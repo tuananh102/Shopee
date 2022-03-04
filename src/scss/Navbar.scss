@@ -1,0 +1,434 @@
+.navbar {
+  height: $header-navbar-height;
+  display: flex;
+  justify-content: space-between;
+  &__list {
+    padding-left: 0;
+    display: flex;
+  }
+
+  &__item {
+    display: inline-block;
+    position: relative;
+
+    &-link,
+    & {
+      display: inline-flex;
+      align-items: center;
+      color: ($white-color);
+      padding: 0 8px;
+      font-size: 1.3rem;
+      text-decoration: none;
+    }
+
+    &:hover,
+    &-link:hover,
+    &_icons:hover {
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+    }
+    &--has-qr:hover .header__qr,
+    &--has-notify:hover .header__notify {
+      display: block;
+    }
+    &-separate::after {
+      content: "";
+      position: absolute;
+      height: 16px;
+      width: 2px;
+      right: -3px;
+      background-color: #f86c5c;
+    }
+
+    &-icon-link {
+      color: ($white-color);
+      text-decoration: none;
+      position: relative;
+      top: 2px;
+      padding-right: 8px;
+    }
+
+    &-no-pointer {
+      cursor: text;
+      color: ($white-color);
+      margin-right: 4px;
+      position: relative;
+      top: 1px;
+    }
+  }
+
+  &_icons {
+    font-size: 1.8rem;
+    padding: 0 5px;
+  }
+
+  // Navbar Language
+  &__language {
+    position: relative;
+    &:hover &-menu {
+      display: block;
+    }
+    &-menu {
+      width: 150px;
+      font-size: 1.5rem;
+      position: absolute;
+      padding-left: 0;
+      list-style: none;
+      top: calc(100% + 4px);
+      right: 0;
+      background-color: ($white-color);
+      color: ($text-color);
+      border-radius: 2px;
+      z-index: 2;
+      box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.2);
+      border: 1px solid #ccc;
+      display: none;
+      &-item {
+        &-link {
+          display: block;
+          padding: 12px 16px;
+        }
+      }
+    }
+  }
+
+  /* Nav User */
+
+  &__user {
+    position: relative;
+  }
+  &__user:hover &__user-menu {
+    display: block;
+    animation: fadeIn ease-in 0.2s;
+  }
+  &__user-avt {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  &__user-name {
+    padding-left: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 110px;
+  }
+
+  &__user-menu {
+    width: 150px;
+    font-size: 1.5rem;
+    position: absolute;
+    padding-left: 0;
+    list-style: none;
+    top: calc(100% + 4px);
+    right: 0;
+    background-color: ($white-color);
+    color: ($text-color);
+    border-radius: 2px;
+    z-index: 1;
+    box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    display: none;
+  }
+  &__user-menu::before,
+  &__language-menu::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    right: 14px;
+    border-color: transparent transparent ($white-color) transparent;
+    border-style: solid;
+    border-width: 10px 13px;
+    cursor: pointer;
+  }
+  &__user-menu::after,
+  &__language-menu::after {
+    content: "";
+    width: 100%;
+    height: 10px;
+    position: absolute;
+    top: -10px;
+  }
+  &__user-menu-item:hover,
+  &__language-menu-item:hover {
+    background-color: ($hover-gray-color);
+    color: $primary-color;
+  }
+  &__user-menu-item {
+    overflow: hidden;
+  }
+  &__user-menu-item a {
+    text-decoration: none;
+    display: block;
+    color: ($text-color);
+    padding: 12px 16px;
+  }
+  &__user-menu-item a:hover {
+    color: ($secondary-green);
+  }
+
+  &__user-menu-item--separate {
+    border-top: 1px solid rgba(0, 0, 0, 0.09);
+  }
+}
+
+/* Header QR Code */
+.header__qr {
+  width: 186px;
+  background-color: ($white-color);
+  position: absolute;
+  top: 170%;
+  padding: 8px;
+  border-radius: 2px;
+  display: none;
+  animation: fadeIn 0.5s ease-in;
+  z-index: 2;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+.header__qr::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10%;
+  top: -16px;
+  width: 100%;
+}
+.header__qr-img {
+  width: 100%;
+}
+
+.header__qr-apps {
+  display: flex;
+  justify-content: space-between;
+}
+.header__qr-app-link:first-child {
+  margin-left: 11px;
+}
+.header__qr-app-link:last-child {
+  margin-right: 11px;
+}
+.header__qr-apps-img {
+  height: 15px;
+}
+
+/* HEADER NOTIFICATION */
+.header__notify {
+  width: 404px;
+  position: absolute;
+  background-color: #fff;
+  top: 120%;
+  right: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.1);
+  cursor: default;
+  transform-origin: calc(100% - 35px) top;
+  animation: headerNotifyGrowth ease-in 0.2s;
+  will-change: opacity, transform;
+  border-radius: 2px;
+  display: none;
+  z-index: 2;
+}
+.header__notify::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 20px;
+  top: -14px;
+  right: 0;
+}
+.header__notify::after {
+  content: "";
+  border-width: 20px 28px;
+  border-style: solid;
+  border-color: transparent transparent ($white-color) transparent;
+  position: absolute;
+  top: -27px;
+  right: 15px;
+}
+
+/* Animation */
+@keyframes headerNotifyGrowth {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.header__notify-header {
+  height: 40px;
+  user-select: none;
+}
+
+.header__notify-header h3 {
+  color: #999;
+  font-weight: 400;
+  font-size: 1.4rem;
+  text-transform: capitalize;
+  margin: 0 0 0 10px;
+  padding: 10px 0;
+}
+.header__notify-list {
+  padding-left: 0;
+}
+
+.header__notify-item:hover {
+  background-color: ($hover-gray-color);
+}
+.header__notify-item--viewed {
+  background-color: rgba(238, 76, 43, 0.1);
+}
+.header__notify-link {
+  display: flex;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.header__notify-img {
+  width: 48px;
+  object-fit: contain;
+}
+
+.header__notify-info {
+  margin-left: 12px;
+}
+
+.header__notify-name {
+  display: block;
+  font-size: 1.4rem;
+  color: ($text-color);
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+.header__notify-description {
+  display: block;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: #756;
+}
+.header__notify-footer {
+  text-align: center;
+}
+.header__notify-footer-btn {
+  text-decoration: none;
+  color: ($text-color);
+  padding: 12px 0;
+  display: block;
+}
+
+/* Auth Form  */
+.auth-form {
+  width: 500px;
+  border-radius: 5px;
+  background-color: ($white-color);
+
+  overflow: hidden;
+}
+
+.auth-form__container {
+  padding: 0 32px;
+}
+
+.auth-form__header {
+  padding: 0 12px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.auth-form__heading {
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: ($text-color);
+}
+.auth-form__switch-btn {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: ($primary-color);
+  cursor: pointer;
+}
+
+.auth-form__input {
+  width: 100%;
+  height: 40px;
+  margin-top: 16px;
+  outline: none;
+  border-radius: 2px;
+  padding: 0 12px;
+  font-size: 1.4rem;
+  border: 1px solid ($border-color);
+}
+
+.auth-form__input:focus {
+  border-color: #777;
+}
+
+.auth-form__aside {
+  margin-top: 20px;
+}
+.auth-form__policy-text {
+  font-size: 1.2rem;
+  text-align: center;
+}
+.auth-form__text-link {
+  text-decoration: none;
+  color: ($primary-color);
+}
+.auth-form__controls {
+  margin-top: 80px;
+  display: flex;
+  justify-content: flex-end;
+}
+.auth-form__controls-back {
+  margin-right: 8px;
+}
+.auth-form__controls-back:hover {
+  background-color: ($hover-gray-color);
+}
+.auth-form__socials {
+  background-color: #f5f5f5;
+  padding: 16px 36px;
+  margin-top: 22px;
+  display: flex;
+  justify-content: space-between;
+}
+.auth-form__socials-icon {
+  font-size: 1.8rem;
+}
+.btn.btn--icon-facebook {
+  background-color: #3a5a98;
+  color: ($white-color);
+}
+.btn.btn--icon-google {
+  background-color: ($white-color);
+  color: #777;
+}
+.auth-form__socials-title {
+  margin: 0 36px;
+}
+
+.auth-form__help {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.auth-form__help-link {
+  text-decoration: none;
+  font-size: 1.4rem;
+  color: ($text-color);
+}
+.auth-form__help-separate {
+  margin: -2px 16px 0;
+  display: block;
+  height: 22px;
+  border: 1px solid ($border-color);
+}
+
+.auth-form__help-link.primary {
+  color: ($primary-color);
+}

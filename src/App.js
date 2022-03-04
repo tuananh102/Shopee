@@ -1,12 +1,35 @@
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import ProductDetails from './pages/ProductDetails'
+import NotFound from "./components/Common/NotFound";
+import React from "react";
+
+// import "bootstrap/dist/css/bootstrap.min.css";
+
+const Main = React.lazy(() => import("./Main"));
+const Admin = React.lazy(() => import("./admin/Admin"));
+
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/product" element={<Home />}></Route>
-      <Route path="/products/:id" element={<ProductDetails />}></Route>
+      <Route
+        path="admin"
+        element={
+          <React.Suspense fallback={<>...</>}>
+            <Admin />
+          </React.Suspense>
+        }
+      ></Route>
+      <Route
+        path="/"
+        element={
+          <React.Suspense fallback={<>...</>}>
+            <Main />
+          </React.Suspense>
+        }
+      >
+        <Route index element={<Home />}></Route>
+      </Route>
+      <Route path="*" element={<NotFound />}></Route>
     </Routes>
   );
 }

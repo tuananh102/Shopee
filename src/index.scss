@@ -1,0 +1,25 @@
+@import "./scss/_variables.scss";
+@import "./scss/_responsive.scss";
+@import "./scss/Navbar.scss";
+@import "./scss/Header.scss";
+* {
+  box-sizing: inherit;
+}
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+  line-height: 1.6em;
+}
+body {
+  margin: 0;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+/* Responsive */
+/* @import url("./css/responsive.css"); */
