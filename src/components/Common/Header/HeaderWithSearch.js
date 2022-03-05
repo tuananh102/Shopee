@@ -1,8 +1,12 @@
-const HeaderWithSearch = () => {
+import { mdiCartOutline, mdiMagnify } from "@mdi/js";
+import Icon from "@mdi/react";
+import { Link } from "react-router-dom";
+
+const HeaderWithSearch = ({ t: translate }) => {
   return (
     <div className="header-with-search">
-      <div className="header-with-search__logo">
-        <a href="/#">
+      <div className="header-with-search__logo d-none d-sm-block">
+        <Link to="/">
           <svg viewBox="0 0 192 65" className="header-with-search__logo-img">
             <g fillRule="evenodd">
               <path
@@ -11,14 +15,14 @@ const HeaderWithSearch = () => {
               />
             </g>
           </svg>
-        </a>
+        </Link>
       </div>
-      <div className="header-with-search__search">
+      <div className="header-with-search__search ms-5 ms-sm-0">
         <div className="header-with-search__search-input-wrap">
           <input
             type="text"
             className="header-with-search__search-input"
-            placeholder="Nhập để tìm kiếm"
+            placeholder={translate("Search.2")}
           />
           <ul className="header-with-search__search-history">
             <li className="header-with-search__search-history-item">
@@ -29,95 +33,92 @@ const HeaderWithSearch = () => {
             </li>
           </ul>
         </div>
-        <div className="header-with-search__select">
-          <span className="header-with-search__select-label">Trong shop</span>
-          <i className="header-with-search__select-icon fas fa-chevron-down" />
-          <ul className="header-with-search__option">
-            <li className="header-with-search__option-item active">
-              <span>Trong shop</span>
-              <i className="fas fa-check" />
-            </li>
-            <li className="header-with-search__option-item">
-              <span>Ngoài shop</span>
-              <i className="fas fa-check" />
-            </li>
-          </ul>
-        </div>
+
         <button className="header-with-search__btn">
-          <i className="header-with-search__btn-icon fas fa-search" />
+          <Icon
+            path={mdiMagnify}
+            className="header-with-search__btn-icon"
+            size={1.8}
+          />
         </button>
       </div>
       {/* Card Layout */}
       <div className="header__cart">
         <div className="header__cart-target">
-          <i className="fas fa-shopping-cart header__cart-icon" />
+          <Icon path={mdiCartOutline} size={2} className="header__cart-icon" />
           <span className="header__cart-notice">3</span>
-          <div className="header__cart-list">
-            {/* Add header__no-card inside parent class to display no card */}
-            <img
-              src="./assests/images/no_cart.png"
-              alt="No cart"
-              className="header__no-cart-img"
-            />
-            <span className="header__no-cart-msg">Chưa có sản phẩm</span>
-            {/* Cart with items */}
-            <h3 className="header__cart-list-heading">Sản phẩm mới thêm</h3>
-            <ul className="header__cart-list-items">
-              <li
-                className="header__cart-item"
-                title="Điện thoại Xiaomi Redmi K40 Gaming Edition RAM 12-128GB,
+          <div className="header__cart-list-wrapper">
+            <div className="header__cart-list">
+              {/* Add header__no-card inside parent class to display no card */}
+              <img
+                src="./images/no_cart.png"
+                alt="No cart"
+                className="header__no-cart-img"
+              />
+              <span className="header__no-cart-msg">
+                {translate("No products yet")}
+              </span>
+              {/* Cart with items */}
+              <h3 className="header__cart-list-heading">
+                {translate("Recently Added Products")}
+              </h3>
+              <ul className="header__cart-list-items">
+                <li
+                  className="header__cart-item"
+                  title="Điện thoại Xiaomi Redmi K40 Gaming Edition RAM 12-128GB,
                   RAM 8-128GB [Giá rẻ Hà Nội, BH 3 tháng 1 đổi 1-Tặng dán
                   màn]"
-              >
-                <img
-                  src="./assests/images/product/product1.jpg"
-                  alt=""
-                  className="header__cart-item-img"
-                />
-                <h3 className="header__cart-item-name">
-                  Điện thoại Xiaomi Redmi K40 Gaming Edition RAM 12-128GB, RAM
-                  8-128GB [Giá rẻ Hà Nội, BH 3 tháng 1 đổi 1-Tặng dán màn]
-                </h3>
-                <span className="header__cart-item-price">₫7.950.000</span>
-              </li>
-              <li
-                className="header__cart-item"
-                title="Bình Giữ Nhiệt Lock&Lock Vacuum Bottle Lock&Lock (800ml) - LHC6180 (3 màu)"
-              >
-                <img
-                  src="./assests/images/product/product2.jpg"
-                  alt=""
-                  className="header__cart-item-img"
-                />
-                <h3 className="header__cart-item-name">
-                  Bình Giữ Nhiệt Lock&amp;Lock Vacuum Bottle Lock&amp;Lock
-                  (800ml) - LHC6180 (3 màu)
-                </h3>
-                <span className="header__cart-item-price">₫369.000</span>
-              </li>
-              <li
-                className="header__cart-item"
-                title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
-              >
-                <img
-                  src="./assests/images/product/product3.jpg"
-                  alt=""
-                  className="header__cart-item-img"
-                />
-                <h3 className="header__cart-item-name">
-                  ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n
-                  Hình Thức Đẹp
-                </h3>
-                <span className="header__cart-item-price">₫90.000</span>
-              </li>
-            </ul>
-            <div className="header__cart-view-cart">
-              <a
-                href="/#"
-                className="btn btn--primary header__cart-view-cart-btn"
-              >
-                Xem giỏ hàng
-              </a>
+                >
+                  <img
+                    src="./images/product/product1.jpg"
+                    alt=""
+                    className="header__cart-item-img"
+                  />
+                  <h3 className="header__cart-item-name">
+                    Điện thoại Xiaomi Redmi K40 Gaming Edition RAM 12-128GB, RAM
+                    8-128GB [Giá rẻ Hà Nội, BH 3 tháng 1 đổi 1-Tặng dán màn]
+                  </h3>
+                  <span className="header__cart-item-price">₫7.950.000</span>
+                </li>
+                <li
+                  className="header__cart-item"
+                  title="Bình Giữ Nhiệt Lock&Lock Vacuum Bottle Lock&Lock (800ml) - LHC6180 (3 màu)"
+                >
+                  <img
+                    src="./images/product/product2.jpg"
+                    alt=""
+                    className="header__cart-item-img"
+                  />
+                  <h3 className="header__cart-item-name">
+                    Bình Giữ Nhiệt Lock&amp;Lock Vacuum Bottle Lock&amp;Lock
+                    (800ml) - LHC6180 (3 màu)
+                  </h3>
+                  <span className="header__cart-item-price">₫369.000</span>
+                </li>
+                <li
+                  className="header__cart-item"
+                  title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
+                >
+                  <img
+                    src="./images/product/product3.jpg"
+                    alt=""
+                    className="header__cart-item-img"
+                  />
+                  <h3 className="header__cart-item-name">
+                    ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
+                    wr842n Hình Thức Đẹp
+                  </h3>
+                  <span className="header__cart-item-price">₫90.000</span>
+                </li>
+              </ul>
+              <div className="header__cart-view-cart">
+                <a
+                  href="/#"
+                  className="btn btn--primary header__cart-view-cart-btn"
+                >
+                  {translate("View my shopping cart")}
+                </a>
+              </div>
             </div>
           </div>
         </div>

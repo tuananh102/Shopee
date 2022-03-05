@@ -1,7 +1,3 @@
-@import "./scss/_variables.scss";
-@import "./scss/_responsive.scss";
-@import "./scss/Navbar.scss";
-@import "./scss/Header.scss";
 * {
   box-sizing: inherit;
 }
@@ -12,7 +8,7 @@ html {
 }
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -21,5 +17,5 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-/* Responsive */
-/* @import url("./css/responsive.css"); */
+
+@import "./scss/style.scss";

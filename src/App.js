@@ -1,9 +1,8 @@
-import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import NotFound from "./components/Common/NotFound";
+import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
-
-// import "bootstrap/dist/css/bootstrap.min.css";
+import { Route, Routes } from "react-router-dom";
+import NotFound from "./components/Common/NotFound";
+import Home from "./pages/Home";
 
 const Main = React.lazy(() => import("./Main"));
 const Admin = React.lazy(() => import("./admin/Admin"));

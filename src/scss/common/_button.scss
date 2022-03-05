@@ -1,0 +1,31 @@
+/* Button style*/
+
+.btn {
+  background-color: $light;
+  min-width: 142px;
+  height: 36px;
+  text-decoration: none;
+  border: none;
+  border-radius: 2px;
+  font-size: 1.4rem;
+  padding: 0 12px;
+  outline: none;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn.btn--primary {
+  background-color: $primary;
+  color: $light;
+}
+.btn.btn--size-s {
+  height: 32px;
+  font-size: 1.2rem;
+  padding: 0 8px;
+}
+.btn--disable {
+  /* do it */
+  cursor: default;
+}

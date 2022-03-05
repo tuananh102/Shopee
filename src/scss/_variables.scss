@@ -1,12 +1,28 @@
-$primary-color: #ee4d2d;
-$white-color: #fff;
-$black-color: #000;
-$text-color: #333;
-$border-color: #dbdbdb;
+// Color
+$primary: rgb(238, 77, 45);
+$light: #fff;
+$dark: rgb(29, 29, 29);
+$text: #333;
+$border: #dbdbdb;
 $header-height: 120px;
 $header-navbar-height: 40px;
-$header-with-search-height: calc($header-height - $header-navbar-height);
-$hover-gray-color: #fafafa;
-$hover-primary-color: #fb6445;
+$header-with-search-height: calc(($header-height) - ($header-navbar-height));
+$hover-gray: #fafafa;
+$hover-primary: #fb6445;
 $secondary-green: #26aa99;
-$star-gold-color: #ffce3d;
+$star-gold: #ffce3d;
+
+@mixin breakpoint($point) {
+  @if $point == md {
+    // 768px
+    @media (max-width: 1023px) {
+      @content;
+    }
+  }
+  @if $point ==sm {
+    // <768px
+    @media (max-width: 739px) {
+      @content;
+    }
+  }
+}

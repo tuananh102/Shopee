@@ -1,0 +1,270 @@
+/* Footer */
+@import "../variables";
+@import "../common/responsive";
+.footer {
+  border-top: 4px solid $primary;
+}
+
+.footer-about-shopee {
+  padding-top: 30px;
+  background-color: #fbfbfb;
+}
+
+.footer-heading {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.65);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.footer-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.footer-list-item:first-child > .footer-list-item__link {
+  padding-top: 0;
+}
+
+.footer-list-item__link {
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #737373;
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+}
+
+.footer-list-item__link:hover,
+.footer-list-item__link:hover .footer-list-item__link-icon {
+  color: $primary;
+}
+
+.footer-list-item__link-icon {
+  font-size: 1.8rem;
+  color: #4a4a4a;
+  margin-right: 12px;
+}
+
+/* Check OUT */
+
+.footer-list-icons {
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.footer-list-icon {
+  list-style: none;
+  display: inline-block;
+  margin: 0 10px 10px 0;
+}
+
+.footer-list-icon__img {
+  width: 5.5rem;
+  height: 2.9rem;
+}
+
+.footer-list-icon__img.footer-visa {
+  height: 1.8rem;
+  background-size: 1347.2727272727273% 983.3333333333334%;
+  background-position: 84.6938775510204% 6.289308176100629%;
+}
+
+.footer-master-card {
+  background-size: 1347.2727272727273% 610.3448275862069%;
+  background-position: 49.416909620991255% 41.891891891891895%;
+}
+
+.footer-jcb {
+  background-size: 1347.2727272727273% 769.5652173913044%;
+  background-position: 38.48396501457726% 38.311688311688314%;
+}
+
+.footer-amex {
+  height: 2.4rem;
+  background-size: 1482% 804.5454545454545%;
+  background-position: 1.447178002894356% 6.451612903225806%;
+}
+
+.footer-cod {
+  background-size: 1482% 610.3448275862069%;
+  background-position: 59.91316931982634% 63.513513513513516%;
+}
+
+.footer-installment {
+  background-size: 1347.2727272727273% 610.3448275862069%;
+  background-position: 19.97084548104956% 66.21621621621621%;
+}
+
+.footer-shopeepay {
+  height: 1.2rem;
+  background-size: 741% 931.578947368421%;
+  background-position: 71.9188767550702% 6.329113924050633%;
+}
+
+/* Transport */
+.footer-shopee-express {
+  height: 1rem;
+  background-size: 667.5675675675676% 983.3333333333334%;
+  background-position: 65.71428571428571% 35.22012578616352%;
+}
+
+.footer-ghtk {
+  height: 1.8rem;
+  background-size: 1347.2727272727273% 983.3333333333334%;
+  background-position: 19.97084548104956% 37.735849056603776%;
+}
+
+.footer-ghn {
+  background-size: 1347.2727272727273% 610.3448275862069%;
+  background-position: 9.037900874635568% 40.54054054054054%;
+}
+
+.footer-viettel-post {
+  background-size: 578.90625% 138.28125%;
+  background-position: 88.90701468189233% 100%;
+  height: 4rem;
+}
+
+.footer-vnpost {
+  background-size: 1347.2727272727273% 655.5555555555555%;
+  background-position: 1.4577259475218658% 72.66666666666667%;
+  height: 2.7rem;
+}
+
+.footer-jnt {
+  background-size: 1347.2727272727273% 1106.25%;
+  background-position: 95.6268221574344% 6.211180124223603%;
+  height: 1.6rem;
+}
+
+.footer-grab-express {
+  height: 1.5rem;
+  background-size: 552.9850746268656% 610.3448275862069%;
+  background-position: 29.9835255354201% 6.756756756756757%;
+}
+
+.footer-ninja-van {
+  background-size: 1235% 680.7692307692307%;
+  background-position: 55.947136563876654% 6.622516556291391%;
+  height: 2rem;
+}
+
+.footer-best-express {
+  background-size: 1029.1666666666667% 590%;
+  background-position: 13.452914798206278% 6.802721088435374%;
+  height: 2.2rem;
+}
+
+.footer__qr {
+  display: flex;
+  &-img {
+    width: 86px;
+    height: 86px;
+  }
+
+  &-apps {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 16px;
+    &-img {
+      height: 16px;
+    }
+  }
+  &-apps-link {
+    text-decoration: none;
+    color: transparent;
+    display: block;
+    padding: 4px 0;
+  }
+}
+
+.footer-region {
+  padding: 40px 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 1.4rem;
+  color: #737373;
+  align-items: baseline;
+  border-top: 1px solid $border;
+  margin-top: 20px;
+
+  &-national {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 70%;
+  }
+  &-link {
+    color: #737373;
+    text-decoration: none;
+    padding: 0 5px;
+    margin-bottom: 5px;
+    &:hover {
+      color: $primary;
+    }
+    &:not(:last-child) {
+      border-right: 1px solid rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.footer-doc {
+  background-color: #f5f5f5;
+  padding: 42px 0 37px;
+  &__legal-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding-left: 0;
+    padding-bottom: 42px;
+  }
+  &__legal-item:not(:last-child) {
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  &__legal-link {
+    padding: 0 26px;
+    font-size: 1.4rem;
+    color: #737373;
+    text-decoration: none;
+    text-transform: uppercase;
+    &:hover {
+      color: $primary;
+    }
+  }
+  &__license {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-link {
+      text-decoration: none;
+      color: transparent;
+    }
+    &-img {
+      height: 4.8rem;
+      margin: 0 20px;
+    }
+    &-regulation {
+      width: 4.8rem;
+      background-size: 1543.75% 368.75%;
+      background-position: 100% 35.65891472868217%;
+    }
+  }
+  &__company-name {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #737373;
+    margin-top: 20px;
+  }
+
+  &__copyright {
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.65);
+    text-align: center;
+  }
+}

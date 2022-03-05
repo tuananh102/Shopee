@@ -16,5 +16,12 @@
   "My purchase": "My purchase",
   "Help": {
     "1": "Help"
-  }
+  },
+  "Recently Added Products": "Recently Added Products",
+  "View my shopping cart": "View my shopping cart",
+  "Search": {
+    "1": "Search",
+    "2": "Search..."
+  },
+  "No products yet": "No products yet"
 }

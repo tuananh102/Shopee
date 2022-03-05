@@ -27,6 +27,12 @@
   padding-right: 4px;
 }
 
+.col-2-4 {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 20%;
+}
+
 .row.no-gutters .col {
   padding-left: 0;
   padding-right: 0;
@@ -150,7 +156,7 @@
   .md-10,
   .md-11,
   .md-12 {
-    display: block;
+    display: flex;
   }
   .md-1 {
     flex: 0 0 calc((1 / 12) * 100%);
@@ -269,7 +275,7 @@
   .lg-10,
   .lg-11,
   .lg-12 {
-    display: block;
+    display: flex;
   }
   .lg-1 {
     flex: 0 0 calc((1 / 12) * 100%);
@@ -383,7 +389,7 @@
   .wide .lg-10,
   .wide .lg-11,
   .wide .lg-12 {
-    display: block;
+    display: flex;
   }
   .wide .lg-1 {
     flex: 0 0 calc((1 / 12) * 100%);

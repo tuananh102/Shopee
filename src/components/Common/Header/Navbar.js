@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import Icon from "@mdi/react";
 import {
   mdiBellOutline,
   mdiFacebook,
@@ -7,11 +5,16 @@ import {
   mdiInstagram,
   mdiWeb,
 } from "@mdi/js";
-const Navbar = ( {i18n, t: translate} ) => {
+import Icon from "@mdi/react";
+import React from "react";
+import "../../../scss/components/Navbar.scss";
+const Navbar = ({ i18n, t: translate }) => {
   return (
-    <nav className="navbar">
+    <nav className="navbar  sm-0 md-0 lg-12">
       <ul className="navbar__list">
-        <li className="navbar__item navbar__item-separate">{translate('Seller Centre')}</li>
+        <li className="navbar__item navbar__item-separate">
+          {translate("Seller Centre")}
+        </li>
         <li className="navbar__item navbar__item-separate">
           {translate("Join as Seller")}
         </li>
@@ -43,12 +46,14 @@ const Navbar = ( {i18n, t: translate} ) => {
           </div>
         </li>
         <li className="navbar__item">
-          <span className="navbar__item-no-pointer">{translate("Follow on us")}</span>
+          <span className="navbar__item-no-pointer">
+            {translate("Follow on us")}
+          </span>
           <a href="/" className="navbar__item-icon-link">
             <Icon
               path={mdiFacebook}
               title="Facebook"
-              size={1.3}
+              size={1.4}
               color="white"
             />
           </a>
@@ -56,7 +61,7 @@ const Navbar = ( {i18n, t: translate} ) => {
             <Icon
               path={mdiInstagram}
               title="InstamdiInstagram"
-              size={1.3}
+              size={1.4}
               color="white"
             />
           </a>
@@ -162,19 +167,29 @@ const Navbar = ( {i18n, t: translate} ) => {
               size={1.3}
               color="white"
             />
-            {translate('Help.1')}
+            {translate("Help.1")}
           </a>
         </li>
         <li className="navbar__item">
           <a href="/" className="navbar__item-link navbar__language">
             <Icon path={mdiWeb} title="Language" size={1.3} color="white" />
-            {i18n.language === 'en' ? "English":"Tiếng Việt"}
+            {i18n.language === "en" ? "English" : "Tiếng Việt"}
             <ul className="navbar__language-menu">
               <li className="navbar__language-menu-item">
-                <span className="navbar__language-menu-item-link" onClick={()=>i18n.changeLanguage('en')}>English</span>
+                <span
+                  className="navbar__language-menu-item-link"
+                  onClick={() => i18n.changeLanguage("en")}
+                >
+                  English
+                </span>
               </li>
               <li className="navbar__language-menu-item">
-                <span className="navbar__language-menu-item-link" onClick={()=>i18n.changeLanguage('vn')}>Tiếng Việt</span>
+                <span
+                  className="navbar__language-menu-item-link"
+                  onClick={() => i18n.changeLanguage("vn")}
+                >
+                  Tiếng Việt
+                </span>
               </li>
             </ul>
           </a>
