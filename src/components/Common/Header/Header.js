@@ -1,13 +1,18 @@
 import React from "react";
 import Navbar from "./Navbar";
+import { Row } from "reactstrap";
 import HeaderWithSearch from "./HeaderWithSearch";
 import "../../../scss/components/Header.scss";
 const Header = (props) => {
   return (
     <header id="header">
       <div className="grid wide">
-        <Navbar {...props} />
-        <HeaderWithSearch t={props.t} />
+        <div className="row">
+          <Navbar {...props} />
+        </div>
+        <div className="row">
+          <HeaderWithSearch t={props.t} />
+        </div>
       </div>
     </header>
   );

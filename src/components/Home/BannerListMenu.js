@@ -17,7 +17,12 @@ const BannerListMenu = () => {
               <Icon path={mdiChevronRight} size={1.4} />
             </h4>
           </a>
-          <div className="list-menu child-list-menu">
+          <div
+            className="list-menu child-list-menu"
+            style={{
+              right: "calc(-100% - 10px)",
+            }}
+          >
             <ul className="list-menu__list">
               <li className="list-menu__list-item list-menu__list-item--has-child">
                 <a href="/" className="list-menu__list-item-link">

@@ -2,117 +2,10 @@
 @import "../common/responsive";
 #header {
   height: $header-height;
-  background-image: linear-gradient(0, #ff6433, #f63e2d);
+  // background-image: linear-gradient(0, #ff6433, #f63e2d);
+  background-color: $primary;
   @include breakpoint(md) {
     height: 68px;
-  }
-  /* HEADER NOTIFICATION */
-  .header__notify {
-    width: 404px;
-    position: absolute;
-    background-color: #fff;
-    top: 120%;
-    right: 0;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.1);
-    cursor: default;
-    transform-origin: calc(100% - 35px) top;
-    animation: headerNotifyGrowth ease-in 0.2s;
-    will-change: opacity, transform;
-    border-radius: 2px;
-    display: none;
-    z-index: 2;
-    &::before {
-      content: "";
-      position: absolute;
-      width: 100px;
-      height: 20px;
-      top: -14px;
-      right: 0;
-    }
-    &::after {
-      content: "";
-      border-width: 20px 28px;
-      border-style: solid;
-      border-color: transparent transparent ($light) transparent;
-      position: absolute;
-      top: -27px;
-      right: 15px;
-    }
-
-    &-header {
-      height: 40px;
-      user-select: none;
-      h3 {
-        color: #999;
-        font-weight: 400;
-        font-size: 1.4rem;
-        text-transform: capitalize;
-        margin: 0 0 0 10px;
-        padding: 10px 0;
-      }
-    }
-
-    &-list {
-      padding-left: 0;
-    }
-
-    &-item:hover {
-      background-color: ($hover-gray);
-    }
-    &-item--viewed {
-      background-color: rgba(238, 76, 43, 0.1);
-    }
-    &-link {
-      display: flex;
-      padding: 12px;
-      text-decoration: none;
-    }
-
-    &-img {
-      width: 48px;
-      object-fit: contain;
-    }
-
-    &-info {
-      margin-left: 12px;
-    }
-
-    &-name {
-      display: block;
-      font-size: 1.4rem;
-      color: ($text);
-      font-weight: 400;
-      margin-bottom: 5px;
-    }
-
-    &-description {
-      display: block;
-      font-size: 1.2rem;
-      line-height: 1.6rem;
-      color: #756;
-    }
-    &-footer {
-      text-align: center;
-    }
-    &-footer-btn {
-      text-decoration: none;
-      color: ($text);
-      padding: 12px 0;
-      display: block;
-    }
-  }
-
-  /* Animation */
-  @keyframes headerNotifyGrowth {
-    from {
-      opacity: 0;
-      transform: scale(0);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
   }
 
   /* Auth Form  */
@@ -389,7 +282,7 @@
 
   .header-with-search__btn {
     height: 34px;
-    background-color: #fb5533;
+    background-color: $primary;
     outline: none;
     border: none;
     width: 60px;
@@ -455,7 +348,7 @@
     animation: fadeIn ease-in 0.15s;
     cursor: default;
     display: none;
-    z-index: 1;
+    z-index: 5;
   }
   .header__cart-list {
     overflow-y: auto;

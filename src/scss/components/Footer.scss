@@ -1,8 +1,8 @@
 /* Footer */
 @import "../variables";
-@import "../common/responsive";
 .footer {
   border-top: 4px solid $primary;
+  overflow-x: hidden;
 }
 
 .footer-about-shopee {

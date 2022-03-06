@@ -1,19 +1,23 @@
 // Color
-$primary: rgb(238, 77, 45);
+// $primary: rgb(238, 77, 45);
+$primary: #d0011b;
 $light: #fff;
 $dark: rgb(29, 29, 29);
 $text: #333;
 $border: #dbdbdb;
 $header-height: 120px;
 $header-navbar-height: 40px;
-$banner-height: 320px;
+$banner-container-height: 468px;
+$banner-height: 340px;
 $hover-gray: #fafafa;
-$hover-primary: #fb6445;
+// $hover-primary: #fb6445;
+$hover-primary: #d41830;
+
 $secondary-green: #26aa99;
 $star-gold: #ffce3d;
 $box-shadow-primary: 0 2px 4px 0 rgb($dark, 0.1);
 $box-shadow-secondary: 0 1px 50px 0 rgba(0, 0, 0, 0.2);
-$menu-box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+$menu-box-shadow: 0 0.5rem 1rem 0 rgb(0 0 0 / 15%);
 @mixin breakpoint($point) {
   @if $point == md {
     // 768px
@@ -24,6 +28,11 @@ $menu-box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
   @if $point ==sm {
     // <768px
     @media (max-width: 739px) {
+      @content;
+    }
+  }
+  @if $point ==lg {
+    @media (min-width: 1024px) {
       @content;
     }
   }
