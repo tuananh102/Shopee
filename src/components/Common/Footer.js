@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="footer-about-shopee">
         <div className="grid wide">
           <div className="row">
-            <div className="col-4 col-sm-3">
+            <div className="col-6 col-sm-4 col-md-3">
               <h3 className="footer-heading">Chăm sóc khách hàng</h3>
               <ul className="footer-list">
                 <li className="footer-list-item">
@@ -69,7 +69,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-4 col-sm-3 ">
+            <div className="col-6 col-sm-4 col-md-3 ">
               <h3 className="footer-heading">Về Shopee</h3>
               <ul className="footer-list">
                 <li className="footer-list-item">
@@ -119,7 +119,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-4 col-sm-3">
+            <div className="col-6 col-sm-4 col-md-3">
               <div className="footer-checkout">
                 <h3 className="footer-heading">Thanh toán</h3>
                 <ul className="footer-list-icons">
@@ -259,7 +259,7 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className="col-4 col-sm-3">
+            <div className="col-6 col-sm-4 col-md-3">
               <h3 className="footer-heading">Theo dõi chúng tôi trên</h3>
               <ul className="footer-list">
                 <li className="footer-list-item">
@@ -327,7 +327,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="col-4 col-sm-3">
+            {/* <div className="col-6 col-sm-4 col-md-3">
               <h3 className="footer-heading">Tải ứng dụng</h3>
               <div className="footer__qr">
                 <a href="/#">

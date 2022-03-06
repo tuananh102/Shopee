@@ -2,6 +2,7 @@ import Product from "../components/Product";
 import useQuery from "../hooks/useQuery";
 
 import React, { useEffect, useState } from "react";
+import Banner from "../components/Home/Banner";
 // import { useDispatch, useSelector } from "react-redux";
 // import { logIn } from "../actions/user";
 
@@ -31,12 +32,21 @@ const Home = () => {
     if (data) setProducts(data);
   }, [data]);
   return (
-    <div>
+    <main
+      style={{
+        background:
+          "url(https://cf.shopee.vn/file/b62471ec58d6d7973ccd6e255b90c33c) center top / 100% no-repeat",
+        minWidth: 1200,
+        paddingBottom: 0,
+        margin: "0px auto 4.375rem",
+      }}
+    >
+      <Banner />
       {/* {products && <Product products={products} />} */}
-      HOME PAGES
+
       {loading && <h2>Loading....</h2>}
       {error && <h2>{error}</h2>}
-    </div>
+    </main>
   );
 };
 

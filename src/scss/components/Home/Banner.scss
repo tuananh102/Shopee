@@ -1,0 +1,89 @@
+@import "../../variables";
+.home-banner {
+  height: $banner-height;
+  padding: 1.6rem 0;
+  .list-menu {
+    position: relative;
+    background-color: $light;
+    border-radius: 5px;
+    box-shadow: $menu-box-shadow;
+    &__list {
+      &-item {
+        overflow: hidden;
+        font-size: 1.4rem;
+        font-weight: 500;
+        display: flex;
+        &--has-child {
+          &:hover > .child-list-menu {
+            display: block;
+          }
+        }
+        &-link {
+          display: flex;
+          align-items: center;
+          height: 3.2rem;
+          padding: 8px 4px 8px 8px;
+          width: 100%;
+          &:first-child {
+            border-top-left-radius: 5px;
+          }
+          &:hover {
+            color: $primary;
+            background-color: $hover-gray;
+          }
+        }
+        &-name {
+          flex: 1;
+          font-size: 1.4rem;
+          margin-left: 8px;
+          margin-bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        &-icon {
+          position: relative;
+          top: -1px;
+        }
+      }
+    }
+  }
+  .list-menu.child-list-menu {
+    position: absolute;
+    border-radius: 0;
+    right: -100%;
+    width: 200px;
+    height: 100%;
+    display: none;
+    z-index: 10;
+    box-shadow: $menu-box-shadow;
+  }
+  .slick-slider {
+    height: $banner-height;
+    box-shadow: $menu-box-shadow;
+    .slick-dots {
+      bottom: 0;
+    }
+    img {
+      width: 100%;
+    }
+    button {
+      width: 34px;
+      height: 34px;
+      z-index: 1;
+      color: $dark;
+    }
+  }
+  .banner-right {
+    width: 100%;
+    height: $banner-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    img {
+      width: 100%;
+      border-radius: 5px;
+      box-shadow: $menu-box-shadow;
+    }
+  }
+}

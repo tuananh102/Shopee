@@ -231,7 +231,11 @@
   .header-with-search {
     display: flex;
     align-items: center;
-    height: ($header-with-search-height);
+
+    height: calc(($header-height) - ($header-navbar-height));
+    @include breakpoint(md) {
+      height: 68px;
+    }
   }
 
   .header-with-search__logo a {
@@ -287,7 +291,10 @@
     overflow: hidden;
     display: none;
     position: absolute;
-    top: 75%;
+    top: calc(100% + 2px);
+    @include breakpoint(md) {
+      width: 100%;
+    }
   }
   .header-with-search__search-history-item {
     font-size: 1.4rem;

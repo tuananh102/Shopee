@@ -1,7 +1,7 @@
 import { mdiCartOutline, mdiMagnify } from "@mdi/js";
 import Icon from "@mdi/react";
+import React from "react";
 import { Link } from "react-router-dom";
-
 const HeaderWithSearch = ({ t: translate }) => {
   return (
     <div className="header-with-search">

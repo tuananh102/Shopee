@@ -6,12 +6,14 @@ $text: #333;
 $border: #dbdbdb;
 $header-height: 120px;
 $header-navbar-height: 40px;
-$header-with-search-height: calc(($header-height) - ($header-navbar-height));
+$banner-height: 320px;
 $hover-gray: #fafafa;
 $hover-primary: #fb6445;
 $secondary-green: #26aa99;
 $star-gold: #ffce3d;
-
+$box-shadow-primary: 0 2px 4px 0 rgb($dark, 0.1);
+$box-shadow-secondary: 0 1px 50px 0 rgba(0, 0, 0, 0.2);
+$menu-box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
 @mixin breakpoint($point) {
   @if $point == md {
     // 768px
