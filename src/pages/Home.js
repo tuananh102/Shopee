@@ -1,4 +1,4 @@
-import Product from "../components/Product";
+// import Product from "../components/Product";
 import useQuery from "../hooks/useQuery";
 
 import React, { useEffect, useState } from "react";

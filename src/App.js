@@ -3,7 +3,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./components/Common/NotFound";
 import Home from "./pages/Home";
-import { Spinner } from "reactstrap";
+import Spinner from "react-bootstrap/Spinner";
 const Main = React.lazy(() => import("./Main"));
 const Admin = React.lazy(() => import("./admin/Admin"));
 
@@ -13,7 +13,7 @@ function App() {
       <Route
         path="admin"
         element={
-          <React.Suspense fallback={<Spinner>...</Spinner>}>
+          <React.Suspense fallback={<Spinner animation="border" />}>
             <Admin />
           </React.Suspense>
         }
@@ -21,7 +21,7 @@ function App() {
       <Route
         path="/"
         element={
-          <React.Suspense fallback={<Spinner>...</Spinner>}>
+          <React.Suspense fallback={<Spinner animation="border" />}>
             <Main />
           </React.Suspense>
         }

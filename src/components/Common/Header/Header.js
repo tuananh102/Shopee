@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "./Navbar";
-import { Row } from "reactstrap";
 import HeaderWithSearch from "./HeaderWithSearch";
 import "../../../scss/components/Header.scss";
 const Header = (props) => {

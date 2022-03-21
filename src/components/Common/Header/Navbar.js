@@ -4,11 +4,71 @@ import {
   mdiHelpCircleOutline,
   mdiInstagram,
   mdiWeb,
-} from "@mdi/js";
+} from '@mdi/js';
 import Icon from "@mdi/react";
-import React from "react";
+import React, { useState } from "react";
+import { Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import AuthLogin from '../Auth/AuthLogin';
+import FacebookLogin from 'react-facebook-login';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import "../../../scss/components/Navbar.scss";
+
+const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID + "";
 const Navbar = ({ i18n, t: translate }) => {
+  const [show, setShow] = useState(false);
+  const [loginData, setLoginData] = useState({
+    user: {
+      name: "",
+      emailId: "",
+      imageUrl: "",
+    },
+    isLogin: false,
+  });
+  const responseFacebook = (response) => {
+    console.log(response);
+    if (response.status !== 'unknown') {
+      let userInfo = {
+        name: response.name,
+        emailId: response.email,
+        imageUrl: response.picture.data.url,
+      };
+      setLoginData({
+        user: userInfo,
+        isLogin: true,
+      });
+      setShow(false);
+    }
+  }
+  const handleFacebookLogin = (data) => {
+    console.log(data);
+  };
+  const facebook = (
+    <FacebookLogin
+      appId="476839580613064"
+      autoLoad={false}
+      fields="name,email,picture"
+      onClick={handleFacebookLogin}
+      callback={responseFacebook}
+      cssClass="social-btn"
+      textButton="Facebook"
+      icon={<Icon path={mdiFacebook} size={1.6} color="#1877F2" />}
+    />
+  );
+  // Logout Session and Update State
+  const logout = () => {
+    let userInfo = {
+      name: "",
+      emailId: "",
+      imageUrl: "",
+    };
+    window.sessionStorage.removeItem("access_token");
+    // window.sessionStorage.removeItem("nama");
+    setLoginData({ user: userInfo, isLogin: false });
+    console.log("Log out successfully");
+
+  };
+
   return (
     <nav className="navbar  sm-0 md-0 lg-12">
       <ul className="navbar__list">
@@ -196,9 +256,9 @@ const Navbar = ({ i18n, t: translate }) => {
         </li>
 
         {/* User  */}
-        <li className="navbar__item navbar__user">
-          <img src="./images/user.jpg" alt="" className="navbar__user-avt" />
-          <span className="navbar__user-name"> Tuấn Anh </span>
+        {loginData.isLogin && <li className="navbar__item navbar__user">
+          <img src={loginData.user.imageUrl} alt="" className="navbar__user-avt" />
+          <span className="navbar__user-name">{loginData.user.name}</span>
           <ul className="navbar__user-menu">
             <li className="navbar__user-menu-item">
               <a href="/#">{translate("My account")}</a>
@@ -207,14 +267,30 @@ const Navbar = ({ i18n, t: translate }) => {
               <a href="/#">{translate("My purchase")}</a>
             </li>
             <li className="navbar__user-menu-item navbar__user-menu-item--separate">
-              <a href="/#">{translate("Log Out")}</a>
+              <GoogleLogout
+                clientId={CLIENT_ID}
+                onLogoutSuccess={logout}
+                icon={false}
+                buttonText={translate("Log Out")}
+                tag='a'
+              />
+              {/* <span onClick={logout}>{translate("Log Out")}
+              </span> */}
             </li>
           </ul>
-        </li>
-
-        {/* <li className="navbar__item navbar__item-separate">Đăng ký</li>
-            <li className="navbar__item">Đăng nhập</li>  */}
+        </li>}
+        {/* If user logged in, hide this */}
+        {!loginData.isLogin &&
+          <>
+            <li className="navbar__item navbar__item-separate" onClick=
+              {() => setShow(true)}>
+              {translate('Sign Up')}
+            </li>
+            <li className="navbar__item" onClick={() => setShow(true)}>
+              {translate('Log In')}
+            </li></>}
       </ul>
+      <AuthLogin show={show} setShow={setShow} facebook={facebook} loginData={loginData} setLoginData={setLoginData} />
     </nav>
   );
 };

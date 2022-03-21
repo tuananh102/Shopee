@@ -70,7 +70,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                   màn]"
                 >
                   <img
-                    src="./images/product/product1.jpg"
+                    src="./images/products/product1.jpg"
                     alt=""
                     className="header__cart-item-img"
                   />
@@ -85,7 +85,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                   title="Bình Giữ Nhiệt Lock&Lock Vacuum Bottle Lock&Lock (800ml) - LHC6180 (3 màu)"
                 >
                   <img
-                    src="./images/product/product2.jpg"
+                    src="./images/products/product2.jpg"
                     alt=""
                     className="header__cart-item-img"
                   />
@@ -100,7 +100,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                   title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
                 >
                   <img
-                    src="./images/product/product3.jpg"
+                    src="./images/products/product3.jpg"
                     alt=""
                     className="header__cart-item-img"
                   />

@@ -125,7 +125,7 @@
     background-color: ($light);
     color: ($text);
     border-radius: 2px;
-    z-index: 1;
+    z-index: 2;
     box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.2);
     border: 1px solid #ccc;
     display: none;
@@ -156,19 +156,22 @@
   }
   &__user-menu-item {
     overflow: hidden;
-  }
-  &__user-menu-item a {
-    text-decoration: none;
-    display: block;
-    color: ($text);
-    padding: 12px 16px;
-  }
-  &__user-menu-item a:hover {
-    color: ($secondary-green);
-  }
-
-  &__user-menu-item--separate {
-    border-top: 1px solid rgba(0, 0, 0, 0.09);
+    & span,
+    a {
+      text-decoration: none;
+      display: block !important;
+      color: ($text);
+      padding: 12px 16px !important;
+      span {
+        padding: 0 !important;
+      }
+      &:hover {
+        color: ($secondary-green);
+      }
+    }
+    &--separate {
+      border-top: 1px solid rgba(0, 0, 0, 0.09);
+    }
   }
 }
 
@@ -184,33 +187,34 @@
   animation: fadeIn 0.5s ease-in;
   z-index: 2;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-}
-.header__qr::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 10%;
-  top: -16px;
-  width: 100%;
-}
-.header__qr-img {
-  width: 100%;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 10%;
+    top: -16px;
+    width: 100%;
+  }
+  &-img {
+    width: 100%;
+  }
+
+  &-apps {
+    display: flex;
+    justify-content: space-between;
+    &-img {
+      height: 15px;
+    }
+  }
+  &-app-link:first-child {
+    margin-left: 11px;
+  }
+  &-app-link:last-child {
+    margin-right: 11px;
+  }
 }
 
-.header__qr-apps {
-  display: flex;
-  justify-content: space-between;
-}
-.header__qr-app-link:first-child {
-  margin-left: 11px;
-}
-.header__qr-app-link:last-child {
-  margin-right: 11px;
-}
-.header__qr-apps-img {
-  height: 15px;
-}
 /* HEADER NOTIFICATION */
 .header__notify {
   width: 404px;
@@ -317,5 +321,142 @@
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+// Sign In Sign up
+
+.modal-content {
+  .modal-title.h4 {
+    font-size: 1.6rem;
+  }
+}
+
+.sign-in-container {
+  background-color: white;
+  .transfer--click {
+    display: flex;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin: 20px 0;
+    &-noti-text {
+      color: $text-gray;
+    }
+  }
+  .sign-in-form-container,
+  .sign-up-form-container {
+    margin: 0 30px;
+
+    .sign-in-form {
+      color: #555555;
+      font-size: 15px;
+      display: flex;
+      flex-direction: column;
+      label {
+        align-items: flex-start;
+        margin-top: 10px;
+      }
+      input {
+        width: 100%;
+        padding: 10px 15px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        &:focus-visible {
+          outline: none;
+          border: 1px solid $primary;
+        }
+      }
+      .forget-password {
+        text-align: end;
+        color: #c92127;
+      }
+      .separate {
+        align-items: center;
+        margin: 10px 0;
+        &-left,
+        &-right {
+          width: 100%;
+          height: 1px;
+          background-color: $border;
+        }
+        span {
+          margin: 0 12px;
+          color: #ccc;
+          font-size: 1.2rem;
+        }
+      }
+      .submit-btn {
+        text-align: center;
+        margin: 10px 0;
+        button {
+          width: 100%;
+          border: none;
+          border-radius: 2px;
+          padding: 10px;
+          color: $light;
+          font-weight: 600;
+        }
+      }
+      .submit-btn {
+        button {
+          background-color: $primary;
+          &:hover {
+            opacity: 0.9;
+          }
+        }
+      }
+      .social-signup {
+        .social-btn {
+          width: 100%;
+          height: 100%;
+          border: 1px solid transparent;
+          border-radius: 2px;
+          padding: 0;
+          background-color: $light;
+          display: flex;
+          align-items: center;
+          color: rgba(0, 0, 0, 0.54);
+          justify-content: center;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px,
+            rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+          &.metro {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            &:hover {
+              color: rgba(0, 0, 0, 0.4);
+            }
+            svg {
+              margin-right: 20px;
+            }
+          }
+        }
+        // button {
+        //   display: flex;
+        //   justify-content: space-evenly;
+        //   align-items: center;
+        //   .ico-fb {
+        //     font-size: 20px;
+        //   }
+        // }
+      }
+    }
+  }
+}
+.license {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  p {
+    display: inline-block;
+    width: 300px;
+    font-size: 13px;
+    a {
+      color: blue;
+    }
   }
 }
