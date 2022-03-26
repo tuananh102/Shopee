@@ -23,5 +23,21 @@
     "1": "Tìm kiếm",
     "2": "Nhập để tìm kiếm"
   },
-  "No products yet": "Chưa có sản phẩm"
+  "No products yet": "Chưa có sản phẩm",
+  "Enter your email": "Nhập email của bạn",
+  "Password": {
+    "1":"Mật khẩu",
+    "2": "Nhập mật khẩu của bạn",
+    "3": "Quên mật khẩu",
+    "4": "Nhập lại mật khẩu"
+
+  },
+  "New to Shopee": "Bạn mới biết đến Shopee",
+  "Have an account": "Bạn đã có tài khoản",
+  "Or": "Hoặc",
+  "By signing up, you agree to Shopee's": "Bằng việc đăng ký, bạn đã đồng ý với Shopee về",
+  "Terms of Service": "Điều khoản dịch vụ",
+  "Privacy Policy": "Chính sách bảo mật"
+
+
 }

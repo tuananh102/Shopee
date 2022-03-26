@@ -127,7 +127,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-visa"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -135,7 +135,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-master-card"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -143,7 +143,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-jcb"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -151,7 +151,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-amex"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -159,7 +159,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-cod"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -167,7 +167,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-installment"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -175,7 +175,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-shopeepay"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -188,7 +188,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-shopee-express"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -196,7 +196,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-ghtk"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -204,7 +204,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-ghn"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -212,7 +212,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-viettel-post"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -220,7 +220,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-vnpost"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -228,7 +228,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-jnt"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -236,7 +236,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-grab-express"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -244,7 +244,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-ninja-van"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -252,7 +252,7 @@ const Footer = () => {
                     <div
                       className="footer-list-icon__img footer-best-express"
                       style={{
-                        backgroundImage: "url(./images/footer_img.png)",
+                        backgroundImage: "url(/images/footer_img.png)",
                       }}
                     />
                   </li>
@@ -297,29 +297,29 @@ const Footer = () => {
               <div className="footer__qr">
                 <a href="/#">
                   <img
-                    src="./images/qr_code.png"
+                    src="/images/qr_code.png"
                     alt="Qr Code"
                     className="footer__qr-img"
                   />
                 </a>
                 <div className="footer__qr-apps">
-                  <a href="/#" className="footer__qr-app-link">
+                  <a href="/#" className="footer__qr-apps-link">
                     <img
-                      src="./images/app_store.png"
+                      src="/images/app_store.png"
                       alt="App Store"
                       className="footer__qr-apps-img"
                     />
                   </a>
-                  <a href="/#" className="footer__qr-app-link">
+                  <a href="/#" className="footer__qr-apps-link">
                     <img
-                      src="./images/ch_play.png"
+                      src="/images/ch_play.png"
                       alt="Google Play"
                       className="footer__qr-apps-img"
                     />
                   </a>
-                  <a href="/#" className="footer__qr-app-link">
+                  <a href="/#" className="footer__qr-apps-link">
                     <img
-                      src="./images/app_gallery.png"
+                      src="/images/app_gallery.png"
                       alt="AppGallery"
                       className="footer__qr-apps-img"
                     />
@@ -332,29 +332,29 @@ const Footer = () => {
               <div className="footer__qr">
                 <a href="/#">
                   <img
-                    src="./images/qr_code.png"
+                    src="/images/qr_code.png"
                     alt="Qr Code"
                     className="footer__qr-img"
                   />
                 </a>
                 <div className="footer__qr-apps">
-                  <a href="/#" className="footer__qr-app-link">
+                  <a href="/#" className="footer__qr-apps-link">
                     <img
-                      src="./images/app_store.png"
+                      src="/images/app_store.png"
                       alt="App Store"
                       className="footer__qr-apps-img"
                     />
                   </a>
-                  <a href="/#" className="footer__qr-app-link">
+                  <a href="/#" className="footer__qr-apps-link">
                     <img
-                      src="./images/ch_play.png"
+                      src="/images/ch_play.png"
                       alt="Google Play"
                       className="footer__qr-apps-img"
                     />
                   </a>
-                  <a href="/#" className="footer__qr-app-link">
+                  <a href="/#" className="footer__qr-apps-link">
                     <img
-                      src="./images/app_gallery.png"
+                      src="/images/app_gallery.png"
                       alt="AppGallery"
                       className="footer__qr-apps-img"
                     />
@@ -450,14 +450,14 @@ const Footer = () => {
             <div className="footer-doc__license">
               <a href="/#" className="footer-doc__license-link">
                 <img
-                  src="./images/logoCCDV.png"
+                  src="/images/logoCCDV.png"
                   className="footer-doc__license-img"
                   alt="license"
                 />
               </a>
               <a href="/#" className="footer-doc__license-link">
                 <img
-                  src="./images/logoCCDV.png"
+                  src="/images/logoCCDV.png"
                   className="footer-doc__license-img"
                   alt="license"
                 />
@@ -465,7 +465,7 @@ const Footer = () => {
               <a className="footer-doc__license-link" href="/#">
                 <div
                   style={{
-                    backgroundImage: "url(./images/footer_img.png)",
+                    backgroundImage: "url(/images/footer_img.png)",
                   }}
                   className="footer-doc__license-img footer-doc__license-regulation"
                 />

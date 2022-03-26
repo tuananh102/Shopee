@@ -4,48 +4,60 @@ import {
   mdiHelpCircleOutline,
   mdiInstagram,
   mdiWeb,
-} from '@mdi/js';
+} from "@mdi/js";
 import Icon from "@mdi/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import AuthLogin from '../Auth/AuthLogin';
-import FacebookLogin from 'react-facebook-login';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import AuthLogin from "../Auth/AuthLogin";
+import FacebookLogin from "react-facebook-login";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
 import "../../../scss/components/Navbar.scss";
-
+const appId = process.env.REACT_APP_FACEBOOK_APP_ID;
 const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID + "";
 const Navbar = ({ i18n, t: translate }) => {
   const [show, setShow] = useState(false);
-  const [loginData, setLoginData] = useState({
-    user: {
-      name: "",
-      emailId: "",
-      imageUrl: "",
-    },
-    isLogin: false,
-  });
+  const [transferLogIn, setTransferLogIn] = useState(true);
+  const [loginData, setLoginData] = useState(
+    localStorage.getItem("loginData")
+      ? JSON.parse(localStorage.getItem("loginData"))
+      : null
+  );
+  useEffect(() => {
+    if (loginData) {
+      console.log(loginData);
+      setLoginData(loginData.profileObj || loginData);
+    }
+    return () => {
+      setLoginData(null);
+    };
+  }, []);
+
   const responseFacebook = (response) => {
     console.log(response);
-    if (response.status !== 'unknown') {
+    if (response.status !== "unknown") {
       let userInfo = {
         name: response.name,
         emailId: response.email,
         imageUrl: response.picture.data.url,
       };
-      setLoginData({
-        user: userInfo,
-        isLogin: true,
-      });
+      setLoginData(userInfo);
+      localStorage.setItem("loginData", JSON.stringify(response));
       setShow(false);
     }
-  }
+  };
   const handleFacebookLogin = (data) => {
     console.log(data);
   };
+  // Logout Session and Update State
+  const handleLogout = () => {
+    localStorage.removeItem("loginData");
+    setLoginData(null);
+    console.log("Log out successfully");
+  };
   const facebook = (
     <FacebookLogin
-      appId="476839580613064"
+      appId={appId}
       autoLoad={false}
       fields="name,email,picture"
       onClick={handleFacebookLogin}
@@ -55,20 +67,16 @@ const Navbar = ({ i18n, t: translate }) => {
       icon={<Icon path={mdiFacebook} size={1.6} color="#1877F2" />}
     />
   );
-  // Logout Session and Update State
-  const logout = () => {
-    let userInfo = {
-      name: "",
-      emailId: "",
-      imageUrl: "",
-    };
-    window.sessionStorage.removeItem("access_token");
-    // window.sessionStorage.removeItem("nama");
-    setLoginData({ user: userInfo, isLogin: false });
-    console.log("Log out successfully");
-
+  const loginProps = {
+    translate: translate,
+    transferLogIn: transferLogIn,
+    setTransferLogIn: setTransferLogIn,
+    show: show,
+    setShow: setShow,
+    facebook: facebook,
+    loginData: loginData,
+    setLoginData: setLoginData,
   };
-
   return (
     <nav className="navbar  sm-0 md-0 lg-12">
       <ul className="navbar__list">
@@ -256,41 +264,58 @@ const Navbar = ({ i18n, t: translate }) => {
         </li>
 
         {/* User  */}
-        {loginData.isLogin && <li className="navbar__item navbar__user">
-          <img src={loginData.user.imageUrl} alt="" className="navbar__user-avt" />
-          <span className="navbar__user-name">{loginData.user.name}</span>
-          <ul className="navbar__user-menu">
-            <li className="navbar__user-menu-item">
-              <a href="/#">{translate("My account")}</a>
-            </li>
-            <li className="navbar__user-menu-item">
-              <a href="/#">{translate("My purchase")}</a>
-            </li>
-            <li className="navbar__user-menu-item navbar__user-menu-item--separate">
-              <GoogleLogout
-                clientId={CLIENT_ID}
-                onLogoutSuccess={logout}
-                icon={false}
-                buttonText={translate("Log Out")}
-                tag='a'
-              />
-              {/* <span onClick={logout}>{translate("Log Out")}
-              </span> */}
-            </li>
-          </ul>
-        </li>}
+        {loginData && (
+          <li className="navbar__item navbar__user">
+            <img
+              src={loginData.imageUrl || loginData.picture.data.url}
+              alt=""
+              className="navbar__user-avt"
+            />
+            <span className="navbar__user-name">{loginData.name}</span>
+            <ul className="navbar__user-menu">
+              <li className="navbar__user-menu-item">
+                <a href="/#">{translate("My account")}</a>
+              </li>
+              <li className="navbar__user-menu-item">
+                <a href="/#">{translate("My purchase")}</a>
+              </li>
+              <li className="navbar__user-menu-item navbar__user-menu-item--separate">
+                <GoogleLogout
+                  clientId={CLIENT_ID}
+                  onLogoutSuccess={handleLogout}
+                  icon={false}
+                  buttonText={translate("Log Out")}
+                  tag="a"
+                />
+              </li>
+            </ul>
+          </li>
+        )}
         {/* If user logged in, hide this */}
-        {!loginData.isLogin &&
+        {!loginData && (
           <>
-            <li className="navbar__item navbar__item-separate" onClick=
-              {() => setShow(true)}>
-              {translate('Sign Up')}
+            <li
+              className="navbar__item navbar__item-separate"
+              onClick={() => {
+                setShow(true);
+                setTransferLogIn(false);
+              }}
+            >
+              {translate("Sign Up")}
             </li>
-            <li className="navbar__item" onClick={() => setShow(true)}>
-              {translate('Log In')}
-            </li></>}
+            <li
+              className="navbar__item"
+              onClick={() => {
+                setShow(true);
+                setTransferLogIn(true);
+              }}
+            >
+              {translate("Log In")}
+            </li>
+          </>
+        )}
       </ul>
-      <AuthLogin show={show} setShow={setShow} facebook={facebook} loginData={loginData} setLoginData={setLoginData} />
+      <AuthLogin {...loginProps} />
     </nav>
   );
 };

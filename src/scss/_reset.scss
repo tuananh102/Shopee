@@ -30,6 +30,7 @@ h5,
 p,
 span {
   text-shadow: none;
+  margin: 0;
 }
 
 [type="button"]:focus,
@@ -134,7 +135,8 @@ input:focus {
   outline: none;
 }
 
-ul {
+ul,
+ol {
   padding: 0;
   margin: 0;
   li {

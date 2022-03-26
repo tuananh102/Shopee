@@ -4,7 +4,7 @@ import React from "react";
 import ProductCard from "../Common/ProductCard";
 import "../../scss/components/Home/ProductByCategory.scss";
 
-const ProductByCategory = () => {
+const ProductByCategory = ({ products }) => {
   return (
     <div className="grid wide">
       <div className="home-product row">
@@ -19,24 +19,11 @@ const ProductByCategory = () => {
         </div>
         <div className="grid wide home-product-container">
           <div className="row">
-            <div className="col-2-4 home-product__item-wrap">
-              <ProductCard />
-            </div>
-            <div className="col-2-4 home-product__item-wrap">
-              <ProductCard />
-            </div>
-            <div className="col-2-4 home-product__item-wrap">
-              <ProductCard />
-            </div>
-            <div className="col-2-4 home-product__item-wrap">
-              <ProductCard />
-            </div>
-            <div className="col-2-4 home-product__item-wrap">
-              <ProductCard />
-            </div>
-            <div className="col-2-4 home-product__item-wrap">
-              <ProductCard />
-            </div>
+            {products.map((item) => (
+              <div className="col-2-4 home-product__item-wrap" key={item.id}>
+                <ProductCard product={item} />
+              </div>
+            ))}
           </div>
         </div>
       </div>

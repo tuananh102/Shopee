@@ -1,5 +1,6 @@
 @import "../variables";
 @import "../common/responsive";
+
 #header {
   height: $header-height;
   // background-image: linear-gradient(0, #ff6433, #f63e2d);
@@ -393,6 +394,10 @@
     font-weight: 300;
     text-align: left;
   }
+  .header__cart-list-items-container {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
   .header__cart-list-items {
     padding-left: 0;
     list-style: none;
@@ -433,7 +438,7 @@
   }
 
   .header__cart-view-cart-btn {
-    width: 124px;
+    min-width: 120px;
     margin: 12px;
   }
 

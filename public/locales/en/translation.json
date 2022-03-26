@@ -23,5 +23,19 @@
     "1": "Search",
     "2": "Search..."
   },
-  "No products yet": "No products yet"
+  "No products yet": "No products yet",
+  "Enter your email": "Enter your email",
+  "Password": {
+    "1":"Password",
+    "2": "Enter your password",
+    "3": "Forget password",
+    "4": "Reenter the password"
+  },
+  "New to Shopee": "New to Shopee",
+  "Have an account": "Have an account",
+  "Or": "Or",
+  "By signing up, you agree to Shopee's": "By signing up, you agree to Shopee's",
+  "Terms of Service": "Terms of Service",
+  "Privacy Policy": "Privacy Policy"
+
 }

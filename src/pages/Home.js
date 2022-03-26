@@ -4,6 +4,7 @@ import useQuery from "../hooks/useQuery";
 import React, { useEffect, useState } from "react";
 import Banner from "../components/Home/Banner";
 import ProductByCategory from "../components/Home/ProductByCategory";
+import PreLoader from "../features/PreLoader.jsx";
 // import { useDispatch, useSelector } from "react-redux";
 // import { logIn } from "../actions/user";
 
@@ -12,7 +13,7 @@ import ProductByCategory from "../components/Home/ProductByCategory";
 // };
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const { data, loading, error } = useQuery(`/posts`);
+  const { data, loading, error } = useQuery(`/products`);
   // Use redux
 
   // const userList = useSelector((state) => state.user.list);
@@ -30,7 +31,12 @@ const Home = () => {
   // dispatch(action);
 
   useEffect(() => {
-    if (data) setProducts(data);
+    if (data) {
+      // window.scrollTo(0, 0);
+      setProducts(data);
+      console.log("HOME PRODUCT:", data);
+    }
+    // return () => setProducts(null);
   }, [data]);
   return (
     <main
@@ -44,12 +50,12 @@ const Home = () => {
     >
       <Banner />
       {/* {products && <Product products={products} />} */}
+      <ProductByCategory products={products} />
+      {/* <ProductByCategory />
       <ProductByCategory />
       <ProductByCategory />
-      <ProductByCategory />
-      <ProductByCategory />
-      <ProductByCategory />
-      {loading && <h2>Loading....</h2>}
+      <ProductByCategory /> */}
+      {loading && <PreLoader />}
       {error && <h2>{error}</h2>}
     </main>
   );

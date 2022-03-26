@@ -8,7 +8,7 @@ import "./index.scss";
 import store from "./store";
 import "./i18next";
 
-axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
+axios.defaults.baseURL = "https://fakestoreapi.com";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

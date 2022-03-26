@@ -17,8 +17,11 @@
   text-transform: uppercase;
   margin-bottom: 20px;
 }
-
+.footer-checkout {
+  margin-bottom: 20px;
+}
 .footer-list {
+  margin-bottom: 20px;
   list-style: none;
   padding-left: 0;
 }
@@ -160,25 +163,26 @@
 
 .footer__qr {
   display: flex;
+  align-items: center;
   &-img {
-    width: 86px;
-    height: 86px;
+    width: 90px;
+    height: 90px;
   }
 
   &-apps {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     margin-left: 16px;
     &-img {
       height: 16px;
     }
-  }
-  &-apps-link {
-    text-decoration: none;
-    color: transparent;
-    display: block;
-    padding: 4px 0;
+    &-link {
+      text-decoration: none;
+      color: transparent;
+      display: block;
+      padding: 10px 0;
+    }
   }
 }
 

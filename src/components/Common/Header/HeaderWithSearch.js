@@ -62,55 +62,118 @@ const HeaderWithSearch = ({ t: translate }) => {
               <h3 className="header__cart-list-heading">
                 {translate("Recently Added Products")}
               </h3>
-              <ul className="header__cart-list-items">
-                <li
-                  className="header__cart-item"
-                  title="Điện thoại Xiaomi Redmi K40 Gaming Edition RAM 12-128GB,
+              <div className="header__cart-list-items-container">
+                <ul className="header__cart-list-items">
+                  <li
+                    className="header__cart-item"
+                    title="Điện thoại Xiaomi Redmi K40 Gaming Edition RAM 12-128GB,
                   RAM 8-128GB [Giá rẻ Hà Nội, BH 3 tháng 1 đổi 1-Tặng dán
                   màn]"
-                >
-                  <img
-                    src="./images/products/product1.jpg"
-                    alt=""
-                    className="header__cart-item-img"
-                  />
-                  <h3 className="header__cart-item-name">
-                    Điện thoại Xiaomi Redmi K40 Gaming Edition RAM 12-128GB, RAM
-                    8-128GB [Giá rẻ Hà Nội, BH 3 tháng 1 đổi 1-Tặng dán màn]
-                  </h3>
-                  <span className="header__cart-item-price">₫7.950.000</span>
-                </li>
-                <li
-                  className="header__cart-item"
-                  title="Bình Giữ Nhiệt Lock&Lock Vacuum Bottle Lock&Lock (800ml) - LHC6180 (3 màu)"
-                >
-                  <img
-                    src="./images/products/product2.jpg"
-                    alt=""
-                    className="header__cart-item-img"
-                  />
-                  <h3 className="header__cart-item-name">
-                    Bình Giữ Nhiệt Lock&amp;Lock Vacuum Bottle Lock&amp;Lock
-                    (800ml) - LHC6180 (3 màu)
-                  </h3>
-                  <span className="header__cart-item-price">₫369.000</span>
-                </li>
-                <li
-                  className="header__cart-item"
-                  title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
-                >
-                  <img
-                    src="./images/products/product3.jpg"
-                    alt=""
-                    className="header__cart-item-img"
-                  />
-                  <h3 className="header__cart-item-name">
-                    ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
-                    wr842n Hình Thức Đẹp
-                  </h3>
-                  <span className="header__cart-item-price">₫90.000</span>
-                </li>
-              </ul>
+                  >
+                    <img
+                      src="./images/products/product1.jpg"
+                      alt=""
+                      className="header__cart-item-img"
+                    />
+                    <h3 className="header__cart-item-name">
+                      Điện thoại Xiaomi Redmi K40 Gaming Edition RAM 12-128GB,
+                      RAM 8-128GB [Giá rẻ Hà Nội, BH 3 tháng 1 đổi 1-Tặng dán
+                      màn]
+                    </h3>
+                    <span className="header__cart-item-price">₫7.950.000</span>
+                  </li>
+                  <li
+                    className="header__cart-item"
+                    title="Bình Giữ Nhiệt Lock&Lock Vacuum Bottle Lock&Lock (800ml) - LHC6180 (3 màu)"
+                  >
+                    <img
+                      src="./images/products/product2.jpg"
+                      alt=""
+                      className="header__cart-item-img"
+                    />
+                    <h3 className="header__cart-item-name">
+                      Bình Giữ Nhiệt Lock&amp;Lock Vacuum Bottle Lock&amp;Lock
+                      (800ml) - LHC6180 (3 màu)
+                    </h3>
+                    <span className="header__cart-item-price">₫369.000</span>
+                  </li>
+                  <li
+                    className="header__cart-item"
+                    title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
+                  >
+                    <img
+                      src="./images/products/product3.jpg"
+                      alt=""
+                      className="header__cart-item-img"
+                    />
+                    <h3 className="header__cart-item-name">
+                      ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
+                      wr842n Hình Thức Đẹp
+                    </h3>
+                    <span className="header__cart-item-price">₫90.000</span>
+                  </li>
+                  <li
+                    className="header__cart-item"
+                    title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
+                  >
+                    <img
+                      src="./images/products/product3.jpg"
+                      alt=""
+                      className="header__cart-item-img"
+                    />
+                    <h3 className="header__cart-item-name">
+                      ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
+                      wr842n Hình Thức Đẹp
+                    </h3>
+                    <span className="header__cart-item-price">₫90.000</span>
+                  </li>
+                  <li
+                    className="header__cart-item"
+                    title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
+                  >
+                    <img
+                      src="./images/products/product3.jpg"
+                      alt=""
+                      className="header__cart-item-img"
+                    />
+                    <h3 className="header__cart-item-name">
+                      ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
+                      wr842n Hình Thức Đẹp
+                    </h3>
+                    <span className="header__cart-item-price">₫90.000</span>
+                  </li>
+                  <li
+                    className="header__cart-item"
+                    title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
+                  >
+                    <img
+                      src="./images/products/product3.jpg"
+                      alt=""
+                      className="header__cart-item-img"
+                    />
+                    <h3 className="header__cart-item-name">
+                      ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
+                      wr842n Hình Thức Đẹp
+                    </h3>
+                    <span className="header__cart-item-price">₫90.000</span>
+                  </li>
+                  <li
+                    className="header__cart-item"
+                    title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
+                  >
+                    <img
+                      src="./images/products/product3.jpg"
+                      alt=""
+                      className="header__cart-item-img"
+                    />
+                    <h3 className="header__cart-item-name">
+                      ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
+                      wr842n Hình Thức Đẹp
+                    </h3>
+                    <span className="header__cart-item-price">₫90.000</span>
+                  </li>
+                </ul>
+              </div>
               <div className="header__cart-view-cart">
                 <a
                   href="/#"

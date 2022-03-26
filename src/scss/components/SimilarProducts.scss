@@ -1,0 +1,21 @@
+@import "../variables";
+
+.similar-product {
+  &.grid.wide {
+    margin-top: 16px;
+  }
+  background-color: $light;
+  border-radius: 2px;
+  padding: 16px;
+  &-heading {
+    margin-bottom: 16px;
+  }
+  .home-product__item {
+    transition: none;
+    box-shadow: none;
+    &:hover {
+      box-shadow: none;
+      transform: none;
+    }
+  }
+}
