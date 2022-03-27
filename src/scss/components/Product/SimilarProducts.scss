@@ -1,0 +1,50 @@
+@import "../../variables";
+
+.similar-product {
+  &.grid.wide {
+    margin-top: 16px;
+  }
+  background-color: $light;
+  border-radius: 2px;
+  padding: 16px;
+  &-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .home-product__see-all {
+      display: flex;
+      padding: 2px 20px;
+    }
+  }
+  .home-product__item {
+    transition: none;
+    box-shadow: none;
+    &:hover {
+      box-shadow: none;
+      transform: none;
+    }
+  }
+  .slick-slider {
+    .slick-next {
+      width: 28px;
+      height: 28px;
+      z-index: 2;
+      &::before {
+        color: $primary;
+        font-size: 28px;
+      }
+    }
+    .slick-prev {
+      width: 28px;
+      height: 28px;
+      z-index: 2;
+      &::before {
+        color: $primary;
+        font-size: 28px;
+      }
+    }
+    .slick-prev {
+      left: -22px;
+    }
+  }
+}

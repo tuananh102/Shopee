@@ -344,6 +344,8 @@ const ProductInfo = ({ product }) => {
             </div>
           </div>
         </div>
+        <SimilarProducts catId={product.category} />
+
         <div className="product-details-information grid wide">
           <div className="row">
             <div className="col-8 product-descriptions">
@@ -358,8 +360,8 @@ const ProductInfo = ({ product }) => {
             </div>
           </div>
         </div>
-        <SimilarProducts catId={product.category} />
       </div>
+      <div className="separate d-block p-3"></div>
     </div>
   );
 };

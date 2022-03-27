@@ -3,7 +3,7 @@ import Icon from "@mdi/react";
 import React from "react";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
-import "../../scss/components/ProductCart.scss";
+import "../../scss/components/Product/ProductCart.scss";
 
 const ProductCard = ({ product }) => {
   return (

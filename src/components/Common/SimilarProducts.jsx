@@ -2,7 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick/lib/slider";
 import ProductCart from "./ProductCard";
-import "../../scss/components/SimilarProducts.scss";
+import "../../scss/components/Product/SimilarProducts.scss";
+import { Link } from "react-router-dom";
+import Icon from "@mdi/react";
+import { mdiChevronRight } from "@mdi/js";
 const SimilarProducts = ({ catId }) => {
   console.log(catId);
 
@@ -19,14 +22,23 @@ const SimilarProducts = ({ catId }) => {
   }, [catId]);
   // Slider settings
   const settings = {
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 3,
   };
   return (
     <div className="grid wide similar-product">
-      <h3 className="similar-product-heading">Similar Products</h3>
+      <div className="similar-product-heading">
+        <h3>Similar Products</h3>
+        <Link
+          to={`/product/category/${catId}`}
+          className="home-product__see-all"
+        >
+          See All
+          <Icon path={mdiChevronRight} size={1.4} />
+        </Link>
+      </div>
       <Slider {...settings}>
         {products &&
           products.map((item) => <ProductCart product={item} key={item.id} />)}
