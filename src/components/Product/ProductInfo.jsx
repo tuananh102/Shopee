@@ -32,9 +32,9 @@ const ProductInfo = ({ product }) => {
   };
   function handleOnChangeQuantity(e) {
     console.log(e.target.value);
-    if (e.target.value !== "") {
-      parseInt(e.target.value);
-    }
+    // if (e.target.value !== "") {
+    //   parseInt(e.target.value);
+    // }
   }
   function handleOnMouseLeaveQuantity(e) {
     if (e.target.value === "") {
@@ -296,13 +296,12 @@ const ProductInfo = ({ product }) => {
                         <Icon path={mdiMinus} size={1.2} />
                       </button>
                       <input
-                        type="number"
-                        min={1}
+                        type="text"
                         max={product.count || undefined}
                         name="quantity"
                         id="productQuantity"
                         onChange={handleOnChangeQuantity}
-                        value={quantity}
+                        value={`${quantity}`}
                         // onMouseLeave={(e) => handleOnMouseLeaveQuantity(e)}
                       />
                       <button

@@ -133,17 +133,16 @@ const AuthLogin = ({
                 : translate("Have an account")}{" "}
               ?
             </span>
-            <a
-              href="/#"
+            <span
               onClick={() =>
                 transferLogIn
                   ? handleTransfer("signUp")
                   : handleTransfer("logIn")
               }
-              className="text-danger px-2"
+              className="text-danger px-2 transfer-btn"
             >
               {transferLogIn ? translate("Sign Up") : translate("Log In")}
-            </a>
+            </span>
           </div>
         </div>
       </Modal.Body>

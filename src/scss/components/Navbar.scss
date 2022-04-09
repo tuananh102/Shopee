@@ -343,6 +343,9 @@
     &-noti-text {
       color: $text-gray;
     }
+    .transfer-btn {
+      cursor: pointer;
+    }
   }
   .sign-in-form-container,
   .sign-up-form-container {

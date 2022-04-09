@@ -51,7 +51,7 @@ const HeaderWithSearch = ({ t: translate }) => {
             <div className="header__cart-list">
               {/* Add header__no-card inside parent class to display no card */}
               <img
-                src="./images/no_cart.png"
+                src="/images/no_cart.png"
                 alt="No cart"
                 className="header__no-cart-img"
               />
@@ -71,7 +71,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                   màn]"
                   >
                     <img
-                      src="./images/products/product1.jpg"
+                      src="/images/products/product1.jpg"
                       alt=""
                       className="header__cart-item-img"
                     />
@@ -87,7 +87,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                     title="Bình Giữ Nhiệt Lock&Lock Vacuum Bottle Lock&Lock (800ml) - LHC6180 (3 màu)"
                   >
                     <img
-                      src="./images/products/product2.jpg"
+                      src="/images/products/product2.jpg"
                       alt=""
                       className="header__cart-item-img"
                     />
@@ -102,7 +102,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                     title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
                   >
                     <img
-                      src="./images/products/product3.jpg"
+                      src="/images/products/product3.jpg"
                       alt=""
                       className="header__cart-item-img"
                     />
@@ -117,7 +117,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                     title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
                   >
                     <img
-                      src="./images/products/product3.jpg"
+                      src="/images/products/product3.jpg"
                       alt=""
                       className="header__cart-item-img"
                     />
@@ -132,7 +132,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                     title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
                   >
                     <img
-                      src="./images/products/product3.jpg"
+                      src="/images/products/product3.jpg"
                       alt=""
                       className="header__cart-item-img"
                     />
@@ -147,7 +147,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                     title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
                   >
                     <img
-                      src="./images/products/product3.jpg"
+                      src="/images/products/product3.jpg"
                       alt=""
                       className="header__cart-item-img"
                     />
@@ -162,7 +162,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                     title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
                   >
                     <img
-                      src="./images/products/product3.jpg"
+                      src="/images/products/product3.jpg"
                       alt=""
                       className="header__cart-item-img"
                     />
