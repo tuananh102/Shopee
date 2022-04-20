@@ -1,68 +1,91 @@
-import React, { useRef, useState } from "react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { useForm } from "react-hook-form";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import { Button } from "@mui/material";
 import { Save, SaveAs } from "@mui/icons-material";
-import Select from "react-select";
+import { Button } from "@mui/material";
 import axios from "axios";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-
-//declare schema
-let schema = yup.object().shape({
-  productName: yup.string().required(),
-  shortDescription: yup.string().required(),
-  fullDescription: yup.string().required(),
-  category: yup.object().required(),
-  manufacturers: yup.object().required(),
-  published: false,
-  price: yup.number().required("heehee"),
-  salePrice: null,
-  stockQuantity: null,
-});
-
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
-const optionsManufacturers = [
-  { value: "Apple", label: "Apple" },
-  { value: "Samsung", label: "Samsung" },
-  { value: "Oppo", label: "Oppo" },
-];
+import React, { useEffect, useRef, useState } from "react";
+import Select from "react-select";
+import CategoryApi from "../../../api/CategoryApi";
+import ManufacturerApi from "../../../api/ManufacturerApi";
 
 export default function CreateProduct() {
-  const { register } = useForm({ resolver: yupResolver(schema) });
-
   const [error, setError] = useState({
     //declare error
-    nameError: "",
-    shortDescriptionError: "",
-    priceError: "",
-    categoryError: "",
+    productName: "",
+    shortDescription: "",
+    price: "",
+    category: "",
+    manufacturers: "",
+    images: "",
   });
-  console.log("error", error);
-  const [dataSubmit, setDataSubmit] = React.useState([
+  const [selectedFile, setSelectedFile] = useState([]);
+  // console.log("error", error);
+  const [dataSubmit, setDataSubmit] = React.useState({
+    productName: "",
+    shortDescription: "",
+    fullDescription: "Full",
+    category: [],
+    manufacturerId: 1,
+    published: false,
+    price: null,
+    salePrice: null,
+    stockQuantity: 1,
+    images: null,
+  });
+  const [category, setCategory] = useState([
     {
-      productName: "",
-      shortDescription: "",
-      fullDescription: "",
-      category: [],
-      manufacturers: [],
-      published: false,
-      price: null,
-      salePrice: null,
-      stockQuantity: null,
+      value: "",
+      label: "",
     },
   ]);
+  const [manufacturer, setManufacturer] = useState([
+    {
+      value: "",
+      label: "",
+    },
+  ]);
+  useEffect(() => {
+    CategoryApi.getAll()
+      .then((res) => {
+        setCategory(
+          res.map((item) => ({
+            ...item,
+            value: item.id,
+            label: item.name,
+          }))
+        );
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  useEffect(() => {
+    ManufacturerApi.getAll()
+      .then((res) => {
+        setManufacturer(
+          res.map((item) => ({
+            ...item,
+            value: item.id,
+            label: item.name,
+          }))
+        );
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  console.log(category);
+  // if (category) {
+  //   category.map((data) =>
+  //     optionCategory.push({ value: data.id, label: data.name })
+  //   );
+  //   console.log(optionCategory);
+  // }
+  const refChooseImage = useRef();
   console.log("datasubmit", dataSubmit);
 
   //Handle change input general
 
   const handleChange = (e) => {
-    if (e.target.value) setError(...error, { nameError: "" });
+    if (e.target.value) setError({ ...error, [e.target.id]: "" });
     setDataSubmit({
       ...dataSubmit,
       [e.target.id]: e.target.value,
@@ -70,21 +93,34 @@ export default function CreateProduct() {
   };
   //Validate
   function Validate(dataSubmit) {
-    let nameError = "",
-      shortDescriptionError = "";
-    let priceError = "";
-    let categoryError = "";
-    if (!dataSubmit.productName) nameError = "Please provide a name";
+    let productName = "";
+    let shortDescription = "";
+    let price = "";
+    let category = "";
+    let manufacturerId = "";
+    let images = "";
+    if (!dataSubmit.productName) productName = "Please provide a name";
     if (!dataSubmit.shortDescription)
-      shortDescriptionError = "This field is required";
-    if (!dataSubmit.price) priceError = "This field is required";
-    if (!dataSubmit.category) categoryError = "This field is required";
-    if (nameError || shortDescriptionError || priceError || categoryError) {
+      shortDescription = "This field is required";
+    if (!dataSubmit.price) price = "This field is required";
+    if (dataSubmit.category === "") category = "This field is required";
+    if (!dataSubmit.manufacturerId) manufacturerId = "This field is required";
+    if (!dataSubmit.images) images = "This field is required";
+    if (
+      productName ||
+      shortDescription ||
+      price ||
+      category ||
+      manufacturerId ||
+      images
+    ) {
       setError({
-        nameError: nameError,
-        shortDescriptionError: shortDescriptionError,
-        priceError: priceError,
-        categoryError: categoryError,
+        productName: productName,
+        shortDescription: shortDescription,
+        price: price,
+        category: category,
+        manufacturer: manufacturer,
+        images: images,
       });
       return false;
     }
@@ -92,11 +128,52 @@ export default function CreateProduct() {
   }
 
   //Submit form
-  function handleSubmit() {
+  function handleSubmit(e) {
     console.log(Validate(dataSubmit));
+
+    // console.log(formData);
     if (Validate(dataSubmit)) {
+      var formData = new FormData();
+
+      //append all data submit to form data
+      formData.append("name", dataSubmit.productName);
+      formData.append("shortDescription", dataSubmit.shortDescription);
+      formData.append("fullDescription", dataSubmit.fullDescription);
+      for (var i = 0; i < dataSubmit.category.length; i++) {
+        formData.append("category", dataSubmit.category[i].value);
+      }
+      formData.append("published", dataSubmit.published);
+      formData.append("price", dataSubmit.price);
+      if (dataSubmit.salePrice)
+        formData.append("salePrice", dataSubmit.salePrice);
+      formData.append("manufacturerId", dataSubmit.manufacturerId);
+      formData.append("stockQuantity", dataSubmit.stockQuantity);
+
+      for (const key of Object.keys(dataSubmit.images)) {
+        formData.append("images", dataSubmit.images[key]);
+      }
+      //Start fetch post
       console.log("fetching post");
-      axios.post("product", dataSubmit).then((data) => console.log(data));
+      const addProduct = async (data) => {
+        try {
+          const response = await axios.post(
+            process.env.REACT_APP_API_URL + "/product",
+            data,
+            {
+              headers: {
+                accept: "application/json",
+                "Accept-Language": "en-US,en;q=0.8",
+                "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+              },
+            }
+          );
+
+          console.log(response.data.headers["Content-Type"]);
+        } catch (error) {
+          console.log("Failed to add a product: ", error);
+        }
+      };
+      addProduct(formData);
     }
   }
 
@@ -106,6 +183,30 @@ export default function CreateProduct() {
     setDataSubmit({ ...dataSubmit, fullDescription: data });
   };
 
+  //Handle Image change
+  console.log("selectedFile", selectedFile);
+  const handleImageChange = (e) => {
+    if (e.target.files) {
+      const fileArray = Array.from(e.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      const filesArray = Array.from(e.target.files);
+      console.log(filesArray);
+      setError({ images: "" });
+      setDataSubmit({
+        ...dataSubmit,
+        images: filesArray,
+      });
+      setSelectedFile((prevImages) => prevImages.concat(fileArray));
+      Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
+    }
+  };
+
+  //Handle clear Images
+  const handleClearImages = () => {
+    setSelectedFile([]);
+    refChooseImage.current.value = "";
+  };
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <div className="create-product">
@@ -135,24 +236,26 @@ export default function CreateProduct() {
 
           <div className="form-group row">
             <div className="col-3 label">
-              <label htmlFor="name">Product Name</label>
+              <label htmlFor="name">
+                Product Name
+                <span className="error">&nbsp;*</span>
+              </label>
             </div>
             <div className="col-9">
               <input
-                {...register("productName")}
                 placeholder="Product name"
                 className="form-control"
-                id="producName"
+                id="productName"
                 onChange={(e) => handleChange(e)}
               />
-              {error.nameError && (
-                <p className="text-danger ">Please provide a name.</p>
-              )}
+              <p className="error">{error.productName}</p>
             </div>
           </div>
           <div className="form-group row">
             <div className="col-3 label">
-              <label htmlFor="shortDescription">Short description</label>
+              <label htmlFor="shortDescription">
+                Short description<span className="error">&nbsp;*</span>
+              </label>
             </div>
             <div className="col-9">
               <textarea
@@ -163,6 +266,7 @@ export default function CreateProduct() {
                 cols={25}
                 id="shortDescription"
               />
+              <p className="error">{error.shortDescription}</p>
             </div>
           </div>
           <div className="form-group row">
@@ -171,6 +275,34 @@ export default function CreateProduct() {
             </div>
             <div className="col-9">
               <CKEditor
+                config={{
+                  toolbarGroup: [
+                    {
+                      name: "document",
+                      groups: ["mode", "document", "doctools"],
+                    },
+                    { name: "clipboard", groups: ["clipboard", "undo"] },
+                    {
+                      name: "editing",
+                      groups: ["find", "selection", "spellchecker"],
+                    },
+                    { name: "forms" },
+                    "/",
+                    { name: "basicstyles", groups: ["basicstyles", "cleanup"] },
+                    {
+                      name: "paragraph",
+                      groups: ["list", "indent", "blocks", "align", "bidi"],
+                    },
+                    { name: "links" },
+                    { name: "insert" },
+                    "/",
+                    { name: "styles" },
+                    { name: "colors" },
+                    { name: "tools" },
+                    { name: "others" },
+                    { name: "about" },
+                  ],
+                }}
                 editor={ClassicEditor}
                 onReady={(editor) => {
                   // You can store the "editor" and use when it is needed.
@@ -183,38 +315,77 @@ export default function CreateProduct() {
 
           <div className="form-group row">
             <div className="col-3 label">
-              <label htmlFor="category">Category</label>
+              <label htmlFor="manufacturer">
+                Manufacturers
+                <span className="error">&nbsp;*</span>
+              </label>
             </div>
             <div className="col-9">
               <Select
-                options={options}
-                isMulti
+                options={manufacturer}
+                id="manufacturer"
                 onChange={(event) => {
-                  setDataSubmit({ ...dataSubmit, category: event });
+                  setDataSubmit({ ...dataSubmit, manufacturerId: event.value });
                 }}
-                onSubmit={(event) => console.log(event)}
               />
-              {error.categoryError && (
-                <p className="error">{error.categoryError}</p>
-              )}
+              <p className="error">{error.manufacturer}</p>
             </div>
           </div>
           <div className="form-group row">
             <div className="col-3 label">
-              <label htmlFor="manufacturers">Manufacturers</label>
+              <label htmlFor="category">
+                Category
+                <span className="error">&nbsp;*</span>
+              </label>
             </div>
             <div className="col-9">
               <Select
-                options={optionsManufacturers}
+                options={category}
                 isMulti
-                id="manufacturers"
-                onChange={(event) => {
-                  setDataSubmit({ ...dataSubmit, manufacturers: event });
+                onChange={(e) => {
+                  if (e.length > 0) setError({ ...error, category: "" });
+                  setDataSubmit({ ...dataSubmit, category: e });
                 }}
+                onSubmit={(event) => console.log(event)}
               />
+
+              <p className="error">{error.category}</p>
             </div>
           </div>
+          <div className="form-group row">
+            <label htmlFor="image" className="col-3 label">
+              Image
+            </label>
+            <div className="col-9">
+              <input
+                multiple
+                onChange={handleImageChange}
+                type="file"
+                id="image"
+                accept="image/*"
+                ref={refChooseImage}
+              />
+              <p className="error">{error.images}</p>
 
+              {selectedFile.length !== 0 && (
+                <div className="preview-image">
+                  <h3 className="preview"> Selected:</h3>
+                  <ul className="image-list">
+                    {selectedFile.map((image, index) => (
+                      <li className="image-list-item" key={index}>
+                        <img src={image} alt="" />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {dataSubmit.images && (
+                <Button variant="outlined" onClick={handleClearImages}>
+                  Clear
+                </Button>
+              )}
+            </div>
+          </div>
           <div className="form-group row">
             <label htmlFor="published" className="col-3 label">
               Published
@@ -235,6 +406,7 @@ export default function CreateProduct() {
           <div className="form-group row">
             <label htmlFor="price" className="col-3 label">
               Price
+              <span className="error">&nbsp;*</span>
             </label>
             <div className="col-9">
               <input
@@ -245,6 +417,7 @@ export default function CreateProduct() {
                 id="price"
                 onChange={(e) => handleChange(e)}
               />
+              <p className="error">{error.price}</p>
             </div>
           </div>
           <div className="form-group row">

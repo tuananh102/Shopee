@@ -8,19 +8,19 @@ import "../../scss/components/Product/ProductCart.scss";
 const ProductCard = ({ product }) => {
   return (
     <div>
-      <Link className="home-product__item p-3" to={`/products/${product.id}`}>
+      <Link className="home-product__item p-3" to={`/products/${product?.id}`}>
         <div className="home-product__box-img">
           <img
             className="home-product__item-img"
-            src={product.image}
-            alt={product.title}
+            src={product?.images[0]}
+            alt={product?.name}
           />
         </div>
-        <h3 className="home-product__item-name">{product.title}</h3>
+        <h3 className="home-product__item-name">{product?.name}</h3>
         <div className="home-product__item-price">
           <span className="home-product__item-price-new">
             <NumberFormat
-              value={product.price * 23000}
+              value={product?.price}
               displayType="text"
               thousandSeparator="."
               decimalSeparator=","
@@ -28,9 +28,18 @@ const ProductCard = ({ product }) => {
               suffix=" ₫"
             />
           </span>
-          {product.salePrice && (
+          {product?.salePrice && (
             <span className="home-product__item-price-old">
-              ₫{product.salePrice}
+              {product?.salePrice && (
+                <NumberFormat
+                  value={product.salePrice}
+                  suffix=" ₫"
+                  displayType="text"
+                  thousandSeparator="."
+                  decimalSeparator=","
+                  decimalScale={0}
+                />
+              )}
             </span>
           )}
         </div>
@@ -43,7 +52,7 @@ const ProductCard = ({ product }) => {
             <Icon path={mdiStar} size={1} />
             <div
               className="rating-children"
-              style={{ width: `${product.rating.rate * 20}%` }}
+              style={{ width: `${(product?.rating?.rate || 0) * 20}%` }}
             >
               <Icon path={mdiStar} size={1} className="rating-star--gold" />
               <Icon path={mdiStar} size={1} className="rating-star--gold" />
@@ -54,10 +63,10 @@ const ProductCard = ({ product }) => {
           </div>
 
           <span className="home-product__item-rating-number">
-            {product.rating.count} Đánh giá
+            {product?.rating?.count} Đánh giá
           </span>
         </div>
-        {product.salePrice && (
+        {product?.salePrice && (
           <div className="home-product__item-sale">
             <span>Giảm 13%</span>
           </div>

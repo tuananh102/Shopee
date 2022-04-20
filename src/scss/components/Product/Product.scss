@@ -305,5 +305,13 @@
     margin-top: 16px;
     background-color: $light;
     padding: 16px;
+    .product-ckeditor-content{
+      font-size: 1.6rem;
+      line-height: 1.6;
+      margin: 12px 0;
+      p{
+        margin: 6px 0;
+      }
+    }
   }
 }

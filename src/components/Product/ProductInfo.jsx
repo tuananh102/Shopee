@@ -19,11 +19,14 @@ import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import "../../scss/components/Product/Product.scss";
 import { Link } from "react-router-dom";
 import SimilarProducts from "../Common/SimilarProducts";
+import ReactHtmlParser from "html-react-parser";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../services/actions/cart";
+import { date } from "yup/lib/locale";
 
 const ProductInfo = ({ product }) => {
-  const [imgActive, setImageActive] = useState(product.image);
-  const [quantity, setQuantity] = useState(product.count || 1);
-  console.log("Image active: ", imgActive);
+  const [imgActive, setImageActive] = useState(product.images[0]);
+  const [quantity, setQuantity] = useState(1);
   const handleDecreaseQuantity = () => {
     if (quantity === 1) return;
     else {
@@ -31,10 +34,8 @@ const ProductInfo = ({ product }) => {
     }
   };
   function handleOnChangeQuantity(e) {
-    console.log(e.target.value);
-    // if (e.target.value !== "") {
-    //   parseInt(e.target.value);
-    // }
+    console.log(typeof e.target.value);
+    setQuantity(Math.floor(e.target.value));
   }
   function handleOnMouseLeaveQuantity(e) {
     if (e.target.value === "") {
@@ -45,6 +46,21 @@ const ProductInfo = ({ product }) => {
     slidesToShow: 4,
     slidesToScroll: 4,
   };
+
+  //Redux
+  const dispatch = useDispatch();
+
+  //handle add to card
+
+  const handleAddToCart = () => {
+    const dataSubmit = {
+      name: product.name,
+      image: product.images[0],
+      price: product.price,
+    };
+    const action = addToCart(dataSubmit);
+    dispatch(action);
+  };
   return (
     <div className="product-details-container">
       <div className="breadcrumbs">
@@ -53,7 +69,7 @@ const ProductInfo = ({ product }) => {
             <Icon path={mdiHome} size={1.2} color="#d0011b" /> Home
           </Breadcrumb.Item>
           <Breadcrumb.Item href=".">{product.category}</Breadcrumb.Item>
-          <Breadcrumb.Item active>{product.title}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{product.name}</Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div className="product-details">
@@ -67,44 +83,23 @@ const ProductInfo = ({ product }) => {
                   </div>
                 </div>
                 <ul className="list-img">
-                  <li
-                    className={
-                      imgActive === product.image
-                        ? "list-img-item active"
-                        : "list-img-item"
-                    }
-                    onMouseEnter={() => setImageActive(product.image)}
-                  >
-                    <img src={product.image} alt="" />
-                  </li>
-                  <li
-                    className="list-img-item"
-                    onMouseEnter={() => setImageActive(product.image)}
-                  >
-                    <img src={product.image} alt="" />
-                  </li>
-                  <li
-                    className="list-img-item"
-                    onMouseEnter={() => setImageActive(product.image)}
-                  >
-                    <img src={product.image} alt="" />
-                  </li>
-                  <li
-                    className="list-img-item"
-                    onMouseEnter={() => setImageActive(product.image)}
-                  >
-                    <img src={product.image} alt="" />
-                  </li>
-                  <li
-                    className="list-img-item"
-                    onMouseEnter={() => setImageActive(product.image)}
-                  >
-                    <img src={product.image} alt="" />
-                  </li>
+                  {product?.images.map((image, index) => (
+                    <li
+                      key={index}
+                      className={
+                        imgActive === image
+                          ? "list-img-item active"
+                          : "list-img-item"
+                      }
+                      onMouseEnter={() => setImageActive(image)}
+                    >
+                      <img src={image} alt="" />
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="col-7 product-info">
-                <h3 className="product-details-name">{product.title}</h3>
+                <h3 className="product-details-name">{product.name}</h3>
                 <a className="product-details-rating" href="/#">
                   <div className="product-details-rating-star">
                     <Icon path={mdiStar} size={1.2} />
@@ -114,7 +109,7 @@ const ProductInfo = ({ product }) => {
                     <Icon path={mdiStar} size={1.2} />
                     <div
                       className="rating-children"
-                      style={{ width: `${product.rating.rate * 20}%` }}
+                      style={{ width: `${(product?.rating?.rate || 0) * 20}%` }}
                     >
                       <Icon
                         path={mdiStar}
@@ -144,7 +139,9 @@ const ProductInfo = ({ product }) => {
                     </div>
                   </div>
                   <span className="product-details-rating-count">
-                    {product.rating.count} Đánh giá
+                    {product?.rating?.count
+                      ? `${product?.rating?.count} Đánh giá`
+                      : "Chưa có đánh giá"}
                   </span>
                 </a>
                 <div className="product-details-price">
@@ -296,12 +293,12 @@ const ProductInfo = ({ product }) => {
                         <Icon path={mdiMinus} size={1.2} />
                       </button>
                       <input
-                        type="text"
-                        max={product.count || undefined}
+                        type="number"
+                        max={product?.stockQuantity || undefined}
                         name="quantity"
                         id="productQuantity"
-                        onChange={handleOnChangeQuantity}
-                        value={`${quantity}`}
+                        onChange={(e) => handleOnChangeQuantity(e)}
+                        value={quantity}
                         // onMouseLeave={(e) => handleOnMouseLeaveQuantity(e)}
                       />
                       <button
@@ -313,14 +310,14 @@ const ProductInfo = ({ product }) => {
                         <Icon path={mdiPlus} size={1.2} />
                       </button>
                     </div>
-                    <span>1976 piece of avaiable</span>
+                    <span>{product.stockQuantity} piece of avaiable</span>
                   </div>
                 </div>
 
                 <div className="controls-btn">
-                  <a href="/#" className="btn add-cart-btn">
+                  <span className="btn add-cart-btn" onClick={handleAddToCart}>
                     Add to Cart
-                  </a>
+                  </span>
                   <a href="/#" className="btn btn--primary buy-btn">
                     Buy now
                   </a>
@@ -343,13 +340,19 @@ const ProductInfo = ({ product }) => {
             </div>
           </div>
         </div>
-        <SimilarProducts catId={product.category} />
+        {product.category && <SimilarProducts catId={product.category} />}
 
         <div className="product-details-information grid wide">
           <div className="row">
             <div className="col-8 product-descriptions">
               <h3 className="product-descriptions-heading">Mô tả sản phẩm</h3>
               {/* Render Product details here */}
+
+              <div className="product-ckeditor-content">
+                {product.fullDescription
+                  ? ReactHtmlParser(product.fullDescription)
+                  : null}
+              </div>
             </div>
             <div className="col-4 product-specifications">
               <h3 className="product-specifications-heading">

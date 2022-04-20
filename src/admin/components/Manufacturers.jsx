@@ -1,7 +1,12 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 const Manufacturers = () => {
-  return <div>Manufacturers</div>;
+  return (
+    <div className="admin-manufacturer">
+      <Outlet />
+    </div>
+  );
 };
 
 export default Manufacturers;

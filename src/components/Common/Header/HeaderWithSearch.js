@@ -1,8 +1,12 @@
 import { mdiCartOutline, mdiMagnify } from "@mdi/js";
 import Icon from "@mdi/react";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import NumberFormat from "react-number-format";
+
 const HeaderWithSearch = ({ t: translate }) => {
+  const cart = useSelector((state) => state.cart);
   return (
     <div className="header-with-search">
       <div className="header-with-search__logo d-none d-sm-block">
@@ -46,142 +50,74 @@ const HeaderWithSearch = ({ t: translate }) => {
       <div className="header__cart">
         <div className="header__cart-target">
           <Icon path={mdiCartOutline} size={2} className="header__cart-icon" />
-          <span className="header__cart-notice">3</span>
+          {cart.length > 0 && (
+            <span className="header__cart-notice">{cart.length}</span>
+          )}
           <div className="header__cart-list-wrapper">
-            <div className="header__cart-list">
+            <div
+              className={`${
+                cart.length > 0 ? "" : "header__no-card "
+              }header__cart-list`}
+            >
               {/* Add header__no-card inside parent class to display no card */}
-              <img
-                src="/images/no_cart.png"
-                alt="No cart"
-                className="header__no-cart-img"
-              />
-              <span className="header__no-cart-msg">
-                {translate("No products yet")}
-              </span>
+              {cart.length === 0 && (
+                <>
+                  <img
+                    src="/images/no_cart.png"
+                    alt="No cart"
+                    className="header__no-cart-img"
+                  />
+                  <span className="header__no-cart-msg">
+                    {translate("No products yet")}
+                  </span>
+                </>
+              )}
               {/* Cart with items */}
-              <h3 className="header__cart-list-heading">
-                {translate("Recently Added Products")}
-              </h3>
-              <div className="header__cart-list-items-container">
-                <ul className="header__cart-list-items">
-                  <li
-                    className="header__cart-item"
-                    title="Điện thoại Xiaomi Redmi K40 Gaming Edition RAM 12-128GB,
-                  RAM 8-128GB [Giá rẻ Hà Nội, BH 3 tháng 1 đổi 1-Tặng dán
-                  màn]"
-                  >
-                    <img
-                      src="/images/products/product1.jpg"
-                      alt=""
-                      className="header__cart-item-img"
-                    />
-                    <h3 className="header__cart-item-name">
-                      Điện thoại Xiaomi Redmi K40 Gaming Edition RAM 12-128GB,
-                      RAM 8-128GB [Giá rẻ Hà Nội, BH 3 tháng 1 đổi 1-Tặng dán
-                      màn]
-                    </h3>
-                    <span className="header__cart-item-price">₫7.950.000</span>
-                  </li>
-                  <li
-                    className="header__cart-item"
-                    title="Bình Giữ Nhiệt Lock&Lock Vacuum Bottle Lock&Lock (800ml) - LHC6180 (3 màu)"
-                  >
-                    <img
-                      src="/images/products/product2.jpg"
-                      alt=""
-                      className="header__cart-item-img"
-                    />
-                    <h3 className="header__cart-item-name">
-                      Bình Giữ Nhiệt Lock&amp;Lock Vacuum Bottle Lock&amp;Lock
-                      (800ml) - LHC6180 (3 màu)
-                    </h3>
-                    <span className="header__cart-item-price">₫369.000</span>
-                  </li>
-                  <li
-                    className="header__cart-item"
-                    title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
-                  >
-                    <img
-                      src="/images/products/product3.jpg"
-                      alt=""
-                      className="header__cart-item-img"
-                    />
-                    <h3 className="header__cart-item-name">
-                      ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
-                      wr842n Hình Thức Đẹp
-                    </h3>
-                    <span className="header__cart-item-price">₫90.000</span>
-                  </li>
-                  <li
-                    className="header__cart-item"
-                    title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
-                  >
-                    <img
-                      src="/images/products/product3.jpg"
-                      alt=""
-                      className="header__cart-item-img"
-                    />
-                    <h3 className="header__cart-item-name">
-                      ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
-                      wr842n Hình Thức Đẹp
-                    </h3>
-                    <span className="header__cart-item-price">₫90.000</span>
-                  </li>
-                  <li
-                    className="header__cart-item"
-                    title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
-                  >
-                    <img
-                      src="/images/products/product3.jpg"
-                      alt=""
-                      className="header__cart-item-img"
-                    />
-                    <h3 className="header__cart-item-name">
-                      ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
-                      wr842n Hình Thức Đẹp
-                    </h3>
-                    <span className="header__cart-item-price">₫90.000</span>
-                  </li>
-                  <li
-                    className="header__cart-item"
-                    title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
-                  >
-                    <img
-                      src="/images/products/product3.jpg"
-                      alt=""
-                      className="header__cart-item-img"
-                    />
-                    <h3 className="header__cart-item-name">
-                      ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
-                      wr842n Hình Thức Đẹp
-                    </h3>
-                    <span className="header__cart-item-price">₫90.000</span>
-                  </li>
-                  <li
-                    className="header__cart-item"
-                    title="( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink wr842n Hình Thức Đẹp"
-                  >
-                    <img
-                      src="/images/products/product3.jpg"
-                      alt=""
-                      className="header__cart-item-img"
-                    />
-                    <h3 className="header__cart-item-name">
-                      ( Rẻ Vô Địch ) Bộ phát wifi 2 râu tốc độ 300mbps Tplink
-                      wr842n Hình Thức Đẹp
-                    </h3>
-                    <span className="header__cart-item-price">₫90.000</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="header__cart-view-cart">
-                <a
-                  href="/#"
-                  className="btn btn--primary header__cart-view-cart-btn"
-                >
-                  {translate("View my shopping cart")}
-                </a>
-              </div>
+              {cart.length > 0 && (
+                <>
+                  <h3 className="header__cart-list-heading">
+                    {translate("Recently Added Products")}
+                  </h3>
+                  <div className="header__cart-list-items-container">
+                    <ul className="header__cart-list-items">
+                      {cart.map((item) => (
+                        <li
+                          className="header__cart-item"
+                          title={item.cardData.name}
+                          key={item.cardData.name}
+                        >
+                          <img
+                            src={item.cardData.image}
+                            alt=""
+                            className="header__cart-item-img"
+                          />
+                          <h3 className="header__cart-item-name">
+                            {item.cardData.name}
+                          </h3>
+                          <span className="header__cart-item-price">
+                            <NumberFormat
+                              value={item.cardData.price}
+                              displayType="text"
+                              thousandSeparator="."
+                              decimalSeparator=","
+                              decimalScale={0}
+                              suffix="₫"
+                            />
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="header__cart-view-cart">
+                    <a
+                      href="/#"
+                      className="btn btn--primary header__cart-view-cart-btn"
+                    >
+                      {translate("View my shopping cart")}
+                    </a>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

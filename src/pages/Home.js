@@ -1,4 +1,3 @@
-// import Product from "../components/Product";
 import useQuery from "../hooks/useQuery";
 
 import React, { useEffect, useState } from "react";
@@ -11,9 +10,10 @@ import PreLoader from "../features/PreLoader.jsx";
 // const randomNumber = () => {
 //   return Math.ceil(Math.random() + 100);
 // };
-const Home = () => {
+const Home = (props) => {
+  console.warn("HOme", props);
   const [products, setProducts] = useState([]);
-  const { data, loading, error } = useQuery(`/products`);
+  const { data, loading, error } = useQuery(`/product`);
   // Use redux
 
   // const userList = useSelector((state) => state.user.list);
@@ -32,11 +32,9 @@ const Home = () => {
 
   useEffect(() => {
     if (data) {
-      // window.scrollTo(0, 0);
       setProducts(data);
-      console.log("HOME PRODUCT:", data);
     }
-    // return () => setProducts(null);
+    return () => setProducts(null);
   }, [data]);
   return (
     <main
@@ -49,12 +47,7 @@ const Home = () => {
       }}
     >
       <Banner />
-      {/* {products && <Product products={products} />} */}
-      <ProductByCategory products={products} />
-      {/* <ProductByCategory />
-      <ProductByCategory />
-      <ProductByCategory />
-      <ProductByCategory /> */}
+      <ProductByCategory products={products} {...props} />
       {loading && <PreLoader />}
       {error && <h2>{error}</h2>}
     </main>

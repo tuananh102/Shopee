@@ -13,7 +13,7 @@ import {
   IconButton,
   Switch,
 } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
+import { Add, Delete, Download, Edit, Upload } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import useQuery from "../../../hooks/useQuery";
 
@@ -29,7 +29,7 @@ function CheckBoxProduct() {
   );
 }
 const ProductList = () => {
-  const { data, loading, error } = useQuery(`/products`);
+  const { data, loading, error } = useQuery(`/product`);
   const [isChecked, setIsChecked] = useState(false);
   const [products, setProducts] = useState([]);
   useEffect(() => {
@@ -57,15 +57,21 @@ const ProductList = () => {
         <div className="admin-products-controls">
           <button className="btn-success">
             <Link to="create">
-              <i className="bx bxs-plus-square" />
+              <Add />
               Add new
             </Link>
           </button>
-          <button className="btn-primary">Export</button>
-          <button className="btn-success">Import</button>
+          <button className="btn-primary">
+            <Download />
+            Export
+          </button>
+          <button className="btn-success">
+            <Upload />
+            Import
+          </button>
           <button className="btn-danger">
             <Link to="trash">
-              <i className="bx bx-trash" />
+              <Delete />
               Delete
             </Link>
           </button>
@@ -87,14 +93,14 @@ const ProductList = () => {
         </thead>
         <tbody>
           {products.map((item, index) => (
-            <tr key={item.id}>
+            <tr key={index}>
               <td>
                 <CheckBoxProduct prop={isChecked} />
               </td>
               <td>
-                {item.image ? (
+                {item.images ? (
                   <div className="product-img">
-                    <img src={item.image} alt="" className="" />
+                    <img src={item.images[0]} alt="" className="" />
                   </div>
                 ) : (
                   <Box>
@@ -103,12 +109,12 @@ const ProductList = () => {
                 )}
               </td>
               <td>
-                <div className="product-name" title={item.title}>
-                  {item.title}
+                <div className="product-name" title={item.name}>
+                  {item.name}
                 </div>
               </td>
               <td>{item.price}</td>
-              <td>{item.rating.count}</td>
+              <td>{item.stockQuantity}</td>
               <td>
                 <Switch defaultChecked />
               </td>

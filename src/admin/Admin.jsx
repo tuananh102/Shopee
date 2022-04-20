@@ -34,7 +34,7 @@ function Admin() {
           <span className="logo_name">Admin Site</span>
         </Link>
         <Accordion onMouseEnter={() => setOffCanvas(true)}>
-          <Link to="dashboard" className="sidebar-alone active">
+          <Link to="." className="sidebar-alone active">
             <i className="bx bxs-dashboard" />
             <span className="links_name">Dashboard</span>
           </Link>
