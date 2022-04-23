@@ -206,13 +206,13 @@
     justify-content: space-between;
     &-img {
       height: 15px;
+      &:first-child{
+        margin-left: 11px;
+      }
+      &:last-child{
+        margin-right: 11px;
+      }
     }
-  }
-  &-app-link:first-child {
-    margin-left: 11px;
-  }
-  &-app-link:last-child {
-    margin-right: 11px;
   }
 }
 

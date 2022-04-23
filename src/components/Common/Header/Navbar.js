@@ -80,12 +80,6 @@ const Navbar = ({ i18n, t: translate }) => {
   return (
     <nav className="navbar  sm-0 md-0 lg-12">
       <ul className="navbar__list">
-        <li className="navbar__item navbar__item-separate">
-          {translate("Seller Centre")}
-        </li>
-        <li className="navbar__item navbar__item-separate">
-          {translate("Join as Seller")}
-        </li>
         <li className="navbar__item navbar__item--has-qr navbar__item-separate">
           {translate("Download")}
           {/* Header QR Code */}
@@ -96,20 +90,16 @@ const Navbar = ({ i18n, t: translate }) => {
               className="header__qr-img"
             />
             <div className="header__qr-apps">
-              <a href="/#" className="header__qr-app-link">
-                <img
-                  src="./images/ch_play.png"
-                  alt="Google Play"
-                  className="header__qr-apps-img"
-                />
-              </a>
-              <a href="/#" className="header__qr-app-link">
-                <img
-                  src="./images/app_store.png"
-                  alt="App Store"
-                  className="header__qr-apps-img"
-                />
-              </a>
+              <img
+                src="./images/ch_play.png"
+                alt="Google Play"
+                className="header__qr-apps-img"
+              />
+              <img
+                src="./images/app_store.png"
+                alt="App Store"
+                className="header__qr-apps-img"
+              />
             </div>
           </div>
         </li>

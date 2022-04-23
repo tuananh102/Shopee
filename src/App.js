@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 import Category from "./admin/components/Category";
 import CategoryList from "./admin/components/Category/CategoryList";
 import CreateCategory from "./admin/components/Category/CreateCategory";
@@ -21,7 +22,6 @@ import Shipments from "./admin/components/Shipments";
 import NotFound from "./components/Common/NotFound";
 import PreLoader from "./features/PreLoader";
 import Home from "./pages/Home";
-
 const Main = React.lazy(() => import("./Main"));
 const Admin = React.lazy(() => import("./admin/Admin"));
 const ProductDetails = React.lazy(() => import("./pages/ProductDetails"));

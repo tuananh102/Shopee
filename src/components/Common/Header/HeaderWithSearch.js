@@ -1,12 +1,16 @@
 import { mdiCartOutline, mdiMagnify } from "@mdi/js";
 import Icon from "@mdi/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import NumberFormat from "react-number-format";
 
 const HeaderWithSearch = ({ t: translate }) => {
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart.cartItems);
+  console.log("render card: ", cart);
+  // useEffect(() => {
+  //   const cart = JSON.parse(localStorage.getItem("cart" || "[]"));
+  // });
   return (
     <div className="header-with-search">
       <div className="header-with-search__logo d-none d-sm-block">
@@ -83,26 +87,29 @@ const HeaderWithSearch = ({ t: translate }) => {
                       {cart.map((item) => (
                         <li
                           className="header__cart-item"
-                          title={item.cardData.name}
-                          key={item.cardData.name}
+                          title={item.name}
+                          key={item.name}
                         >
                           <img
-                            src={item.cardData.image}
+                            src={item.image}
                             alt=""
                             className="header__cart-item-img"
                           />
                           <h3 className="header__cart-item-name">
-                            {item.cardData.name}
+                            {item.name}
                           </h3>
                           <span className="header__cart-item-price">
                             <NumberFormat
-                              value={item.cardData.price}
+                              value={item.price}
                               displayType="text"
                               thousandSeparator="."
                               decimalSeparator=","
                               decimalScale={0}
                               suffix="₫"
                             />
+                          </span>
+                          <span className="header__cart-item-quantity">
+                            x{item.cartQuantity}
                           </span>
                         </li>
                       ))}

@@ -7,7 +7,6 @@ import App from "./App";
 import "./index.scss";
 import store from "./store";
 import "./i18next";
-
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 ReactDOM.render(
   <React.StrictMode>

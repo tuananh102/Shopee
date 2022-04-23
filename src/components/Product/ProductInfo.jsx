@@ -10,7 +10,7 @@ import {
   mdiStar,
 } from "@mdi/js";
 import Icon from "@mdi/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import NumberFormat from "react-number-format";
 import Slider from "react-slick";
@@ -22,11 +22,12 @@ import SimilarProducts from "../Common/SimilarProducts";
 import ReactHtmlParser from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../services/actions/cart";
-import { date } from "yup/lib/locale";
+import { ToastContainer, toast } from "react-toastify";
 
 const ProductInfo = ({ product }) => {
   const [imgActive, setImageActive] = useState(product.images[0]);
   const [quantity, setQuantity] = useState(1);
+  const stateCartRedux = useSelector((state) => state.cart);
   const handleDecreaseQuantity = () => {
     if (quantity === 1) return;
     else {
@@ -54,13 +55,20 @@ const ProductInfo = ({ product }) => {
 
   const handleAddToCart = () => {
     const dataSubmit = {
+      id: product.id,
       name: product.name,
       image: product.images[0],
       price: product.price,
     };
+    console.log("State cart: ", stateCartRedux);
     const action = addToCart(dataSubmit);
     dispatch(action);
+    localStorage.setItem("cart", JSON.stringify(stateCartRedux.cartItems));
+    toast.success("Added to card successfully!", {
+      position: "bottom-left",
+    });
   };
+
   return (
     <div className="product-details-container">
       <div className="breadcrumbs">
@@ -72,6 +80,7 @@ const ProductInfo = ({ product }) => {
           <Breadcrumb.Item active>{product.name}</Breadcrumb.Item>
         </Breadcrumb>
       </div>
+      <ToastContainer />
       <div className="product-details">
         <div className="general-information">
           <div className="grid wide">
