@@ -6,8 +6,11 @@ import { useSelector } from "react-redux";
 import NumberFormat from "react-number-format";
 
 const HeaderWithSearch = ({ t: translate }) => {
-  const cart = useSelector((state) => state.cart.cartItems);
-  console.log("render card: ", cart);
+  const [cart, setCart] = useState([]);
+  const x = useSelector((state) => state.cart.cartItems);
+  useEffect(()=>{
+    setCart(x);
+  },[x])
   // useEffect(() => {
   //   const cart = JSON.parse(localStorage.getItem("cart" || "[]"));
   // });
@@ -116,12 +119,12 @@ const HeaderWithSearch = ({ t: translate }) => {
                     </ul>
                   </div>
                   <div className="header__cart-view-cart">
-                    <a
-                      href="/#"
+                    <Link
+                      to="cart"
                       className="btn btn--primary header__cart-view-cart-btn"
                     >
                       {translate("View my shopping cart")}
-                    </a>
+                    </Link>
                   </div>
                 </>
               )}

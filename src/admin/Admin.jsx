@@ -1,34 +1,14 @@
-import { createTheme, responsiveFontSizes, ThemeProvider } from "@mui/material";
-import { viVN } from "@mui/x-data-grid";
-import { viVN as coreViVN } from "@mui/material/locale";
 import React, { useState } from "react";
 import { Accordion } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import "../scss/admin/style.scss";
 
-// Customize MUI theme
-let theme = createTheme(
-  {
-    typography: {
-      // Tell MUI what's the font-size on the html element is.
-      htmlFontSize: 10,
-    },
-    palette: {
-      neutral: {
-        main: "#64748B",
-        contrastText: "#fff",
-      },
-    },
-  },
-  viVN,
-  coreViVN
-);
-theme = responsiveFontSizes(theme);
+
 function Admin() {
   const [offCanvas, setOffCanvas] = useState(true);
   return (
-    <ThemeProvider theme={theme}>
-      <div className={`sidebar ${!offCanvas && "active"}`}>
+     <>
+     <div className={`sidebar ${!offCanvas && "active"}`}>
         <Link to="." className="logo-details">
           <img src="/images/shopee-admin-50.png" alt="logo-admin" />
           <span className="logo_name">Admin Site</span>
@@ -133,8 +113,7 @@ function Admin() {
         <div className="home-content">
           <Outlet />
         </div>
-      </section>
-    </ThemeProvider>
+      </section></>
   );
 }
 export default Admin;

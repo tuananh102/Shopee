@@ -1,3 +1,6 @@
+import { createTheme, responsiveFontSizes, ThemeProvider } from "@mui/material";
+import { viVN as coreViVN } from "@mui/material/locale";
+import { viVN } from "@mui/x-data-grid";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
@@ -13,7 +16,6 @@ import ManufacturerList from "./admin/components/Manufacturer/ManufacturerList";
 import Manufacturers from "./admin/components/Manufacturers";
 import Order from "./admin/components/Order";
 import Product from "./admin/components/Product";
-// import productApi from "./api/productApi";
 import CreateProduct from "./admin/components/Product/CreateProduct";
 import EditProduct from "./admin/components/Product/EditProduct";
 import ProductList from "./admin/components/Product/ProductList";
@@ -21,12 +23,37 @@ import ProductTrash from "./admin/components/Product/ProductTrash";
 import Shipments from "./admin/components/Shipments";
 import NotFound from "./components/Common/NotFound";
 import PreLoader from "./features/PreLoader";
+import Cart from "./pages/Cart";
 import Home from "./pages/Home";
+
+
+// Customize MUI theme
+let theme = createTheme(
+  {
+    typography: {
+      // Tell MUI what's the font-size on the html element is.
+      htmlFontSize: 10,
+    },
+    palette: {
+      neutral: {
+        main: "#64748B",
+        contrastText: "#fff",
+      },
+    },
+  },
+  viVN,
+  coreViVN
+);
+theme = responsiveFontSizes(theme);
+
+
 const Main = React.lazy(() => import("./Main"));
 const Admin = React.lazy(() => import("./admin/Admin"));
 const ProductDetails = React.lazy(() => import("./pages/ProductDetails"));
 function App() {
   return (
+    <ThemeProvider theme={theme}>
+
     <Routes>
       <Route
         path="admin"
@@ -76,9 +103,11 @@ function App() {
             </React.Suspense>
           }
         ></Route>
+        <Route path="cart" element={<Cart/>}></Route>
       </Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>
+    </ThemeProvider>
   );
 }
 
