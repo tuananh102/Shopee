@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import CategoryApi from "../../../api/CategoryApi";
 import ManufacturerApi from "../../../api/ManufacturerApi";
-
+import { ToastContainer, toast } from "react-toastify";
 export default function CreateProduct() {
   const [error, setError] = useState({
     //declare error
@@ -156,24 +156,24 @@ export default function CreateProduct() {
       console.log("fetching post");
       const addProduct = async (data) => {
         try {
-          const response = await axios.post(
-            process.env.REACT_APP_API_URL + "/product",
-            data,
-            {
-              headers: {
-                accept: "application/json",
-                "Accept-Language": "en-US,en;q=0.8",
-                "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-              },
-            }
-          );
-
-          console.log(response.data.headers["Content-Type"]);
+          await axios.post(process.env.REACT_APP_API_URL + "/product", data, {
+            headers: {
+              accept: "application/json",
+              "Accept-Language": "en-US,en;q=0.8",
+              "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+            },
+          });
         } catch (error) {
           console.log("Failed to add a product: ", error);
         }
       };
-      addProduct(formData);
+      addProduct(formData)
+        .then((res) => console.log("Add success", res))
+        .finally(
+          toast.success("Added product successfully!", {
+            position: "bottom-left",
+          })
+        );
     }
   }
 
@@ -210,6 +210,7 @@ export default function CreateProduct() {
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <div className="create-product">
+      <ToastContainer />
       <form
         // ref={multiRef}
         className="create-form"

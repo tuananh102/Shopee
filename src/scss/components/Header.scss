@@ -373,8 +373,7 @@
   }
 
   .header__no-cart .header__no-cart-img,
-  .header__no-cart .header__no-cart-msg 
-  {
+  .header__no-cart .header__no-cart-msg {
     display: block;
   }
   .header__no-cart-img {
@@ -426,8 +425,10 @@
     font-weight: 500;
     color: ($text);
     font-size: 1.4rem;
+    flex: 1;
+    text-align: start;
   }
-  .header__cart-item-quantity{
+  .header__cart-item-quantity {
     padding: 0 4px;
     font-size: 1.2rem;
     margin-right: 12px;

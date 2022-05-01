@@ -8,6 +8,7 @@ export const addToCart = (data) => {
 };
 
 export const removeToCart = (data) => {
+  console.warn("Remove item", data.id);
   return {
     type: REMOVE_TO_CART,
     data: data,

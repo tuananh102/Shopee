@@ -4,13 +4,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import NumberFormat from "react-number-format";
-
+const selectCart = (state) => state.cart;
 const HeaderWithSearch = ({ t: translate }) => {
-  const [cart, setCart] = useState([]);
-  const x = useSelector((state) => state.cart.cartItems);
-  useEffect(()=>{
-    setCart(x);
-  },[x])
+  const cartRaw = useSelector(selectCart);
+  const [cart, setCart] = useState(cartRaw.cartItems);
+  console.log("Cart from home", cartRaw);
   // useEffect(() => {
   //   const cart = JSON.parse(localStorage.getItem("cart" || "[]"));
   // });

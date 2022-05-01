@@ -1,14 +1,17 @@
 import React from "react";
+import useQuery from "../../hooks/useQuery";
 import "../../scss/components/Home/Banner.scss";
 import Menu from "./BannerListMenu";
 import Slider from "./BannerSlider";
 const Banner = () => {
+  const { data, loading, error } = useQuery(`/category`);
+  console.log("Category home: ", data);
   return (
     <div className="home-banner-container">
       <div className="grid wide home-banner">
         <div className="row">
           <div className="col-lg-2 d-none d-lg-block">
-            <Menu />
+            <Menu data={data} />
           </div>
           <div className="col-lg-10 col-12">
             <div className="row pe-lg-0">
@@ -47,9 +50,11 @@ const Banner = () => {
       <div className="grid wide home-banner-special">
         <div className="row">
           <a href="/" className="home-banner-special-link">
-            <img src="./images/home/banner/8.webp" alt="" /></a></div>
+            <img src="./images/home/banner/8.webp" alt="" />
+          </a>
+        </div>
       </div>
-    </div >
+    </div>
   );
 };
 

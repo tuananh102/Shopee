@@ -36,7 +36,10 @@ td {
 th {
   font-weight: 400;
 }
+
 .cart-table {
+  border-radius: 2px;
+  background-color: $hover-gray;
   margin: 16px 0;
   .cart-item {
     display: flex;
@@ -46,6 +49,7 @@ th {
       width: 62px;
       height: 62px;
       margin: 12px;
+      margin-left: 0;
       border: 1px solid ($border);
     }
     &-name {
@@ -60,6 +64,9 @@ th {
       font-weight: 500;
       color: ($text);
       font-size: 1.6rem;
+    }
+    &-price.total {
+      color: $primary;
     }
     &-quantity {
       display: flex;
@@ -84,4 +91,35 @@ th {
       }
     }
   }
+}
+.cart-purchase {
+  display: flex;
+  background-color: $hover-gray;
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 1.6rem;
+  align-items: center;
+  justify-content: space-between;
+  .cart-item-remove {
+    background-color: transparent;
+    border: none;
+    padding: 4px 12px;
+    color: $text;
+    display: flex;
+    &:hover {
+      color: $primary;
+    }
+  }
+  .btn--primary.purchase {
+    min-width: 300px;
+    padding: 24px;
+  }
+  .total-price {
+    color: $primary;
+    // font-size: 1.8em;
+  }
+}
+.no-cart {
+  font-size: 1.6rem;
+  margin-bottom: 16px;
 }

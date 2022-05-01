@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { mdiCellphone, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
-const BannerListMenu = () => {
+import { Link } from "react-router-dom";
+const BannerListMenu = ({ data }) => {
   return (
     <div className="list-menu">
       <ul className="list-menu__list">
-        <li className="list-menu__list-item  list-menu__list-item--has-child">
+        {/* <li className="list-menu__list-item  list-menu__list-item--has-child">
           <a href="/" className="list-menu__list-item-link">
             <Icon
               path={mdiCellphone}
@@ -66,52 +67,20 @@ const BannerListMenu = () => {
               </li>
             </ul>
           </div>
-        </li>
-        <li className="list-menu__list-item">
-          <a href="/" className="list-menu__list-item-link">
-            Điện thoại
-          </a>
-        </li>
-        <li className="list-menu__list-item">
-          <a href="/" className="list-menu__list-item-link">
-            Điện thoại
-          </a>
-        </li>
-        <li className="list-menu__list-item">
-          <a href="/" className="list-menu__list-item-link">
-            Điện thoại
-          </a>
-        </li>
-        <li className="list-menu__list-item">
-          <a href="/" className="list-menu__list-item-link">
-            Điện thoại
-          </a>
-        </li>
-        <li className="list-menu__list-item">
-          <a href="/" className="list-menu__list-item-link">
-            Điện thoại
-          </a>
-        </li>
-        <li className="list-menu__list-item">
-          <a href="/" className="list-menu__list-item-link">
-            Điện thoại
-          </a>
-        </li>
-        <li className="list-menu__list-item">
-          <a href="/" className="list-menu__list-item-link">
-            Điện thoại
-          </a>
-        </li>
-        <li className="list-menu__list-item">
-          <a href="/" className="list-menu__list-item-link">
-            Điện thoại
-          </a>
-        </li>
-        <li className="list-menu__list-item">
-          <a href="/" className="list-menu__list-item-link">
-            Điện thoại
-          </a>
-        </li>
+        </li> */}
+        {data &&
+          data
+            .filter((c) => c.parentId == null)
+            .map((item) => (
+              <li className="list-menu__list-item" key={item.id}>
+                <Link
+                  to={`/category/${item.id}`}
+                  className="list-menu__list-item-link"
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
       </ul>
     </div>
   );

@@ -18,15 +18,25 @@ const cartReducer = (state = initialState, action) => {
         } else {
           const tempProduct = { ...action.data, cartQuantity: 1 };
           state.cartItems.push(tempProduct);
+          state.cartTotalAmount += action.data.price;
+          state.cartTotalQuantity += 1;
           return { ...state };
         }
       } else {
         state.cartItems.push(action.data);
+        state.cartTotalAmount += action.data.price;
+        state.cartTotalQuantity += 1;
         return { ...state };
       }
     case REMOVE_TO_CART:
-      const itemRemove = state.cartItems.indexOf(action.data.id);
-      return state.cartItems.splice(itemRemove, 1);
+      // console.log("Reducer", action);
+      const itemRemove = state.cartItems.findIndex(
+        (item) => item.id === action.data.id
+      );
+      console.log("Reducer itemRemove", itemRemove);
+
+      state.cartItems.splice(itemRemove, 1);
+      return { ...state };
     default:
       return state;
   }

@@ -1,17 +1,9 @@
 import useQuery from "../hooks/useQuery";
-
 import React, { useEffect, useState } from "react";
 import Banner from "../components/Home/Banner";
 import ProductByCategory from "../components/Home/ProductByCategory";
 import PreLoader from "../features/PreLoader.jsx";
-// import { useDispatch, useSelector } from "react-redux";
-// import { logIn } from "../actions/user";
-
-// const randomNumber = () => {
-//   return Math.ceil(Math.random() + 100);
-// };
 const Home = (props) => {
-  console.warn("HOme", props);
   const [products, setProducts] = useState([]);
   const { data, loading, error } = useQuery(`/product`);
   // Use redux

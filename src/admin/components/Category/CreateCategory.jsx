@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
+import { toast, ToastContainer } from "react-toastify";
 import * as yup from "yup";
 import CategoryApi from "../../../api/CategoryApi";
 
@@ -65,7 +66,9 @@ const CreateCategory = () => {
       .then((res) => console.log("Add successfully"))
       .catch((err) => console.log("Category :", err))
       .finally(() => {
-        setOpenToast(true);
+        toast.success("Added category successfully", {
+          position: "bottom-left",
+        });
         setOpenBackdrop(false);
       });
   };
@@ -81,20 +84,7 @@ const CreateCategory = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <form onSubmit={handleSubmit(onSubmit)} className="create-form">
-        <Snackbar
-          open={openToast}
-          autoHideDuration={4000}
-          onClose={handleCloseToast}
-        >
-          <Alert
-            onClose={handleCloseToast}
-            severity="success"
-            variant="filled"
-            sx={{ width: "100%" }}
-          >
-            Added category successfully!
-          </Alert>
-        </Snackbar>
+        <ToastContainer />
         <div className="create-form-heading">
           <h3>Create</h3>
           <div className="create-form-heading-controls">
