@@ -92,7 +92,7 @@ const HeaderWithSearch = ({ t: translate }) => {
                           key={item.name}
                         >
                           <img
-                            src={item.image}
+                            src={item.images[0]}
                             alt=""
                             className="header__cart-item-img"
                           />

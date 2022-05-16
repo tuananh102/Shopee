@@ -16,17 +16,26 @@ import { yupResolver } from "@hookform/resolvers/yup";
 const schema = yup.object().shape({
   productName: yup.string().required("This field is required"),
   shortDescription: yup.string().required("This field is required"),
-  fullDescription: yup.string().required("This field is required"),
-  manufacturerId: yup.bool().required("This field is required"),
-  published: yup.bool().required("This field is required"),
-  price: yup.number().required("This field is required"),
-  salePrice: yup.number().required("This field is required"),
-  images: yup.string().required("This field is required"),
+  manufacturerId: yup.number().required("This field is required"),
+  category: yup.array().required("This field is required"),
+  price: yup
+    .number()
+    .typeError("Amount must be a number")
+    .moreThan(0, "Price is greater than zero")
+    .required("This field is required"),
+  salePrice: yup
+    .number()
+    .strip()
+    .default(0)
+    .lessThan(yup.ref("price"), "Sale price shoule be less than price")
+    .notRequired(),
+  images: yup.mixed().required("This field is required"),
 });
 export default function CreateProduct() {
   const {
     register,
     control,
+    setValue,
     reset,
     handleSubmit,
     formState: { errors, isSubmitSuccessful },
@@ -85,31 +94,6 @@ export default function CreateProduct() {
     reset({ productName: "" });
   }
 
-  //Submit form
-  // function handleSubmit(e) {
-  //   console.log(Validate(dataSubmit));
-
-  //   // console.log(formData);
-  //   if (Validate(dataSubmit)) {
-  //     var formData = new FormData();
-
-  //     //append all data submit to form data
-  //     formData.append("name", dataSubmit.productName);
-  //     formData.append("shortDescription", dataSubmit.shortDescription);
-  //     formData.append("fullDescription", dataSubmit.fullDescription);
-  //     for (var i = 0; i < dataSubmit.category.length; i++) {
-  //       formData.append("category", dataSubmit.category[i].value);
-  //     }
-  //     formData.append("published", dataSubmit.published);
-  //     formData.append("price", dataSubmit.price);
-  //     if (dataSubmit.salePrice)
-  //       formData.append("salePrice", dataSubmit.salePrice);
-  //     formData.append("manufacturerId", dataSubmit.manufacturerId);
-  //     formData.append("stockQuantity", dataSubmit.stockQuantity);
-
-  //     for (const key of Object.keys(dataSubmit.images)) {
-  //       formData.append("images", dataSubmit.images[key]);
-  //     }
   //     //Start fetch post
   //     console.log("fetching post");
   //     const addProduct = async (data) => {
@@ -134,15 +118,15 @@ export default function CreateProduct() {
   //       );
   //   }
   // }
-
+  const [dataSubmit, setDataSubmit] = useState({
+    fullDescription: "",
+  });
   //CKEditor
-  // const handleCkeditor = (event, editor) => {
-  //   const data = editor.getData();
-  //   setDataSubmit({ ...dataSubmit, fullDescription: data });
-  // };
+  const handleCkeditor = (event, editor) => {
+    const data = editor.getData();
+    setDataSubmit({ ...dataSubmit, fullDescription: data });
+  };
 
-  //Handle Image change
-  console.log("selectedFile", selectedFile);
   const handleImageChange = (e) => {
     if (e.target.files) {
       const fileArray = Array.from(e.target.files).map((file) =>
@@ -155,6 +139,7 @@ export default function CreateProduct() {
       //   ...dataSubmit,
       //   images: filesArray,
       // });
+      setValue("images", filesArray);
       setSelectedFile((prevImages) => prevImages.concat(fileArray));
       Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
     }
@@ -166,8 +151,9 @@ export default function CreateProduct() {
     refChooseImage.current.value = "";
   };
   const onSubmit = (data) => {
-    const dataSubmit = {
-      productName: data.productName,
+    console.log("Data submit: ", data);
+    const dataToSend = {
+      name: data.productName,
       shortDescription: data.shortDescription,
       fullDescription: data.fullDescription,
       category: data.category,
@@ -178,40 +164,52 @@ export default function CreateProduct() {
       stockQuantity: data.stockQuantity,
       images: data.images,
     };
-    console.log("Datasubmit hook form: ", dataSubmit);
+    console.log("dataToSend hook form: ", dataToSend);
     var formData = new FormData();
 
     //append all data submit to form data
-    formData.append("name", dataSubmit.productName);
-    formData.append("shortDescription", dataSubmit.shortDescription);
-    formData.append("fullDescription", dataSubmit.fullDescription);
-    for (var i = 0; i < dataSubmit.category.length; i++) {
-      formData.append("category", dataSubmit.category[i].value);
+    formData.append("name", dataToSend.name);
+    formData.append("shortDescription", dataToSend.shortDescription);
+    formData.append("fullDescription", dataToSend.fullDescription);
+    for (var i = 0; i < dataToSend.category.length; i++) {
+      formData.append("category", dataToSend.category[i].value);
     }
-    formData.append("published", dataSubmit.published);
-    formData.append("price", dataSubmit.price);
-    if (dataSubmit.salePrice)
-      formData.append("salePrice", dataSubmit.salePrice);
-    formData.append("manufacturerId", dataSubmit.manufacturerId);
-    formData.append("stockQuantity", dataSubmit.stockQuantity);
+    formData.append("published", dataToSend.published);
+    formData.append("price", dataToSend.price);
+    if (dataToSend.salePrice)
+      formData.append("salePrice", dataToSend.salePrice);
+    formData.append("manufacturerId", dataToSend.manufacturerId);
+    formData.append("stockQuantity", dataToSend.stockQuantity);
 
-    for (const key of Object.keys(dataSubmit.images)) {
-      formData.append("images", dataSubmit.images[key]);
+    for (const key of Object.keys(dataToSend.images)) {
+      formData.append("images", dataToSend.images[key]);
     }
     setOpenBackdrop(true);
-    productApi
-      .post(dataSubmit)
-      .then((res) => {
-        console.log("Add successfully", res);
-        handleReset();
+    //Start fetching post
+    console.log("fetching post");
+    const addProduct = async (data) => {
+      try {
+        await axios
+          .post(process.env.REACT_APP_API_URL + "/product", data, {
+            headers: {
+              accept: "application/json",
+              "Accept-Language": "en-US,en;q=0.8",
+              "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+            },
+          })
+          .then((res) => {
+            console.log("Add successfully", res);
+            handleReset();
+          });
+      } catch (error) {
+        console.log("Failed to add a product: ", error);
+      }
+    };
+    addProduct(formData).then(
+      toast.success("Added product successfully!", {
+        position: "bottom-left",
       })
-      .catch((err) => console.log("Category :", err))
-      .finally(() => {
-        toast.success("Added category successfully", {
-          position: "bottom-left",
-        });
-        setOpenBackdrop(false);
-      });
+    );
   };
 
   return (
@@ -253,10 +251,11 @@ export default function CreateProduct() {
               <input
                 placeholder="Product name"
                 className="form-control"
-                id="productName"
                 {...register("productName")}
               />
-              <p className="error">{errors.productName}</p>
+              {errors.productName && (
+                <p className="error">{errors.productName.message}</p>
+              )}
             </div>
           </div>
           <div className="form-group row">
@@ -274,7 +273,9 @@ export default function CreateProduct() {
                 cols={25}
                 id="shortDescription"
               />
-              <p className="error">{errors.shortDescription}</p>
+              {errors.shortDescription && (
+                <p className="error">{errors.shortDescription.message}</p>
+              )}
             </div>
           </div>
           <div className="form-group row">
@@ -282,51 +283,15 @@ export default function CreateProduct() {
               <label>Full description</label>
             </div>
             <div className="col-9">
-              <Controller
-                name="fullDescription"
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <CKEditor
-                    config={{
-                      toolbarGroup: [
-                        {
-                          name: "document",
-                          groups: ["mode", "document", "doctools"],
-                        },
-                        { name: "clipboard", groups: ["clipboard", "undo"] },
-                        {
-                          name: "editing",
-                          groups: ["find", "selection", "spellchecker"],
-                        },
-                        { name: "forms" },
-                        "/",
-                        {
-                          name: "basicstyles",
-                          groups: ["basicstyles", "cleanup"],
-                        },
-                        {
-                          name: "paragraph",
-                          groups: ["list", "indent", "blocks", "align", "bidi"],
-                        },
-                        { name: "links" },
-                        { name: "insert" },
-                        "/",
-                        { name: "styles" },
-                        { name: "colors" },
-                        { name: "tools" },
-                        { name: "others" },
-                        { name: "about" },
-                      ],
-                    }}
-                    editor={ClassicEditor}
-                    onReady={(editor) => {
-                      // You can store the "editor" and use when it is needed.
-                      console.log("Editor is ready to use!", editor);
-                    }}
-                    onChange={onChange}
-                  />
-                )}
-                // render={({ field }) => <Ckeditor {...field} />}
+              <CKEditor
+                editor={ClassicEditor}
+                onReady={(editor) => {
+                  // You can store the "editor" and use when it is needed.
+                  console.log("Editor is ready to use!", editor);
+                }}
+                onChange={(e, editor) =>
+                  setValue("fullDescription", editor.getData())
+                }
               />
             </div>
           </div>
@@ -344,14 +309,16 @@ export default function CreateProduct() {
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <Select
-                    onChange={onChange}
+                    onChange={(e) => setValue("manufacturerId", e.value)}
                     defaultValue={manufacturer[0]}
                     // selected={value}
                     options={manufacturer}
                   />
                 )}
               />
-              <p className="error">{errors.manufacturerId}</p>
+              {errors.manufacturer && (
+                <p className="error">{errors.manufacturer.message}</p>
+              )}
             </div>
           </div>
           <div className="form-group row">
@@ -367,14 +334,20 @@ export default function CreateProduct() {
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <Select
-                    onChange={onChange}
-                    defaultValue={category[0]}
+                    onChange={(e) => {
+                      // console.log("Select:", e);
+                      setValue("category", e);
+                    }}
+                    // defaultValue={category[0]}
+                    isMulti={true}
                     // selected={value}
                     options={category}
                   />
                 )}
               />
-              <p className="error">{errors.category}</p>
+              {errors.category && (
+                <p className="error">{errors.category.messgae}</p>
+              )}
             </div>
           </div>
           <div className="form-group row">
@@ -391,7 +364,9 @@ export default function CreateProduct() {
                 accept="image/*"
                 ref={refChooseImage}
               />
-              <p className="error">{errors.images}</p>
+              {errors.images && (
+                <p className="error">{errors.images.message}</p>
+              )}
 
               {selectedFile.length !== 0 && (
                 <div className="preview-image">
@@ -438,7 +413,7 @@ export default function CreateProduct() {
                 id="price"
                 {...register("price")}
               />
-              <p className="error">{errors.price}</p>
+              {errors.price && <p className="error">{errors.price.message}</p>}
             </div>
           </div>
           <div className="form-group row">
@@ -449,11 +424,15 @@ export default function CreateProduct() {
               <input
                 type="number"
                 min={0}
+                defaultValue={0}
                 className="form-control w-50"
                 placeholder="15000 VND"
                 id="salePrice"
                 {...register("salePrice")}
               />
+              {errors.salePrice && (
+                <p className="error">{errors.salePrice.message}</p>
+              )}
             </div>
           </div>
           <div className="form-group row">

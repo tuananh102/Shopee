@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { Modal } from "react-bootstrap";
 import GoogleLogin from "react-google-login";
@@ -10,6 +9,7 @@ import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../../services/actions/user";
+import axios from "axios";
 //Schema validation
 const schema = yup.object().shape({
   email: yup.string().email().required("This field is required"),
@@ -71,9 +71,7 @@ const AuthLogin = ({
       .post(data, "login")
       .then((res) => {
         console.log("Login successfully!", res);
-        var user = {
-          accessToken: res,
-        };
+
         dispatch(logIn(user));
       })
       .catch((err) =>
@@ -95,6 +93,15 @@ const AuthLogin = ({
       emailId: response.profileObj.email,
       imageUrl: response.profileObj.imageUrl,
     };
+
+    const dataSubmit = {
+      provider: "Google",
+      Token: response.tokenId,
+    };
+    axios
+      .post(`account/google-login`, dataSubmit)
+      .then((res) => console.log("google login: ", res))
+      .catch((err) => console.log(err));
     setLoginData(userInfo);
     setShow(false);
     localStorage.setItem("loginData", JSON.stringify(response.profileObj));

@@ -2,13 +2,14 @@ import { ADD_TO_CART, REMOVE_TO_CART } from "../constant";
 const CartLocalStorage = localStorage.getItem("cart");
 let cartInitial = [];
 if (CartLocalStorage !== "undefined")
-  cartInitial = JSON.parse(CartLocalStorage);
+  cartInitial = JSON.parse(CartLocalStorage) || [];
 const initialState = {
   cartItems: cartInitial,
   cartTotalAmount: 0,
   cartTotalQuantity: 0,
 };
 const cartReducer = (state = initialState, action) => {
+  // console.warn("action:", action);
   switch (action.type) {
     case ADD_TO_CART:
       let sameIndex = -1;
@@ -33,7 +34,6 @@ const cartReducer = (state = initialState, action) => {
         return { ...state };
       }
     case REMOVE_TO_CART:
-      // console.log("Reducer", action);
       const itemRemove = state.cartItems.findIndex(
         (item) => item.id === action.data.id
       );

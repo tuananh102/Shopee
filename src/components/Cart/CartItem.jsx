@@ -1,11 +1,23 @@
 import { Add, Delete, Remove } from "@mui/icons-material";
 import { Checkbox } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
 
-const CartItem = ({ item, handleTotalPrice, handleDelete, isCheckAll }) => {
+const CartItem = ({
+  item,
+  handleTotalPrice,
+  handleDelete,
+  isCheckAll,
+  setDataSubmit,
+  dataSubmit,
+}) => {
   const [quantity, setQuantity] = useState(item.cartQuantity);
   const [check, setCheck] = useState(isCheckAll);
+  const [price, setPrice] = useState(0);
+  useEffect(() => {
+    // setPriceChange(quantity * item.price - price);
+    setPrice(quantity * item.price);
+  }, [quantity]);
   //Handle onchange input quantity
   function handleOnchangeQuantity(e) {
     if (!isNaN(Math.floor(e.target.value))) {
@@ -13,20 +25,35 @@ const CartItem = ({ item, handleTotalPrice, handleDelete, isCheckAll }) => {
         Math.floor(e.target.value) === 0 ? 1 : Math.floor(e.target.value)
       );
     }
+    var array = [...dataSubmit]; // make a separate copy of the array
+    var index = array.findIndex((arr) => arr.item === item);
+    if (index !== -1) {
+      array[index].quantity = quantity;
+      setDataSubmit(array);
+    }
   }
 
   //Handle decrease quantity
   function handleDecrease() {
-    if (quantity > 1) setQuantity(quantity - 1);
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
   }
 
   //ChangeCheckbox
   function handleChangeCheckbox(e) {
-    const price = quantity * item.price;
+    setCheck(e.target.checked);
     if (e.target.checked === true) {
       //Checked
-      handleTotalPrice(price);
-    } else handleTotalPrice(price * -1);
+      setDataSubmit([...dataSubmit, { quantity: quantity, item: item }]);
+    } else {
+      var array = [...dataSubmit]; // make a separate copy of the array
+      var index = array.findIndex((arr) => arr.item === item);
+      if (index !== -1) {
+        array.splice(index, 1);
+        setDataSubmit(array);
+      }
+    }
   }
 
   return (
@@ -36,12 +63,12 @@ const CartItem = ({ item, handleTotalPrice, handleDelete, isCheckAll }) => {
           // defaultChecked={isCheckAll}
           // onClick={(e) => handleChangeCheckbox(e)}
           checked={isCheckAll ? isCheckAll : check}
-          onChange={(e) => setCheck(e.target.checked)}
+          onChange={(e) => handleChangeCheckbox(e)}
         />
       </td>
       <td>
         <div className="cart-item">
-          <img src={item.image} alt="" className="cart-item-img" />
+          <img src={item.images[0]} alt="" className="cart-item-img" />
           <h3 className="cart-item-name">{item.name}</h3>
         </div>
       </td>
@@ -78,7 +105,7 @@ const CartItem = ({ item, handleTotalPrice, handleDelete, isCheckAll }) => {
       <td>
         <span className="cart-item-price total">
           <NumberFormat
-            value={item.price * quantity}
+            value={price}
             suffix=" ₫"
             displayType="text"
             thousandSeparator="."

@@ -61,7 +61,7 @@ const ProductInfo = ({ product }) => {
       price: product.price,
     };
     console.log("State cart: ", stateCartRedux);
-    const action = addToCart(dataSubmit);
+    const action = addToCart(product);
     dispatch(action);
     localStorage.setItem("cart", JSON.stringify(stateCartRedux.cartItems));
     toast.success("Added to card successfully!", {

@@ -18,8 +18,9 @@ export default function Cart() {
   const handleTotalPrice = (price) => {
     setTotalPrice(totalPrice + price);
   };
+  const [dataSubmit, setDataSubmit] = useState([]);
   console.log("Cart - local:", cartRaw);
-
+  console.log("cartItem retrieve: ", dataSubmit);
   console.log("Total price", totalPrice);
   //Handle delete cart item
   function handleDelete(item) {
@@ -54,6 +55,8 @@ export default function Cart() {
                 handleTotalPrice={handleTotalPrice}
                 handleDelete={handleDelete}
                 isCheckAll={checkAll}
+                setDataSubmit={setDataSubmit}
+                dataSubmit={dataSubmit}
               />
             ))}
         </tbody>
@@ -71,7 +74,7 @@ export default function Cart() {
         <span>Tổng thanh toán ({0} sản phẩm ):</span>
         <span className="total-price">
           <NumberFormat
-            value={0}
+            value={totalPrice}
             suffix=" ₫"
             displayType="text"
             thousandSeparator="."
