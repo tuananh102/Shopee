@@ -93,31 +93,6 @@ export default function CreateProduct() {
   function handleReset() {
     reset({ productName: "" });
   }
-
-  //     //Start fetch post
-  //     console.log("fetching post");
-  //     const addProduct = async (data) => {
-  //       try {
-  //         await axios.post(process.env.REACT_APP_API_URL + "/product", data, {
-  //           headers: {
-  //             accept: "application/json",
-  //             "Accept-Language": "en-US,en;q=0.8",
-  //             "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-  //           },
-  //         });
-  //       } catch (error) {
-  //         console.log("Failed to add a product: ", error);
-  //       }
-  //     };
-  //     addProduct(formData)
-  //       .then((res) => console.log("Add success", res))
-  //       .finally(
-  //         toast.success("Added product successfully!", {
-  //           position: "bottom-left",
-  //         })
-  //       );
-  //   }
-  // }
   const [dataSubmit, setDataSubmit] = useState({
     fullDescription: "",
   });
@@ -190,7 +165,7 @@ export default function CreateProduct() {
     const addProduct = async (data) => {
       try {
         await axios
-          .post(process.env.REACT_APP_API_URL + "/product", data, {
+          .post("/product", data, {
             headers: {
               accept: "application/json",
               "Accept-Language": "en-US,en;q=0.8",

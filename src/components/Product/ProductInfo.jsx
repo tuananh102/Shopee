@@ -54,12 +54,6 @@ const ProductInfo = ({ product }) => {
   //handle add to card
 
   const handleAddToCart = () => {
-    const dataSubmit = {
-      id: product.id,
-      name: product.name,
-      image: product.images[0],
-      price: product.price,
-    };
     console.log("State cart: ", stateCartRedux);
     const action = addToCart(product);
     dispatch(action);

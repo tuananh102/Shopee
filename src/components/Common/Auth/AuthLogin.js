@@ -71,8 +71,8 @@ const AuthLogin = ({
       .post(data, "login")
       .then((res) => {
         console.log("Login successfully!", res);
-
-        dispatch(logIn(user));
+        const action = logIn(res);
+        dispatch(action);
       })
       .catch((err) =>
         toast.error("Oops, Some thing went wrong! " + err, {
@@ -100,7 +100,10 @@ const AuthLogin = ({
     };
     axios
       .post(`account/google-login`, dataSubmit)
-      .then((res) => console.log("google login: ", res))
+      .then((res) => {
+        const action = logIn(res.data);
+        dispatch(action);
+      })
       .catch((err) => console.log(err));
     setLoginData(userInfo);
     setShow(false);

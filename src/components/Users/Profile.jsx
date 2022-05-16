@@ -7,6 +7,7 @@ import { Button, Skeleton } from "@mui/material";
 import { Save } from "@mui/icons-material";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 //Schema validation
 const schema = yup.object().shape({
@@ -18,33 +19,29 @@ const schema = yup.object().shape({
 const Profile = () => {
   const {
     register,
+    setValue,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
-
+  const userRedux = useSelector((state) => state.user);
+  let birthday = new Date(userRedux.user.birthday);
+  birthday = `${birthday.getFullYear()}-${birthday.getMonth() < 8 ? "0" : ""}${
+    birthday.getMonth() + 1
+  }-${birthday.getDate()}`;
+  console.log("birthday: ", birthday);
   const [avatar, setAvatar] = useState();
-  console.log("local storage: ", localStorage.getItem("loginData"));
-  // localStorage.getItem("loginData") != undefined
-  // ? JSON.parse(localStorage.getItem("loginData"))?.imageUrl
-  // : null
-  //Change avatar
+  const user = JSON.parse(localStorage.getItem("loginData"));
   const handleAvatarChange = (e) => {
-    // console.log(e);
     if (e.target.files) {
       const fileArray = Array.from(e.target.files).map((file) =>
         URL.createObjectURL(file)
       );
       const filesArray = Array.from(e.target.files);
-      console.log(filesArray);
-      // setDataSubmit({
-      //   ...dataSubmit,
-      //   images: filesArray,
-      // });
+      setValue("image", filesArray);
       setAvatar(fileArray);
-      // Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
     }
   };
 
@@ -60,44 +57,25 @@ const Profile = () => {
     formData.append("sex", data.sex);
     formData.append("birthday", data.birthday);
 
-    if (data.avatar) formData.append("images", data.avatar[0]);
+    if (data.image) formData.append("image", data.image[0]);
     //Start fetch post
     console.log("fetching post");
     const addProduct = (data) => {
       try {
-        axios.post(process.env.REACT_APP_API_URL + "/account", data, {
-          headers: {
-            accept: "application/json",
-            "Accept-Language": "en-US,en;q=0.8",
-            "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-          },
-        });
+        axios
+          .put(`/account/${userRedux.user.email}`, data, {
+            headers: {
+              accept: "application/json",
+              "Accept-Language": "en-US,en;q=0.8",
+              "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+            },
+          })
+          .then(() => console.log("Updated success"));
       } catch (error) {
         console.log("Failed to fetch: ", error);
       }
     };
-    addProduct(formData)
-      .then((res) => console.log("Saved successfully", res))
-      .finally(
-        toast.success("Saved successfully!", {
-          position: "bottom-left",
-        })
-      );
-    // const dataSubmit = {
-    //   name: data.categoryName,
-    //   parentId: data.parentId?.value,
-    // };
-    // console.log(dataSubmit);
-    // setOpenBackdrop(true);
-    // CategoryApi.post(dataSubmit)
-    //   .then((res) => console.log("Add successfully"))
-    //   .catch((err) => console.log("Category :", err))
-    //   .finally(() => {
-    //     toast.success("Added category successfully", {
-    //       position: "bottom-left",
-    //     });
-    //     setOpenBackdrop(false);
-    //   });
+    addProduct(formData);
   };
 
   return (
@@ -117,6 +95,7 @@ const Profile = () => {
                 placeholder="Name"
                 className="form-control"
                 {...register("name")}
+                defaultValue={userRedux.user.name}
                 id="name"
               />
               {/*username input */}
@@ -135,6 +114,7 @@ const Profile = () => {
                 placeholder="Email"
                 className="form-control"
                 {...register("email")}
+                defaultValue={userRedux.user.email}
                 id="email"
               />
               {/*email input */}
@@ -153,6 +133,7 @@ const Profile = () => {
                 placeholder="Phone number"
                 className="form-control"
                 {...register("phoneNumber")}
+                defaultValue={userRedux.user.phoneNumber}
                 id="phoneNumber"
               />
               {/*phoneNumber input */}
@@ -176,6 +157,7 @@ const Profile = () => {
                   value="male"
                   type="radio"
                   name="sex"
+                  defaultChecked={userRedux.user.sex === "male"}
                 />
                 <label htmlFor="male">Nam</label>
                 <input
@@ -184,6 +166,7 @@ const Profile = () => {
                   value="female"
                   type="radio"
                   name="sex"
+                  defaultChecked={userRedux.user.sex === "female"}
                 />
                 <label htmlFor="female">Nữ</label>
                 <input
@@ -192,6 +175,7 @@ const Profile = () => {
                   value="other"
                   type="radio"
                   name="sex"
+                  defaultChecked={userRedux.user.sex === "other"}
                 />
                 <label htmlFor="other">Khác</label>
               </div>
@@ -210,8 +194,10 @@ const Profile = () => {
               <input
                 className="form-control"
                 {...register("birthday")}
+                defaultValue={birthday}
                 id="birthday"
                 type="date"
+                // max={new Date().toISOString()}
               />
               {/*birthday input */}
               {errors.birthday && (
@@ -236,14 +222,17 @@ const Profile = () => {
         <div className="col-4 user-avatar">
           <div className="user-avatar-container">
             <img
-              src={avatar || "/images/avatar-anonymous-300x300.png"}
+              src={
+                avatar ||
+                userRedux.user.image ||
+                "/images/avatar-anonymous-300x300.png"
+              }
               alt=""
               className="user-avatar-img"
             />
             {/* <Skeleton variant="circular" width={40} height={40} /> */}
             <input
               onChange={(e) => handleAvatarChange(e)}
-              {...register("avatar")}
               accept="image/*"
               type="file"
               id="avatar"

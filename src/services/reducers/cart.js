@@ -9,7 +9,6 @@ const initialState = {
   cartTotalQuantity: 0,
 };
 const cartReducer = (state = initialState, action) => {
-  // console.warn("action:", action);
   switch (action.type) {
     case ADD_TO_CART:
       let sameIndex = -1;

@@ -13,25 +13,32 @@ import AuthLogin from "../Auth/AuthLogin";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import "../../../scss/components/Navbar.scss";
+import { logOut } from "../../../services/actions/user";
+import { useSelector, useDispatch } from "react-redux";
+
 const appId = process.env.REACT_APP_FACEBOOK_APP_ID;
 const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID + "";
+
 const Navbar = ({ i18n, t: translate }) => {
   const [show, setShow] = useState(false);
   const [transferLogIn, setTransferLogIn] = useState(true);
   const [loginData, setLoginData] = useState(
-    localStorage.getItem("loginData")
-      ? JSON.parse(localStorage.getItem("loginData"))
+    localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
       : null
   );
-  useEffect(() => {
-    if (loginData) {
-      console.log(loginData);
-      setLoginData(loginData.profileObj || loginData);
-    }
-    return () => {
-      setLoginData(null);
-    };
-  }, []);
+
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const actionLogout = logOut("user");
+
+  // console.log("User", user);
+  // useEffect(() => {
+  //   if (loginData) {
+  //     console.log("login Data: ", loginData);
+  //   }
+  //   return () => {};
+  // }, []);
 
   const responseFacebook = (response) => {
     console.log(response);
@@ -52,6 +59,9 @@ const Navbar = ({ i18n, t: translate }) => {
   // Logout Session and Update State
   const handleLogout = () => {
     localStorage.removeItem("loginData");
+    localStorage.removeItem("user");
+    dispatch(actionLogout);
+
     setLoginData(null);
     console.log("Log out successfully");
   };
@@ -254,14 +264,14 @@ const Navbar = ({ i18n, t: translate }) => {
         </li>
 
         {/* User  */}
-        {loginData && (
+        {user.user && (
           <li className="navbar__item navbar__user">
             <img
-              src={loginData.imageUrl || loginData.picture.data.url}
+              src={user.user?.image || "/images/avatar-anonymous-300x300.png"}
               alt=""
               className="navbar__user-avt"
             />
-            <span className="navbar__user-name">{loginData.name}</span>
+            <span className="navbar__user-name">{user.name}</span>
             <ul className="navbar__user-menu">
               <li className="navbar__user-menu-item">
                 <Link to="/user/profile">{translate("My account")}</Link>
@@ -269,6 +279,11 @@ const Navbar = ({ i18n, t: translate }) => {
               <li className="navbar__user-menu-item">
                 <Link to="/user/purchase">{translate("My purchase")}</Link>
               </li>
+              {user.user.isAdmin && (
+                <li className="navbar__user-menu-item">
+                  <Link to="/admin">{translate("Admin site")}</Link>
+                </li>
+              )}
               <li className="navbar__user-menu-item navbar__user-menu-item--separate">
                 <GoogleLogout
                   clientId={CLIENT_ID}
@@ -282,7 +297,7 @@ const Navbar = ({ i18n, t: translate }) => {
           </li>
         )}
         {/* If user logged in, hide this */}
-        {!loginData && (
+        {!user.user && (
           <>
             <li
               className="navbar__item navbar__item-separate"
