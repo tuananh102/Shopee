@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
         <div className="home-product__box-img">
           <img
             className="home-product__item-img"
-            src={product?.images[0]}
+            src={product.images[0]}
             alt={product?.name}
           />
         </div>

@@ -1,19 +1,16 @@
-const initialState = {
-  list: [],
-  activeId: 0,
-};
+import { LOGIN, LOGOUT } from "../constant";
+
+const initialState = {};
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOGIN":
-      const newList = [...state.list];
-      newList.push(action.payload);
-      return {
-        ...state,
-        list: newList,
-      };
+    case LOGIN:
+      console.warn("From Login", action);
+      state = action.payload;
+      return state;
 
-    case "LOGOUT":
+    case LOGOUT:
+      state = {};
       return state;
 
     default:

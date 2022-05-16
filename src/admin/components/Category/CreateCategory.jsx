@@ -39,8 +39,9 @@ const CreateCategory = () => {
   const {
     register,
     control,
+    reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -50,20 +51,20 @@ const CreateCategory = () => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpenToast(false);
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     const dataSubmit = {
       name: data.categoryName,
       parentId: data.parentId?.value,
     };
-    console.log(dataSubmit);
     setOpenBackdrop(true);
     CategoryApi.post(dataSubmit)
-      .then((res) => console.log("Add successfully"))
+      .then((res) => {
+        console.log("Add successfully", res);
+        handleReset();
+      })
       .catch((err) => console.log("Category :", err))
       .finally(() => {
         toast.success("Added category successfully", {
@@ -72,7 +73,10 @@ const CreateCategory = () => {
         setOpenBackdrop(false);
       });
   };
-  //Add children "null" to options
+
+  function handleReset() {
+    reset({ categoryName: "" });
+  }
 
   return (
     <>

@@ -264,10 +264,10 @@ const Navbar = ({ i18n, t: translate }) => {
             <span className="navbar__user-name">{loginData.name}</span>
             <ul className="navbar__user-menu">
               <li className="navbar__user-menu-item">
-                <a href="/#">{translate("My account")}</a>
+                <Link to="/user/profile">{translate("My account")}</Link>
               </li>
               <li className="navbar__user-menu-item">
-                <a href="/#">{translate("My purchase")}</a>
+                <Link to="/user/purchase">{translate("My purchase")}</Link>
               </li>
               <li className="navbar__user-menu-item navbar__user-menu-item--separate">
                 <GoogleLogout

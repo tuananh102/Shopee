@@ -2,7 +2,22 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import GoogleLogin from "react-google-login";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import accountApi from "../../../api/accountApi";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { logIn } from "../../../services/actions/user";
+//Schema validation
+const schema = yup.object().shape({
+  email: yup.string().email().required("This field is required"),
+  password: yup.string().required("This field is required"),
+  passwordConfirmation: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
+});
 
 const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const AuthLogin = ({
@@ -17,10 +32,59 @@ const AuthLogin = ({
 }) => {
   const handleTransfer = (data) => {
     const isLogIn = data === "logIn" ? true : false;
-
     setTransferLogIn(isLogIn);
   };
-  // //MODal
+
+  const {
+    register,
+    control,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  //REDUX
+  const dispatch = useDispatch();
+
+  //Onsubmit SignUp
+  const onSubmit = (data) => {
+    console.log("Register: ", data);
+    accountApi
+      .post(data, "register")
+      .then(() => {
+        toast.success("Success! Please verify email before start.", {
+          position: "bottom-left",
+        });
+        setTransferLogIn(true);
+      })
+      .catch((err) =>
+        toast.error("Oops, Some thing went wrong! " + err, {
+          position: "bottom-left",
+        })
+      );
+  };
+  const onSubmitLogin = (data) => {
+    console.log("Login data :", data);
+    accountApi
+      .post(data, "login")
+      .then((res) => {
+        console.log("Login successfully!", res);
+        var user = {
+          accessToken: res,
+        };
+        dispatch(logIn(user));
+      })
+      .catch((err) =>
+        toast.error("Oops, Some thing went wrong! " + err, {
+          position: "bottom-left",
+        })
+      )
+      .finally(() => {
+        setShow(false);
+      });
+  };
 
   // LOGIN WITH GOOGLE
   // Success Handler
@@ -43,6 +107,7 @@ const AuthLogin = ({
   const handleClose = () => setShow(false);
   return (
     <Modal show={show} onHide={handleClose} scrollable={true} centered>
+      <ToastContainer />
       <Modal.Header closeButton>
         <Modal.Title>
           {transferLogIn === true ? translate("Log In") : translate("Sign Up")}
@@ -52,14 +117,29 @@ const AuthLogin = ({
         <div className="sign-in-container">
           {transferLogIn === true ? (
             <div className="sign-in-form-container">
-              <form action="/account" className="sign-in-form">
+              <form
+                onSubmit={handleSubmit(onSubmitLogin)}
+                className="sign-in-form"
+              >
                 <label htmlFor="userName">Email</label>
                 <input
                   type="email"
+                  {...register("email")}
                   placeholder={translate("Enter your email")}
                 />
+                {errors.email && (
+                  <p className="error">{errors.email.message}</p>
+                )}
                 <label htmlFor="password">{translate("Password.1")}</label>
-                <input type="password" placeholder={translate("Password.2")} />
+                <input
+                  {...register("password")}
+                  type="password"
+                  placeholder={translate("Password.2")}
+                />
+                {errors.password && (
+                  <p className="error">{errors.password.message}</p>
+                )}
+
                 <div className="forget-password">
                   <span>{translate("Password.3")}?</span>
                 </div>
@@ -91,22 +171,39 @@ const AuthLogin = ({
             </div>
           ) : (
             <div className="sign-up-form-container">
-              <form action="/account-signup" className="sign-in-form">
+              <form onSubmit={handleSubmit(onSubmit)} className="sign-in-form">
                 <label htmlFor="userName">Email</label>
                 <input
                   type="email"
+                  {...register("email")}
                   placeholder={translate("Enter your email")}
                 />
+                {errors.email && (
+                  <p className="error">{errors.email.message}</p>
+                )}
+
                 <label htmlFor="password">{translate("Password.1")}</label>
                 <input
                   type="password"
+                  {...register("password")}
                   name="password"
                   placeholder={translate("Password.2")}
                 />
-                <label htmlFor="reEnterPassword">
+                {errors.password && (
+                  <p className="error">{errors.password.message}</p>
+                )}
+
+                <label htmlFor="passwordConfirmation">
                   {translate("Password.4")}
                 </label>
-                <input type="password" name="reEnterPassword" />
+                <input
+                  type="password"
+                  {...register("passwordConfirmation")}
+                  name="passwordConfirmation"
+                />
+                {errors.passwordConfirmation && (
+                  <p className="error">{errors.passwordConfirmation.message}</p>
+                )}
 
                 <div className="submit-btn">
                   <button type="submit">{translate("Sign Up")}</button>
@@ -117,7 +214,7 @@ const AuthLogin = ({
                   {translate("By signing up, you agree to Shopee's")}
                   <Link to="/terms-of-use">
                     &nbsp;{translate("Terms of Service")}
-                  </Link>{" "}
+                  </Link>
                   &
                   <Link to="/privacy-policy">
                     &nbsp;{translate("Privacy Policy")}

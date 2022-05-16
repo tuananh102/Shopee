@@ -1,6 +1,10 @@
 import { ADD_TO_CART, REMOVE_TO_CART } from "../constant";
+const CartLocalStorage = localStorage.getItem("cart");
+let cartInitial = [];
+if (CartLocalStorage !== "undefined")
+  cartInitial = JSON.parse(CartLocalStorage);
 const initialState = {
-  cartItems: JSON.parse(localStorage.getItem("cart")) || [],
+  cartItems: cartInitial,
   cartTotalAmount: 0,
   cartTotalQuantity: 0,
 };

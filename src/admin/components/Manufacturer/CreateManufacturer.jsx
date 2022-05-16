@@ -7,7 +7,7 @@ import {
   CircularProgress,
   Snackbar,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import ManufacturerApi from "../../../api/ManufacturerApi";
@@ -21,6 +21,8 @@ const CreateManufacturer = () => {
   const [openToast, setOpenToast] = useState(false);
   const [openBackdrop, setOpenBackdrop] = useState(false);
   const [manufacturer, setManufacturer] = useState();
+  const refInput = useRef();
+
   useEffect(() => {
     ManufacturerApi.getAll()
       .then((res) => {
@@ -32,6 +34,7 @@ const CreateManufacturer = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -56,7 +59,11 @@ const CreateManufacturer = () => {
       console.log(dataSubmit);
       setOpenBackdrop(true);
       ManufacturerApi.post(dataSubmit)
-        .then((res) => console.log("Add successfully", res))
+        .then((res) => {
+          console.log("Add successfully", res);
+          reset({ manufacturerName: "" });
+          refInput.current.focus();
+        })
         .catch((err) => console.log("Manufacturer :", err))
         .finally(() => {
           setOpenToast(true);
@@ -64,7 +71,6 @@ const CreateManufacturer = () => {
         });
     }
   };
-  //Add children "null" to options
 
   return (
     <>
@@ -104,7 +110,7 @@ const CreateManufacturer = () => {
         <div className="form-main">
           <div className="form-group row">
             <div className="col-3 label">
-              <label htmlFor="manufacturerName">
+              <label htmlFor="manufacturerName" ref={refInput}>
                 Manufacturer Name
                 <span className="error">&nbsp;*</span>
               </label>

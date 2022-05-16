@@ -1,0 +1,98 @@
+@import "../../variables";
+.user-container {
+  margin: 32px 0;
+  .user-heading,
+  .main-information-heading {
+    height: 48px;
+    display: flex;
+    align-items: center;
+  }
+  .user-heading {
+    &-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+    &-name {
+      margin-left: 8px;
+    }
+  }
+  .user-functions {
+    margin: 16px 0;
+    .list-functions {
+      &-item {
+        font-size: 1.6rem;
+        padding: 8px 0;
+        &-link {
+          display: flex;
+          align-items: center;
+          svg {
+            margin-right: 8px;
+          }
+          span {
+            &:hover {
+              color: $primary;
+            }
+          }
+        }
+      }
+    }
+  }
+  .user-form {
+    .label {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .form-group {
+      margin: 12px 0;
+      font-size: 1.4rem;
+      input {
+        font-size: 1.4rem;
+      }
+
+      .sex-input {
+        display: flex;
+        align-items: center;
+        input[type="radio"] {
+          margin-right: 4px;
+        }
+        label {
+          margin-right: 12px;
+        }
+      }
+    }
+    .user-avatar {
+      border-left: 1px solid $border;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &-container {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        .label-avatar {
+          border: 1px solid $border;
+          border-radius: 2px;
+          padding: 6px 10px;
+          text-align: center;
+          font-size: 1.6rem;
+          margin-top: 8px;
+          cursor: pointer;
+          &:hover {
+            background-color: $hover-gray;
+          }
+        }
+      }
+      &-img {
+        border-radius: 50%;
+        width: 100%;
+      }
+    }
+  }
+}
+.error {
+  color: $primary;
+}

@@ -7,8 +7,8 @@ import NumberFormat from "react-number-format";
 const selectCart = (state) => state.cart;
 const HeaderWithSearch = ({ t: translate }) => {
   const cartRaw = useSelector(selectCart);
-  const [cart, setCart] = useState(cartRaw.cartItems);
-  console.log("Cart from home", cartRaw);
+  const [cart, setCart] = useState(cartRaw?.cartItems || []);
+  // console.log("Cart from home", cartRaw);
   // useEffect(() => {
   //   const cart = JSON.parse(localStorage.getItem("cart" || "[]"));
   // });

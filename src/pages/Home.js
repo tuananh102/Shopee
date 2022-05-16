@@ -6,26 +6,13 @@ import PreLoader from "../features/PreLoader.jsx";
 const Home = (props) => {
   const [products, setProducts] = useState([]);
   const { data, loading, error } = useQuery(`/product`);
-  // Use redux
-
-  // const userList = useSelector((state) => state.user.list);
-  // console.log(userList);
-
-  // const dispatch = useDispatch();
-
-  // const newId = randomNumber();
-
-  // const newUser = {
-  //   userName: newId,
-  //   password: `pass${newId}`,
-  // };
-  // const action = logIn(newUser);
-  // dispatch(action);
 
   useEffect(() => {
     if (data) {
       setProducts(data);
     }
+    // console.log("Data from home page: ", data);
+
     return () => setProducts(null);
   }, [data]);
   return (

@@ -3,8 +3,9 @@ import { Checkbox } from "@mui/material";
 import React, { useState } from "react";
 import NumberFormat from "react-number-format";
 
-const CartItem = ({ item, handleTotalPrice, handleDelete }) => {
+const CartItem = ({ item, handleTotalPrice, handleDelete, isCheckAll }) => {
   const [quantity, setQuantity] = useState(item.cartQuantity);
+  const [check, setCheck] = useState(isCheckAll);
   //Handle onchange input quantity
   function handleOnchangeQuantity(e) {
     if (!isNaN(Math.floor(e.target.value))) {
@@ -21,16 +22,22 @@ const CartItem = ({ item, handleTotalPrice, handleDelete }) => {
 
   //ChangeCheckbox
   function handleChangeCheckbox(e) {
+    const price = quantity * item.price;
     if (e.target.checked === true) {
       //Checked
-      handleTotalPrice(quantity * item.price);
-    } else console.log("Check false");
+      handleTotalPrice(price);
+    } else handleTotalPrice(price * -1);
   }
 
   return (
     <tr>
       <td>
-        <Checkbox onChange={(e) => handleChangeCheckbox(e)} />
+        <Checkbox
+          // defaultChecked={isCheckAll}
+          // onClick={(e) => handleChangeCheckbox(e)}
+          checked={isCheckAll ? isCheckAll : check}
+          onChange={(e) => setCheck(e.target.checked)}
+        />
       </td>
       <td>
         <div className="cart-item">

@@ -4,8 +4,8 @@ import React from "react";
 import ProductCard from "../Common/ProductCard";
 import "../../scss/components/Home/ProductByCategory.scss";
 
-const ProductByCategory = ({ products }, props) => {
-  console.log("PROP: ", props);
+const ProductByCategory = ({ products }) => {
+  console.log("render: ", products);
   return (
     <div className="grid wide">
       <div className="home-product row">

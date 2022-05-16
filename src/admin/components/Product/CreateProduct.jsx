@@ -5,33 +5,37 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Select from "react-select";
-import CategoryApi from "../../../api/CategoryApi";
 import ManufacturerApi from "../../../api/ManufacturerApi";
 import { ToastContainer, toast } from "react-toastify";
+import { useForm, Controller } from "react-hook-form";
+import productApi from "../../../api/productApi";
+import CategoryApi from "../../../api/CategoryApi";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+//Schema validation
+const schema = yup.object().shape({
+  productName: yup.string().required("This field is required"),
+  shortDescription: yup.string().required("This field is required"),
+  fullDescription: yup.string().required("This field is required"),
+  manufacturerId: yup.bool().required("This field is required"),
+  published: yup.bool().required("This field is required"),
+  price: yup.number().required("This field is required"),
+  salePrice: yup.number().required("This field is required"),
+  images: yup.string().required("This field is required"),
+});
 export default function CreateProduct() {
-  const [error, setError] = useState({
-    //declare error
-    productName: "",
-    shortDescription: "",
-    price: "",
-    category: "",
-    manufacturers: "",
-    images: "",
+  const {
+    register,
+    control,
+    reset,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+  } = useForm({
+    resolver: yupResolver(schema),
   });
+
+  const [openBackdrop, setOpenBackdrop] = useState(false);
   const [selectedFile, setSelectedFile] = useState([]);
-  // console.log("error", error);
-  const [dataSubmit, setDataSubmit] = React.useState({
-    productName: "",
-    shortDescription: "",
-    fullDescription: "Full",
-    category: [],
-    manufacturerId: 1,
-    published: false,
-    price: null,
-    salePrice: null,
-    stockQuantity: 1,
-    images: null,
-  });
   const [category, setCategory] = useState([
     {
       value: "",
@@ -73,115 +77,69 @@ export default function CreateProduct() {
       .catch((err) => console.log(err));
   }, []);
   console.log(category);
-  // if (category) {
-  //   category.map((data) =>
-  //     optionCategory.push({ value: data.id, label: data.name })
-  //   );
-  //   console.log(optionCategory);
-  // }
   const refChooseImage = useRef();
-  console.log("datasubmit", dataSubmit);
+  // console.log("datasubmit", dataSubmit);
 
-  //Handle change input general
-
-  const handleChange = (e) => {
-    if (e.target.value) setError({ ...error, [e.target.id]: "" });
-    setDataSubmit({
-      ...dataSubmit,
-      [e.target.id]: e.target.value,
-    });
-  };
-  //Validate
-  function Validate(dataSubmit) {
-    let productName = "";
-    let shortDescription = "";
-    let price = "";
-    let category = "";
-    let manufacturerId = "";
-    let images = "";
-    if (!dataSubmit.productName) productName = "Please provide a name";
-    if (!dataSubmit.shortDescription)
-      shortDescription = "This field is required";
-    if (!dataSubmit.price) price = "This field is required";
-    if (dataSubmit.category === "") category = "This field is required";
-    if (!dataSubmit.manufacturerId) manufacturerId = "This field is required";
-    if (!dataSubmit.images) images = "This field is required";
-    if (
-      productName ||
-      shortDescription ||
-      price ||
-      category ||
-      manufacturerId ||
-      images
-    ) {
-      setError({
-        productName: productName,
-        shortDescription: shortDescription,
-        price: price,
-        category: category,
-        manufacturer: manufacturer,
-        images: images,
-      });
-      return false;
-    }
-    return true;
+  //Handle reset
+  function handleReset() {
+    reset({ productName: "" });
   }
 
   //Submit form
-  function handleSubmit(e) {
-    console.log(Validate(dataSubmit));
+  // function handleSubmit(e) {
+  //   console.log(Validate(dataSubmit));
 
-    // console.log(formData);
-    if (Validate(dataSubmit)) {
-      var formData = new FormData();
+  //   // console.log(formData);
+  //   if (Validate(dataSubmit)) {
+  //     var formData = new FormData();
 
-      //append all data submit to form data
-      formData.append("name", dataSubmit.productName);
-      formData.append("shortDescription", dataSubmit.shortDescription);
-      formData.append("fullDescription", dataSubmit.fullDescription);
-      for (var i = 0; i < dataSubmit.category.length; i++) {
-        formData.append("category", dataSubmit.category[i].value);
-      }
-      formData.append("published", dataSubmit.published);
-      formData.append("price", dataSubmit.price);
-      if (dataSubmit.salePrice)
-        formData.append("salePrice", dataSubmit.salePrice);
-      formData.append("manufacturerId", dataSubmit.manufacturerId);
-      formData.append("stockQuantity", dataSubmit.stockQuantity);
+  //     //append all data submit to form data
+  //     formData.append("name", dataSubmit.productName);
+  //     formData.append("shortDescription", dataSubmit.shortDescription);
+  //     formData.append("fullDescription", dataSubmit.fullDescription);
+  //     for (var i = 0; i < dataSubmit.category.length; i++) {
+  //       formData.append("category", dataSubmit.category[i].value);
+  //     }
+  //     formData.append("published", dataSubmit.published);
+  //     formData.append("price", dataSubmit.price);
+  //     if (dataSubmit.salePrice)
+  //       formData.append("salePrice", dataSubmit.salePrice);
+  //     formData.append("manufacturerId", dataSubmit.manufacturerId);
+  //     formData.append("stockQuantity", dataSubmit.stockQuantity);
 
-      for (const key of Object.keys(dataSubmit.images)) {
-        formData.append("images", dataSubmit.images[key]);
-      }
-      //Start fetch post
-      console.log("fetching post");
-      const addProduct = async (data) => {
-        try {
-          await axios.post(process.env.REACT_APP_API_URL + "/product", data, {
-            headers: {
-              accept: "application/json",
-              "Accept-Language": "en-US,en;q=0.8",
-              "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-            },
-          });
-        } catch (error) {
-          console.log("Failed to add a product: ", error);
-        }
-      };
-      addProduct(formData)
-        .then((res) => console.log("Add success", res))
-        .finally(
-          toast.success("Added product successfully!", {
-            position: "bottom-left",
-          })
-        );
-    }
-  }
+  //     for (const key of Object.keys(dataSubmit.images)) {
+  //       formData.append("images", dataSubmit.images[key]);
+  //     }
+  //     //Start fetch post
+  //     console.log("fetching post");
+  //     const addProduct = async (data) => {
+  //       try {
+  //         await axios.post(process.env.REACT_APP_API_URL + "/product", data, {
+  //           headers: {
+  //             accept: "application/json",
+  //             "Accept-Language": "en-US,en;q=0.8",
+  //             "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+  //           },
+  //         });
+  //       } catch (error) {
+  //         console.log("Failed to add a product: ", error);
+  //       }
+  //     };
+  //     addProduct(formData)
+  //       .then((res) => console.log("Add success", res))
+  //       .finally(
+  //         toast.success("Added product successfully!", {
+  //           position: "bottom-left",
+  //         })
+  //       );
+  //   }
+  // }
 
   //CKEditor
-  const handleCkeditor = (event, editor) => {
-    const data = editor.getData();
-    setDataSubmit({ ...dataSubmit, fullDescription: data });
-  };
+  // const handleCkeditor = (event, editor) => {
+  //   const data = editor.getData();
+  //   setDataSubmit({ ...dataSubmit, fullDescription: data });
+  // };
 
   //Handle Image change
   console.log("selectedFile", selectedFile);
@@ -192,11 +150,11 @@ export default function CreateProduct() {
       );
       const filesArray = Array.from(e.target.files);
       console.log(filesArray);
-      setError({ images: "" });
-      setDataSubmit({
-        ...dataSubmit,
-        images: filesArray,
-      });
+      // setError({ images: "" });
+      // setDataSubmit({
+      //   ...dataSubmit,
+      //   images: filesArray,
+      // });
       setSelectedFile((prevImages) => prevImages.concat(fileArray));
       Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
     }
@@ -207,11 +165,61 @@ export default function CreateProduct() {
     setSelectedFile([]);
     refChooseImage.current.value = "";
   };
+  const onSubmit = (data) => {
+    const dataSubmit = {
+      productName: data.productName,
+      shortDescription: data.shortDescription,
+      fullDescription: data.fullDescription,
+      category: data.category,
+      manufacturerId: data.manufacturerId,
+      published: data.published,
+      price: data.price,
+      salePrice: data.salePrice,
+      stockQuantity: data.stockQuantity,
+      images: data.images,
+    };
+    console.log("Datasubmit hook form: ", dataSubmit);
+    var formData = new FormData();
+
+    //append all data submit to form data
+    formData.append("name", dataSubmit.productName);
+    formData.append("shortDescription", dataSubmit.shortDescription);
+    formData.append("fullDescription", dataSubmit.fullDescription);
+    for (var i = 0; i < dataSubmit.category.length; i++) {
+      formData.append("category", dataSubmit.category[i].value);
+    }
+    formData.append("published", dataSubmit.published);
+    formData.append("price", dataSubmit.price);
+    if (dataSubmit.salePrice)
+      formData.append("salePrice", dataSubmit.salePrice);
+    formData.append("manufacturerId", dataSubmit.manufacturerId);
+    formData.append("stockQuantity", dataSubmit.stockQuantity);
+
+    for (const key of Object.keys(dataSubmit.images)) {
+      formData.append("images", dataSubmit.images[key]);
+    }
+    setOpenBackdrop(true);
+    productApi
+      .post(dataSubmit)
+      .then((res) => {
+        console.log("Add successfully", res);
+        handleReset();
+      })
+      .catch((err) => console.log("Category :", err))
+      .finally(() => {
+        toast.success("Added category successfully", {
+          position: "bottom-left",
+        });
+        setOpenBackdrop(false);
+      });
+  };
+
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <div className="create-product">
       <ToastContainer />
       <form
+        onSubmit={handleSubmit(onSubmit)}
         // ref={multiRef}
         className="create-form"
       >
@@ -222,8 +230,7 @@ export default function CreateProduct() {
               variant="contained"
               style={{ marginRight: "16px" }}
               startIcon={<Save />}
-              type="button"
-              onClick={handleSubmit}
+              type="submit"
             >
               Save
             </Button>
@@ -247,9 +254,9 @@ export default function CreateProduct() {
                 placeholder="Product name"
                 className="form-control"
                 id="productName"
-                onChange={(e) => handleChange(e)}
+                {...register("productName")}
               />
-              <p className="error">{error.productName}</p>
+              <p className="error">{errors.productName}</p>
             </div>
           </div>
           <div className="form-group row">
@@ -260,14 +267,14 @@ export default function CreateProduct() {
             </div>
             <div className="col-9">
               <textarea
-                onChange={(e) => handleChange(e)}
+                {...register("shortDescription")}
                 placeholder="Short description"
                 className="form-control col-9"
                 rows={4}
                 cols={25}
                 id="shortDescription"
               />
-              <p className="error">{error.shortDescription}</p>
+              <p className="error">{errors.shortDescription}</p>
             </div>
           </div>
           <div className="form-group row">
@@ -275,41 +282,51 @@ export default function CreateProduct() {
               <label>Full description</label>
             </div>
             <div className="col-9">
-              <CKEditor
-                config={{
-                  toolbarGroup: [
-                    {
-                      name: "document",
-                      groups: ["mode", "document", "doctools"],
-                    },
-                    { name: "clipboard", groups: ["clipboard", "undo"] },
-                    {
-                      name: "editing",
-                      groups: ["find", "selection", "spellchecker"],
-                    },
-                    { name: "forms" },
-                    "/",
-                    { name: "basicstyles", groups: ["basicstyles", "cleanup"] },
-                    {
-                      name: "paragraph",
-                      groups: ["list", "indent", "blocks", "align", "bidi"],
-                    },
-                    { name: "links" },
-                    { name: "insert" },
-                    "/",
-                    { name: "styles" },
-                    { name: "colors" },
-                    { name: "tools" },
-                    { name: "others" },
-                    { name: "about" },
-                  ],
-                }}
-                editor={ClassicEditor}
-                onReady={(editor) => {
-                  // You can store the "editor" and use when it is needed.
-                  console.log("Editor is ready to use!", editor);
-                }}
-                onChange={handleCkeditor}
+              <Controller
+                name="fullDescription"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <CKEditor
+                    config={{
+                      toolbarGroup: [
+                        {
+                          name: "document",
+                          groups: ["mode", "document", "doctools"],
+                        },
+                        { name: "clipboard", groups: ["clipboard", "undo"] },
+                        {
+                          name: "editing",
+                          groups: ["find", "selection", "spellchecker"],
+                        },
+                        { name: "forms" },
+                        "/",
+                        {
+                          name: "basicstyles",
+                          groups: ["basicstyles", "cleanup"],
+                        },
+                        {
+                          name: "paragraph",
+                          groups: ["list", "indent", "blocks", "align", "bidi"],
+                        },
+                        { name: "links" },
+                        { name: "insert" },
+                        "/",
+                        { name: "styles" },
+                        { name: "colors" },
+                        { name: "tools" },
+                        { name: "others" },
+                        { name: "about" },
+                      ],
+                    }}
+                    editor={ClassicEditor}
+                    onReady={(editor) => {
+                      // You can store the "editor" and use when it is needed.
+                      console.log("Editor is ready to use!", editor);
+                    }}
+                    onChange={onChange}
+                  />
+                )}
+                // render={({ field }) => <Ckeditor {...field} />}
               />
             </div>
           </div>
@@ -322,14 +339,19 @@ export default function CreateProduct() {
               </label>
             </div>
             <div className="col-9">
-              <Select
-                options={manufacturer}
-                id="manufacturer"
-                onChange={(event) => {
-                  setDataSubmit({ ...dataSubmit, manufacturerId: event.value });
-                }}
+              <Controller
+                name="manufacturerId"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    onChange={onChange}
+                    defaultValue={manufacturer[0]}
+                    // selected={value}
+                    options={manufacturer}
+                  />
+                )}
               />
-              <p className="error">{error.manufacturer}</p>
+              <p className="error">{errors.manufacturerId}</p>
             </div>
           </div>
           <div className="form-group row">
@@ -340,17 +362,19 @@ export default function CreateProduct() {
               </label>
             </div>
             <div className="col-9">
-              <Select
-                options={category}
-                isMulti
-                onChange={(e) => {
-                  if (e.length > 0) setError({ ...error, category: "" });
-                  setDataSubmit({ ...dataSubmit, category: e });
-                }}
-                onSubmit={(event) => console.log(event)}
+              <Controller
+                name="category"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    onChange={onChange}
+                    defaultValue={category[0]}
+                    // selected={value}
+                    options={category}
+                  />
+                )}
               />
-
-              <p className="error">{error.category}</p>
+              <p className="error">{errors.category}</p>
             </div>
           </div>
           <div className="form-group row">
@@ -360,13 +384,14 @@ export default function CreateProduct() {
             <div className="col-9">
               <input
                 multiple
+                {...register("images")}
                 onChange={handleImageChange}
                 type="file"
                 id="image"
                 accept="image/*"
                 ref={refChooseImage}
               />
-              <p className="error">{error.images}</p>
+              <p className="error">{errors.images}</p>
 
               {selectedFile.length !== 0 && (
                 <div className="preview-image">
@@ -380,11 +405,11 @@ export default function CreateProduct() {
                   </ul>
                 </div>
               )}
-              {dataSubmit.images && (
+              {/* {dataSubmit.images && (
                 <Button variant="outlined" onClick={handleClearImages}>
                   Clear
                 </Button>
-              )}
+              )} */}
             </div>
           </div>
           <div className="form-group row">
@@ -393,12 +418,7 @@ export default function CreateProduct() {
             </label>
             <div className="col-9">
               <input
-                onChange={(e) =>
-                  setDataSubmit({
-                    ...dataSubmit,
-                    [e.target.id]: e.target.checked,
-                  })
-                }
+                {...register("published")}
                 type="checkbox"
                 id="published"
               />
@@ -416,9 +436,9 @@ export default function CreateProduct() {
                 className="form-control w-50"
                 placeholder="15000 VND"
                 id="price"
-                onChange={(e) => handleChange(e)}
+                {...register("price")}
               />
-              <p className="error">{error.price}</p>
+              <p className="error">{errors.price}</p>
             </div>
           </div>
           <div className="form-group row">
@@ -432,7 +452,7 @@ export default function CreateProduct() {
                 className="form-control w-50"
                 placeholder="15000 VND"
                 id="salePrice"
-                onChange={(e) => handleChange(e)}
+                {...register("salePrice")}
               />
             </div>
           </div>
@@ -448,7 +468,7 @@ export default function CreateProduct() {
                 placeholder="1"
                 defaultValue={1}
                 id="stockQuantity"
-                onChange={(e) => handleChange(e)}
+                {...register("stockQuantity")}
               />
             </div>
           </div>
