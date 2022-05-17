@@ -47,26 +47,26 @@ const ListOrders = () => {
     {
       field: "ShippingStatus",
       headerName: "Shipping status",
-      type: "text",
+      type: "string",
       sortable: true,
       width: 150,
     },
     {
       field: "Customer",
       headerName: "Customer",
-      type: "text",
+      type: "string",
       sortable: true,
     },
     {
       field: "CreatedOn",
       headerName: "Created on",
-      type: "text",
+      type: "string",
       sortable: true,
     },
     {
       field: "OrderTotal",
       headerName: "Order total",
-      type: "text",
+      type: "string",
       sortable: true,
     },
     {

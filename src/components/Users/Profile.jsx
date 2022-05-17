@@ -81,169 +81,173 @@ const Profile = () => {
   return (
     <>
       <ToastContainer />
-      <form className="user-form row" onSubmit={handleSubmit(onSubmit)}>
-        <div className="col-8">
-          <div className="form-group row">
-            <div className="col-3 label">
-              <label htmlFor="name">
-                Name
-                <span className="error">&nbsp;*</span>
-              </label>
-            </div>
-            <div className="col-9">
-              <input
-                placeholder="Name"
-                className="form-control"
-                {...register("name")}
-                defaultValue={userRedux.user.name}
-                id="name"
-              />
-              {/*username input */}
-              {errors.name && <p className="error">{errors.name.message}</p>}
-            </div>
-          </div>
-          <div className="form-group row">
-            <div className="col-3 label">
-              <label htmlFor="email">
-                Email
-                <span className="error">&nbsp;*</span>
-              </label>
-            </div>
-            <div className="col-9">
-              <input
-                placeholder="Email"
-                className="form-control"
-                {...register("email")}
-                defaultValue={userRedux.user.email}
-                id="email"
-              />
-              {/*email input */}
-              {errors.email && <p className="error">{errors.email.message}</p>}
-            </div>
-          </div>
-          <div className="form-group row">
-            <div className="col-3 label">
-              <label htmlFor="phoneNumber">
-                Phone Number
-                <span className="error">&nbsp;*</span>
-              </label>
-            </div>
-            <div className="col-9">
-              <input
-                placeholder="Phone number"
-                className="form-control"
-                {...register("phoneNumber")}
-                defaultValue={userRedux.user.phoneNumber}
-                id="phoneNumber"
-              />
-              {/*phoneNumber input */}
-              {errors.phoneNumber && (
-                <p className="error">{errors.phoneNumber.message}</p>
-              )}
-            </div>
-          </div>
-          <div className="form-group row">
-            <div className="col-3 label">
-              <label htmlFor="sex">
-                Giới tính
-                <span className="error">&nbsp;*</span>
-              </label>
-            </div>
-            <div className="col-9">
-              <div className="sex-input">
-                <input
-                  {...register("sex")}
-                  id="male"
-                  value="male"
-                  type="radio"
-                  name="sex"
-                  defaultChecked={userRedux.user.sex === "male"}
-                />
-                <label htmlFor="male">Nam</label>
-                <input
-                  {...register("sex")}
-                  id="female"
-                  value="female"
-                  type="radio"
-                  name="sex"
-                  defaultChecked={userRedux.user.sex === "female"}
-                />
-                <label htmlFor="female">Nữ</label>
-                <input
-                  {...register("sex")}
-                  id="other"
-                  value="other"
-                  type="radio"
-                  name="sex"
-                  defaultChecked={userRedux.user.sex === "other"}
-                />
-                <label htmlFor="other">Khác</label>
+      {userRedux && (
+        <form className="user-form row" onSubmit={handleSubmit(onSubmit)}>
+          <div className="col-8">
+            <div className="form-group row">
+              <div className="col-3 label">
+                <label htmlFor="name">
+                  Name
+                  <span className="error">&nbsp;*</span>
+                </label>
               </div>
-              {/*sex input */}
-              {errors.sex && <p className="error">{errors.sex.message}</p>}
+              <div className="col-9">
+                <input
+                  placeholder="Name"
+                  className="form-control"
+                  {...register("name")}
+                  defaultValue={userRedux.user.name}
+                  id="name"
+                />
+                {/*username input */}
+                {errors.name && <p className="error">{errors.name.message}</p>}
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-3 label">
+                <label htmlFor="email">
+                  Email
+                  <span className="error">&nbsp;*</span>
+                </label>
+              </div>
+              <div className="col-9">
+                <input
+                  placeholder="Email"
+                  className="form-control"
+                  {...register("email")}
+                  defaultValue={userRedux.user.email}
+                  id="email"
+                />
+                {/*email input */}
+                {errors.email && (
+                  <p className="error">{errors.email.message}</p>
+                )}
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-3 label">
+                <label htmlFor="phoneNumber">
+                  Phone Number
+                  <span className="error">&nbsp;*</span>
+                </label>
+              </div>
+              <div className="col-9">
+                <input
+                  placeholder="Phone number"
+                  className="form-control"
+                  {...register("phoneNumber")}
+                  defaultValue={userRedux.user.phoneNumber}
+                  id="phoneNumber"
+                />
+                {/*phoneNumber input */}
+                {errors.phoneNumber && (
+                  <p className="error">{errors.phoneNumber.message}</p>
+                )}
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-3 label">
+                <label htmlFor="sex">
+                  Giới tính
+                  <span className="error">&nbsp;*</span>
+                </label>
+              </div>
+              <div className="col-9">
+                <div className="sex-input">
+                  <input
+                    {...register("sex")}
+                    id="male"
+                    value="male"
+                    type="radio"
+                    name="sex"
+                    defaultChecked={userRedux.user.sex === "male"}
+                  />
+                  <label htmlFor="male">Nam</label>
+                  <input
+                    {...register("sex")}
+                    id="female"
+                    value="female"
+                    type="radio"
+                    name="sex"
+                    defaultChecked={userRedux.user.sex === "female"}
+                  />
+                  <label htmlFor="female">Nữ</label>
+                  <input
+                    {...register("sex")}
+                    id="other"
+                    value="other"
+                    type="radio"
+                    name="sex"
+                    defaultChecked={userRedux.user.sex === "other"}
+                  />
+                  <label htmlFor="other">Khác</label>
+                </div>
+                {/*sex input */}
+                {errors.sex && <p className="error">{errors.sex.message}</p>}
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-3 label">
+                <label htmlFor="birthday">
+                  Birthday
+                  <span className="error">&nbsp;*</span>
+                </label>
+              </div>
+              <div className="col-9">
+                <input
+                  className="form-control"
+                  {...register("birthday")}
+                  defaultValue={birthday}
+                  id="birthday"
+                  type="date"
+                  // max={new Date().toISOString()}
+                />
+                {/*birthday input */}
+                {errors.birthday && (
+                  <p className="error">{errors.birthday.message}</p>
+                )}
+              </div>
+            </div>
+            <div className="from-group row">
+              <div className="col-3"></div>
+              <div className="col-9">
+                <Button
+                  style={{ marginLeft: "4px" }}
+                  variant="contained"
+                  startIcon={<Save />}
+                  type="submit"
+                >
+                  Save
+                </Button>
+              </div>
             </div>
           </div>
-          <div className="form-group row">
-            <div className="col-3 label">
-              <label htmlFor="birthday">
-                Birthday
-                <span className="error">&nbsp;*</span>
+          <div className="col-4 user-avatar">
+            <div className="user-avatar-container">
+              <img
+                src={
+                  avatar ||
+                  userRedux.user.image ||
+                  "/images/avatar-anonymous-300x300.png"
+                }
+                alt=""
+                className="user-avatar-img"
+              />
+              {/* <Skeleton variant="circular" width={40} height={40} /> */}
+              <input
+                onChange={(e) => handleAvatarChange(e)}
+                accept="image/*"
+                type="file"
+                id="avatar"
+                style={{ display: "none" }}
+              />
+              <label htmlFor="avatar" className="label-avatar">
+                Chọn Ảnh
               </label>
             </div>
-            <div className="col-9">
-              <input
-                className="form-control"
-                {...register("birthday")}
-                defaultValue={birthday}
-                id="birthday"
-                type="date"
-                // max={new Date().toISOString()}
-              />
-              {/*birthday input */}
-              {errors.birthday && (
-                <p className="error">{errors.birthday.message}</p>
-              )}
-            </div>
           </div>
-          <div className="from-group row">
-            <div className="col-3"></div>
-            <div className="col-9">
-              <Button
-                style={{ marginLeft: "4px" }}
-                variant="contained"
-                startIcon={<Save />}
-                type="submit"
-              >
-                Save
-              </Button>
-            </div>
-          </div>
-        </div>
-        <div className="col-4 user-avatar">
-          <div className="user-avatar-container">
-            <img
-              src={
-                avatar ||
-                userRedux.user.image ||
-                "/images/avatar-anonymous-300x300.png"
-              }
-              alt=""
-              className="user-avatar-img"
-            />
-            {/* <Skeleton variant="circular" width={40} height={40} /> */}
-            <input
-              onChange={(e) => handleAvatarChange(e)}
-              accept="image/*"
-              type="file"
-              id="avatar"
-              style={{ display: "none" }}
-            />
-            <label htmlFor="avatar" className="label-avatar">
-              Chọn Ảnh
-            </label>
-          </div>
-        </div>
-      </form>
+        </form>
+      )}
     </>
   );
 };

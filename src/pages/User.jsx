@@ -8,15 +8,19 @@ import { Link, Outlet } from "react-router-dom";
 import "../scss/components/Home/User.scss";
 const User = () => {
   const [heading, setHeading] = useState("My Profile");
-  const avatar = JSON.parse(localStorage.getItem("loginData"));
+  const user = JSON.parse(localStorage.getItem("user"));
   // console.log("Avatar from localstorage", avatar.imageUrl);
   return (
     <div className="grid wide">
       <div className="row user-container">
         <div className="col-2">
           <div className="user-heading">
-            <img src={avatar?.imageUrl} alt="" className="user-heading-img" />
-            <h4 className="user-heading-name">tuananh6696</h4>
+            <img
+              src={user.user?.image || `/images/avatar-anonymous-300x300.png`}
+              alt=""
+              className="user-heading-img"
+            />
+            <h4 className="user-heading-name">{user.user?.email}</h4>
           </div>
           <hr />
           <div className="user-functions">

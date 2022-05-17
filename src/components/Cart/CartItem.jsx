@@ -5,7 +5,6 @@ import NumberFormat from "react-number-format";
 
 const CartItem = ({
   item,
-  handleTotalPrice,
   handleDelete,
   isCheckAll,
   setDataSubmit,
@@ -15,7 +14,12 @@ const CartItem = ({
   const [check, setCheck] = useState(isCheckAll);
   const [price, setPrice] = useState(0);
   useEffect(() => {
-    // setPriceChange(quantity * item.price - price);
+    var index = dataSubmit.findIndex((arr) => arr.item.id === item.id);
+    if (index !== -1) {
+      var arr = [...dataSubmit];
+      arr[index].quantity = quantity;
+      setDataSubmit(arr);
+    }
     setPrice(quantity * item.price);
   }, [quantity]);
   //Handle onchange input quantity

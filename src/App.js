@@ -15,6 +15,9 @@ import EditManufacturer from "./admin/components/Manufacturer/EditManufacturer";
 import ManufacturerList from "./admin/components/Manufacturer/ManufacturerList";
 import Manufacturers from "./admin/components/Manufacturers";
 import Order from "./admin/components/Order";
+import EditOrder from "./admin/components/Orders/EditOrder";
+import ListOrders from "./admin/components/Orders/ListOrders";
+import TrashOrders from "./admin/components/Orders/TrashOrders";
 import Product from "./admin/components/Product";
 import CreateProduct from "./admin/components/Product/CreateProduct";
 import EditProduct from "./admin/components/Product/EditProduct";
@@ -22,16 +25,15 @@ import ProductList from "./admin/components/Product/ProductList";
 import ProductTrash from "./admin/components/Product/ProductTrash";
 import Shipments from "./admin/components/Shipments";
 import NotFound from "./components/Common/NotFound";
-import PreLoader from "./features/PreLoader";
-import Cart from "./pages/Cart";
-import User from "./pages/User";
-import Home from "./pages/Home";
+import CartList from "./components/Cart/CartList";
+import Notifications from "./components/Users/Notifications";
 import Profile from "./components/Users/Profile";
 import Purchase from "./components/Users/Purchase";
-import Notifications from "./components/Users/Notifications";
-import ListOrders from "./admin/components/Orders/ListOrders";
-import EditOrder from "./admin/components/Orders/EditOrder";
-import TrashOrders from "./admin/components/Orders/TrashOrders";
+import PreLoader from "./features/PreLoader";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import Home from "./pages/Home";
+import User from "./pages/User";
 
 // Customize MUI theme
 let theme = createTheme(
@@ -111,7 +113,10 @@ function App() {
               </React.Suspense>
             }
           ></Route>
-          <Route path="cart" element={<Cart />}></Route>
+          <Route path="cart" element={<Cart />}>
+            {/* <Route index element={<CartList />} /> */}
+            <Route path="checkout" element={<Checkout />} />
+          </Route>
           <Route path="user" element={<User />}>
             <Route path="profile" element={<Profile />} />
             <Route path="purchase" element={<Purchase />} />

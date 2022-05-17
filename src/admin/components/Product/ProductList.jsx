@@ -49,7 +49,7 @@ const ProductList = () => {
     };
     //setIsPublished(e.target.checked)
     productApi
-      .put(data.id, dataSubmit)
+      .updatePublished(data.id, dataSubmit)
       .then((res) => console.log("Update published success", res))
       .catch((err) => console.log("Some thing went wrong! ", err));
   }

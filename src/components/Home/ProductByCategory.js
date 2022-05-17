@@ -20,11 +20,13 @@ const ProductByCategory = ({ products }) => {
         </div>
         <div className="grid wide home-product-container">
           <div className="row">
-            {products.map((item) => (
-              <div className="col-2-4 home-product__item-wrap" key={item.id}>
-                <ProductCard product={item} />
-              </div>
-            ))}
+            {products
+              .filter((i) => i.isPublished)
+              .map((item) => (
+                <div className="col-2-4 home-product__item-wrap" key={item.id}>
+                  <ProductCard product={item} />
+                </div>
+              ))}
           </div>
         </div>
       </div>
