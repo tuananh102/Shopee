@@ -29,6 +29,9 @@ import Home from "./pages/Home";
 import Profile from "./components/Users/Profile";
 import Purchase from "./components/Users/Purchase";
 import Notifications from "./components/Users/Notifications";
+import ListOrders from "./admin/components/Orders/ListOrders";
+import EditOrder from "./admin/components/Orders/EditOrder";
+import TrashOrders from "./admin/components/Orders/TrashOrders";
 
 // Customize MUI theme
 let theme = createTheme(
@@ -83,7 +86,11 @@ function App() {
             <Route path="edit/:id" element={<EditManufacturer />} />
             <Route path="trash" element={<ProductTrash />} />
           </Route>
-          <Route path="order" element={<Order />}></Route>
+          <Route path="order" element={<Order />}>
+            <Route index element={<ListOrders />} />
+            <Route path="edit" element={<EditOrder />} />
+            <Route path="trash" element={<TrashOrders />} />
+          </Route>
           <Route path="shipments" element={<Shipments />}></Route>
           <Route path="setting" element={<Dashboard />}></Route>
         </Route>

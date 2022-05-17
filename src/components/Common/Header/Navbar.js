@@ -267,7 +267,7 @@ const Navbar = ({ i18n, t: translate }) => {
         {user.user && (
           <li className="navbar__item navbar__user">
             <img
-              src={user.user?.image || "/images/avatar-anonymous-300x300.png"}
+              src={user.user.image || "/images/avatar-anonymous-300x300.png"}
               alt=""
               className="navbar__user-avt"
             />
