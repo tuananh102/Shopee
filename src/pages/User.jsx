@@ -20,7 +20,7 @@ const User = () => {
               alt=""
               className="user-heading-img"
             />
-            <h4 className="user-heading-name">{user.user?.email}</h4>
+            <h4 className="user-heading-name">{user.user?.name}</h4>
           </div>
           <hr />
           <div className="user-functions">

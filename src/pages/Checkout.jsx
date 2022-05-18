@@ -5,8 +5,23 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import * as yup from "yup";
 //Schema validation
+
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
 const schema = yup.object().shape({
-  email: yup.string().email().required("This field is required"),
+  name: yup.string().required("Vui lòng nhập tên người nhận"),
+  phoneNumber: yup
+    .string()
+    .matches(phoneRegExp, "Số điện thoại không đúng")
+    .typeError()
+    .required("Vui lòng nhập số điện thoại"),
+
+  email: yup.string().email().required("Vui lòng nhập email"),
+  address: yup.string().required("Vui lòng nhập địa chỉ nhận hàng"),
+  city: yup.mixed().required("Vui lòng chọn Tỉnh/Thành phố "),
+  district: yup.mixed().required("Vui lòng chọn Quận/Huyện"),
+  ward: yup.mixed().required("Vui lòng chọn Phường/Xã"),
   // password: yup.string().required("This field is required"),
   // passwordConfirmation: yup
   //   .string()
@@ -26,7 +41,9 @@ export default function Checkout() {
   });
   const [city, setCity] = useState();
   const [activeCity, setActiveCity] = useState();
+  const [activeDistrict, setActiveDistrict] = useState();
   const [districts, setDistrists] = useState();
+  const [wards, setWards] = useState();
   useEffect(() => {
     axios
       .get(`https://provinces.open-api.vn/api/?depth=3`)
@@ -36,13 +53,21 @@ export default function Checkout() {
   useEffect(() => {
     if (activeCity) {
       var data = city.filter((c) => c.code === activeCity);
-      console.log("districts :", data);
-      setDistrists(data);
+      const districtsByCode = data[0].districts;
+      // console.log("District got: ", districtsByCode);
+      setDistrists(districtsByCode || []);
     }
   }, [activeCity]);
-
+  useEffect(() => {
+    if (activeDistrict) {
+      var data = districts.filter((c) => c.code === activeDistrict);
+      const wardsByCode = data[0].wards;
+      // console.log("Wards got: ", wardsByCode);
+      setWards(wardsByCode || []);
+    }
+  }, [activeDistrict]);
   const onSubmit = (data) => {
-    console.log("Active city: ", activeCity);
+    console.log("data prepare submid: ", data);
   };
 
   return (
@@ -53,6 +78,7 @@ export default function Checkout() {
           <h2 className="inner-heading form-group col">
             1. Thông tin người nhận
           </h2>
+          {/* Họ tên */}
           <div className="form-group row">
             <div className="col-4 label">
               <label htmlFor="name">
@@ -69,6 +95,7 @@ export default function Checkout() {
               {errors.name && <p className="error">{errors.name.message}</p>}
             </div>
           </div>
+          {/* Sđt */}
           <div className="form-group row">
             <div className="col-4 label">
               <label htmlFor="phoneNumber">
@@ -88,6 +115,7 @@ export default function Checkout() {
               )}
             </div>
           </div>
+          {/* Email */}
           <div className="form-group row">
             <div className="col-4 label">
               <label htmlFor="email">
@@ -105,9 +133,11 @@ export default function Checkout() {
               {errors.email && <p className="error">{errors.email.message}</p>}
             </div>
           </div>
+          {/* Thông tin nhận hàng */}
           <h2 className="inner-heading form-group col">
             2. Thông tin nhận hàng
           </h2>
+          {/* Tỉnh/Thành phố */}
           <div className="form-group row">
             <div className="col-4 label">
               <label htmlFor="city">
@@ -122,7 +152,7 @@ export default function Checkout() {
                 render={({ field: { onChange, value } }) => (
                   <Select
                     onChange={(e) => {
-                      setValue("city", e.value);
+                      setValue("city", e.label);
                       setActiveCity(e.value);
                     }}
                     // defaultValue={city[0]}
@@ -135,9 +165,10 @@ export default function Checkout() {
                   />
                 )}
               />
-              {errors.name && <p className="error">{errors.name.message}</p>}
+              {errors.city && <p className="error">{errors.city.message}</p>}
             </div>
           </div>
+          {/* Quận huyện */}
           <div className="form-group row">
             <div className="col-4 label">
               <label htmlFor="district">
@@ -152,18 +183,91 @@ export default function Checkout() {
                 render={({ field: { onChange, value } }) => (
                   <Select
                     onChange={(e) => {
-                      setValue("district", e.value);
+                      setValue("district", e.label);
+                      setActiveDistrict(e.value);
                     }}
-                    // defaultValue={district[0]}
+                    // defaultValue={districts[0]}
                     // selected={value}
-
-                    options={districts.districts?.map((item) => ({
+                    options={districts?.map((item) => ({
                       ...item,
                       value: item.code,
                       label: item.name,
                     }))}
                   />
                 )}
+              />
+              {errors.district && (
+                <p className="error">{errors.district.message}</p>
+              )}
+            </div>
+          </div>
+          {/* Phường/Xã */}
+          <div className="form-group row">
+            <div className="col-4 label">
+              <label htmlFor="ward">
+                Phường/Xã
+                <span className="error">&nbsp;*</span>
+              </label>
+            </div>
+            <div className="col-4">
+              <Controller
+                name="ward"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    onChange={(e) => {
+                      setValue("ward", e.label);
+                      // setActiveDistrict(e.value);
+                    }}
+                    // defaultValue={wards[0]}
+                    // selected={value}
+                    options={wards?.map((item) => ({
+                      ...item,
+                      value: item.code,
+                      label: item.name,
+                    }))}
+                  />
+                )}
+              />
+              {errors.ward && <p className="error">{errors.ward.message}</p>}
+            </div>
+          </div>
+          <div className="form-group row">
+            <div className="col-4 label">
+              <label htmlFor="address">
+                Địa chỉ cụ thể
+                <span className="error">&nbsp;*</span>
+              </label>
+            </div>
+            <div className="col-4">
+              <input
+                placeholder="Số nhà, ngõ, tên đường..."
+                className="form-control"
+                type="address"
+                {...register("address")}
+              />
+              {errors.address && (
+                <p className="error">{errors.address.message}</p>
+              )}
+            </div>
+          </div>
+          {/* Phương thức thanh toán */}
+          <h2 className="inner-heading form-group">
+            3. Phương thức thanh toán
+          </h2>
+          {/* Họ tên */}
+          <div className="form-group row">
+            <div className="col-6 label">
+              <label htmlFor="name">
+                Họ tên
+                <span className="error">&nbsp;*</span>
+              </label>
+            </div>
+            <div className="col-6">
+              <input
+                placeholder="Name"
+                className="form-control"
+                {...register("name")}
               />
               {errors.name && <p className="error">{errors.name.message}</p>}
             </div>
