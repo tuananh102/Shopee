@@ -79,7 +79,7 @@ const CartItem = ({
       <td>
         <span className="cart-item-price">
           <NumberFormat
-            value={item.price}
+            value={item.saleprice || item.price}
             suffix=" ₫"
             displayType="text"
             thousandSeparator="."

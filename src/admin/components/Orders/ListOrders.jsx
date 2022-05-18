@@ -15,6 +15,7 @@ const ListOrders = () => {
 
   React.useEffect(() => {
     if (data) {
+      console.log("Order ", data);
       setOrder(data);
     }
   }, [data]);
@@ -32,42 +33,59 @@ const ListOrders = () => {
       width: 90,
     },
     {
-      field: "OrderStatus",
+      field: "orderStatus",
       headerName: "Order status",
       type: "string",
       sortable: true,
+      renderCell: (cellValues) => {
+        console.log("Cell values: ", cellValues);
+        return (
+          <span className={`order-status order-status-${cellValues.value}`}>
+            {cellValues.value}
+          </span>
+        );
+      },
     },
     {
-      field: "PaymentStatus",
+      field: "paymentStatus",
       headerName: "Payment status",
       type: "number",
       sortable: true,
       width: 150,
+      renderCell: (cellValues) => {
+        return <span>{cellValues.paymentStatus ? "Paid" : "Pending"}</span>;
+      },
     },
     {
-      field: "ShippingStatus",
+      field: "shippingStatus",
       headerName: "Shipping status",
       type: "string",
       sortable: true,
       width: 150,
     },
     {
-      field: "Customer",
+      field: "user",
       headerName: "Customer",
       type: "string",
       sortable: true,
+      width: 265,
+      renderCell: (cellValues) => {
+        return <span>{cellValues.value.email}</span>;
+      },
     },
     {
-      field: "CreatedOn",
+      field: "createdAt",
       headerName: "Created on",
       type: "string",
       sortable: true,
+      width: 110,
     },
     {
-      field: "OrderTotal",
+      field: "orderTotal",
       headerName: "Order total",
       type: "string",
       sortable: true,
+      width: 140,
     },
     {
       field: "function",
@@ -108,12 +126,6 @@ const ListOrders = () => {
       <div className="admin-category-heading">
         <h3>Order</h3>
         <div className="admin-category-controls">
-          <button className="btn-success">
-            <Link to="create">
-              <Add />
-              Add new
-            </Link>
-          </button>
           <button className="btn-danger">
             <Link to="trash">
               <Delete />

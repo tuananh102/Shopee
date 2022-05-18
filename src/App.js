@@ -24,7 +24,7 @@ import EditProduct from "./admin/components/Product/EditProduct";
 import ProductList from "./admin/components/Product/ProductList";
 import ProductTrash from "./admin/components/Product/ProductTrash";
 import Shipments from "./admin/components/Shipments";
-import NotFound from "./components/Common/NotFound";
+import NotFound from "./pages/NotFound";
 import CartList from "./components/Cart/CartList";
 import Notifications from "./components/Users/Notifications";
 import Profile from "./components/Users/Profile";
@@ -122,6 +122,7 @@ function App() {
             <Route path="purchase" element={<Purchase />} />
             <Route path="notifications" element={<Notifications />} />
           </Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

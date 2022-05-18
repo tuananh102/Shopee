@@ -130,12 +130,13 @@ th {
   background-color: $hover-gray;
   margin: 20px 0;
   .checkout-heading {
+    color: $primary;
     margin: 20px;
     padding-top: 20px;
     text-align: center;
   }
   .inner-heading.form-group {
-    background-color: #4ab2f1;
+    background-color: $primary;
     padding: 10px;
     color: $light;
     font-weight: 400;
@@ -152,5 +153,103 @@ th {
   }
   & * {
     font-size: 1.4rem;
+  }
+}
+.payment {
+  display: flex;
+  justify-content: center;
+
+  &-method {
+    border: 1px solid $border;
+    padding: 20px 40px;
+    margin: 0 8px;
+    border-radius: 2px;
+    cursor: pointer;
+    &:hover {
+      color: $primary;
+      border: 1px solid $primary;
+    }
+  }
+  &-method.active {
+    border-color: $primary;
+    position: relative;
+    &::before {
+      content: "";
+      width: 15px;
+      height: 10px;
+      border-radius: 0 0 0.2rem 0;
+      background: $primary;
+      background-image: url("https://cdn.cellphones.com.vn/media/icons/checkmark.svg");
+      background-size: 50%;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: white;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+  }
+  &-method.disable {
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: unset;
+  }
+}
+.checkout-overview {
+  color: $text-light-gray;
+  margin: 20px 0 0;
+  background: #fffefb;
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 5%);
+  border-top: 1px solid #f1f0ed;
+  padding-top: 15px;
+  .total-price {
+    font-size: 1.4rem;
+    &-label {
+    }
+    &-value {
+      text-align: end;
+      &.finish {
+        font-size: 2.8rem;
+        color: $primary;
+      }
+    }
+    ul {
+      align-items: center;
+      margin: 16px 0;
+    }
+  }
+}
+.place-order {
+  min-height: 95px;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px dashed rgba(0, 0, 0, 0.09);
+  .terms-conditions {
+    font-size: 1.4rem;
+    color: $text-light-gray;
+  }
+  .btn--primary.purchase {
+    min-width: 300px;
+    padding: 24px;
+    &:hover {
+      background-color: $hover-primary;
+    }
+  }
+}
+.order-status {
+  padding: 4px 6px !important;
+  &-Complete {
+    background-color: $green;
+  }
+  &-Processing {
+    background-color: $dodger-blue;
+  }
+  &-Pending {
+    background-color: $orange;
+  }
+  &-Canceled {
+    background-color: $orange;
   }
 }

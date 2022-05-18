@@ -58,7 +58,7 @@ const User = () => {
             </ul>
           </div>
         </div>
-        <div className="col-9">
+        <div className="col-10">
           <div className="main-information">
             <div className="main-information-heading">
               <h4>{heading}</h4>

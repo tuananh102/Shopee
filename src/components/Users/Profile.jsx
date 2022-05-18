@@ -15,6 +15,7 @@ const schema = yup.object().shape({
   email: yup.string().email().required("This field is required"),
   phoneNumber: yup.string().required("This field is required"),
   birthday: yup.string().required("This field is required"),
+  image: yup.string().required("This field is required"),
 });
 const Profile = () => {
   const {
@@ -70,7 +71,11 @@ const Profile = () => {
               "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
             },
           })
-          .then(() => console.log("Updated success"));
+          .then(() =>
+            toast.success("Lưu thông tin thành công!", {
+              position: "bottom-left",
+            })
+          );
       } catch (error) {
         console.log("Failed to fetch: ", error);
       }
@@ -235,6 +240,7 @@ const Profile = () => {
               />
               {/* <Skeleton variant="circular" width={40} height={40} /> */}
               <input
+                {...register("image")}
                 onChange={(e) => handleAvatarChange(e)}
                 accept="image/*"
                 type="file"
@@ -244,6 +250,7 @@ const Profile = () => {
               <label htmlFor="avatar" className="label-avatar">
                 Chọn Ảnh
               </label>
+              {errors.image && <p className="error">{errors.image.message}</p>}
             </div>
           </div>
         </form>

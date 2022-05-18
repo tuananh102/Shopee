@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { removeToCart } from "../services/actions/cart";
 import CartItem from "../components/Cart/CartItem";
+import ConfirmOrder from "../components/Cart/ConfirmOrder";
 import "../scss/components/Home/Cart.scss";
 import Checkout from "./Checkout";
 import { Link } from "react-router-dom";
@@ -19,6 +20,14 @@ export default function Cart() {
   const dispatch = useDispatch();
   const [dataSubmit, setDataSubmit] = useState([]);
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isSuccess, setIsSuccess] = useState({
+    success: false,
+    user: "",
+  });
+
+  useEffect(() => {
+    console.log("Is success", isSuccess);
+  }, [isSuccess]);
 
   useEffect(() => {
     function sumAll(dataSubmit) {
@@ -100,16 +109,32 @@ export default function Cart() {
           </span>
           <button
             onClick={() => {
-              if (totalPrice !== 0) setIsCheckout(true);
+              if (totalPrice !== 0) {
+                setIsCheckout(true);
+                window.scrollTo(0, 450);
+              }
             }}
-            // onClick={handlePurchaseClick}
             className="btn btn--primary purchase"
           >
             Mua hàng
           </button>
         </div>
       </div>
-      {isCheckout && <Checkout />}
+      {isCheckout && (
+        <Checkout
+          setIsSuccess={setIsSuccess}
+          setIsCheckout={setIsCheckout}
+          totalPrice={totalPrice}
+          products={dataSubmit}
+        />
+      )}
+      {isSuccess.success && (
+        <ConfirmOrder
+          isSuccess={isSuccess}
+          data={dataSubmit}
+          totalPrice={totalPrice}
+        />
+      )}
     </div>
   );
 }
